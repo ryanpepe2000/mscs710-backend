@@ -4,7 +4,7 @@
 Apart of Matrix Systems, this repository encompasses our Backend Server which is responsible for parsing incoming metric data from registered devices, storing formatted data in our data store, and facilitating incoming requests from our users through the Matrix Client. Developed for Marist College Graduate Capstone Project Spring 2022.
 
 ## Table of Contents
-- [Application Structure (#application-structure)
+- [Application Structure] (#application-structure)
 - [Installation] (#installation)
 - [Testing] (#testing)
 - [Technologies] (#technologies)
