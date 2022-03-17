@@ -11,7 +11,7 @@ from flask_sqlalchemy import SQLAlchemy
 #from flask_redis import FlaskRedis
 
 # Global References
-#db = SQLAlchemy()
+db = SQLAlchemy()
 #r = FlaskRedis()
 
 
@@ -27,11 +27,11 @@ def init_app():
         app.config.from_object('config.DevelopmentConfig')
 
     # Initalize Plugins
-    #db.init_app(app)
+    db.init_app(app)
     # r.init_app(app)
 
     @app.route('/')
     def hello_world():
-        return "What's good bitches"
+        return "Hello, world!"
 
     return app

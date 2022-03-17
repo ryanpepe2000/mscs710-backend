@@ -39,7 +39,9 @@ class DevelopmentConfig(Config):
     FLASK_ENV = 'development'
     DEBUG = True
     TESTING = False
-    #SQLALCHEMY_DATABASE_URI = environ.get('DEV_DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = environ.get('MYSQL_DEVELOPMENT_URI')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLAlchemy_ECHO = True
 
 
 class TestingConfig(Config):
