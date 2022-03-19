@@ -32,6 +32,7 @@ def init_app():
 
     @app.route('/')
     def hello_world():
+        app.logger.debug("TESTING DEBUG LOG FUNCTIONALITY")
         return "Hello, world!"
 
     return app
