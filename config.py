@@ -3,33 +3,42 @@ Configuration Settings for Matrix Backend. Switch between configurations by sett
 the ENV variable within the Flask config object in your CLI.
 
 MacOS
-export FLASK_ENV = 'development'
+export FLASK_ENV='development'
 
 Windows
-set FLASK_ENV = 'development'
+set FLASK_ENV='development'
 
 @date 3.16.21
 @author Christian Saltarelli
 """
 
-from os import environ, path
+from os import environ, path, remove
+from pathlib import Path
 from dotenv import load_dotenv
+from logging.config import fileConfig
 
 basedir = path.abspath(path.dirname(__file__))
 load_dotenv(path.join(basedir, '.env'))
 
+
 class Config:
     """ Default Configuration Settings """
-    FLASK_ENV = 'development'
-    TESTING = True
     SECRET_KEY = environ.get('SECRET_KEY')
+
+    # Logging Configuration
+    log_dir = Path('logs/')
+
+    if path.exists(log_dir / 'out.log'):
+        remove(log_dir / 'out.log')
+
+    fileConfig(log_dir / 'logging.ini', disable_existing_loggers=False)
 
 
 class ProductionConfig(Config):
     FLASK_ENV = 'production'
     DEBUG = False
     TESTING = False
-    #SQLALCHEMY_DATABASE_URI = environ.get('PROD_DATABASE_URI')
+    #SQLALCHEMY_DATABASE_URI = environ.get('MYSQL_PRODUCTION_URI')
 
     # AWS ECS
     # TODO:- Implement AWS Credentials through dotenv
