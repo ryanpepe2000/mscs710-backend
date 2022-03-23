@@ -22,6 +22,7 @@ def init_app():
     """ Initialize the Matrix Backend """
     app = Flask(__name__, instance_relative_config=True)
 
+
     if app.config['ENV'] == 'production':
         app.config.from_object('config.ProductionConfig')
     elif app.config['ENV'] == 'testing':
@@ -32,25 +33,14 @@ def init_app():
     # Initalize Plugins
     db.init_app(app)
 
+    # Import these AFTER initializing the database to avoid circular imports
+    from app.main import main
+    from app.database import database
+
     # r.init_app(app)
 
-    @app.route('/')
-    def hello_world():
-        app.logger.debug("TESTING DEBUG LOG FUNCTIONALITY")
-        return "Hello, world!"
-
-    @app.route('/create-db')
-    def create_db():
-        from .models import User, UserRole, Role, Device, DeviceAssignment, CPUReport, MemoryReport, ProcessReport, DiskReport
-        # Test database stuff
-        db.create_all()
-        return "Success"
-
-    @app.route('/delete-db')
-    def delete_db():
-        from .models import User, UserRole, Role, Device, DeviceAssignment, CPUReport, MemoryReport, ProcessReport, DiskReport
-        # Test database stuff
-        db.drop_all()
-        return "Dropped"
+    # Register Blueprints
+    app.register_blueprint(main)
+    app.register_blueprint(database)
 
     return app
