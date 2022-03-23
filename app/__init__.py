@@ -48,8 +48,9 @@ def init_app():
 
     @app.route('/delete-db')
     def delete_db():
+        from .models import User, UserRole, Role, Device, DeviceAssignment, CPUReport, MemoryReport, ProcessReport, DiskReport
         # Test database stuff
         db.drop_all()
-        return "Success"
+        return "Dropped"
 
     return app
