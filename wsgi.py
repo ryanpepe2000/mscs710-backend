@@ -7,7 +7,7 @@ $ python3 wsgi.py
 @date 3.16.21
 @author Christian Saltarelli
 """
-from matrix_backend import init_app
+from app import init_app
 
 app = init_app()
 

@@ -8,11 +8,14 @@ application factory pattern.
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-#from flask_redis import FlaskRedis
+
+# from flask_redis import FlaskRedis
 
 # Global References
 db = SQLAlchemy()
-#r = FlaskRedis()
+
+
+# r = FlaskRedis()
 
 
 def init_app():
@@ -28,11 +31,25 @@ def init_app():
 
     # Initalize Plugins
     db.init_app(app)
+
     # r.init_app(app)
 
     @app.route('/')
     def hello_world():
         app.logger.debug("TESTING DEBUG LOG FUNCTIONALITY")
         return "Hello, world!"
+
+    @app.route('/create-db')
+    def create_db():
+        from .models import User, UserRole, Role, Device, DeviceAssignment, CPUReport, MemoryReport, ProcessReport, DiskReport
+        # Test database stuff
+        db.create_all()
+        return "Success"
+
+    @app.route('/delete-db')
+    def delete_db():
+        # Test database stuff
+        db.drop_all()
+        return "Success"
 
     return app
