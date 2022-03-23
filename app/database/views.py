@@ -1,5 +1,5 @@
 from . import database
-from .. import db
+from ..models import *
 
 
 @database.route('/create-db')
