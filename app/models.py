@@ -1,3 +1,10 @@
+"""
+ORM Configuration for the Tables used in the Matrix DB Schema. Organizes intermediate tables
+into separate classes with explicitly defined back-population variables.
+
+@date 3.23.21
+@author Ryan Pepe
+"""
 from datetime import datetime
 from . import db
 
