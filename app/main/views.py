@@ -1,8 +1,11 @@
-from wsgi import app
+import logging
+
 from . import main
+
+logger = logging.getLogger(__name__)
 
 
 @main.route('/')
 def hello_world():
-    app.logger.debug("TESTING DEBUG LOG FUNCTIONALITY")
+    logger.debug("TESTING DEBUG LOG FUNCTIONALITY")
     return "Hello, world!"
