@@ -30,10 +30,7 @@ def init_app():
     # Import these AFTER initializing the database to avoid circular imports
     from app.main import main
     from app.database import database
-<<<<<<< HEAD:matrix-server/app/__init__.py
     from app.agent import agent
-=======
->>>>>>> edb477daf21c3c5b49605f158a5e2c647bde9623:app/__init__.py
 
     # Register Blueprints
     app.register_blueprint(main)
