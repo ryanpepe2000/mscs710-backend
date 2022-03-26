@@ -5,9 +5,11 @@ into separate classes with explicitly defined back-population variables.
 @date 3.23.21
 @author Ryan Pepe
 """
+import logging
 from datetime import datetime
 from . import db
 
+logger = logging.getLogger(__name__)
 
 # Describing the Role Table
 class Role(db.Model):

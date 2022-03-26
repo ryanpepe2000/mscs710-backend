@@ -1,5 +1,5 @@
 """
-Configuration Settings for Matrix Backend. Switch between configurations by setting
+Configuration Settings for the Matrix Server. Switch between configurations by setting
 the ENV variable within the Flask config object in your CLI.
 
 MacOS
