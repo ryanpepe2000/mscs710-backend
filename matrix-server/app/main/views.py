@@ -1,5 +1,4 @@
 import logging
-
 from . import main
 
 logger = logging.getLogger(__name__)
