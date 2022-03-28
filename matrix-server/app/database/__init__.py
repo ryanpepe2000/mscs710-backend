@@ -1,0 +1,6 @@
+from flask import Blueprint
+
+# Creates a blueprint for all our code under main
+database = Blueprint('database', __name__)
+
+from app.database import views

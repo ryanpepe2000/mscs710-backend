@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+  matrix-server:
+    build: matrix-server
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV="development"
+    networks:
+      - matrix_network
+
+  proxy-server:
+    build: proxy-server
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - matrix_network
+
+networks:
+  matrix_network:
