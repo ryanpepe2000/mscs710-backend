@@ -20,21 +20,28 @@ matrix-backend
 |
 |___app
 |   |   __init__.py
-|   |   routes.py
 |   |   models.py
 |   |   parse.py
-|   |   queries.py
-|   |___util
-|   |   |   util.py
-|   |___agents
-|   |   |   mac_agent.py
-|   |   |   ubuntu_agent.py
-|   |   |   linux_agent.py
-|
+|   |___agent
+|   |   |   __init__.py
+|   |   |   views.py
+|   |___database
+|   |   |   __init__.py
+|   |   |   views.py
+|   |   |   queries.py
+|   |___main
+|   |   |   __init__.py
+|   |   |   views.py
+|___logs
+|   |   logging.ini
+|   |   out.log
+|   
 |   requirements.txt
+|  .env
 |   README.md
 |   .gitignore
 |   LICENSE
+|   wsgi.py
 ```
 
 ## Installation
@@ -52,13 +59,26 @@ $ git clone https://github.com/ryanpepe2000/mscs710-backend.git
 # Install Application Dependencies 
 $ pip install -r requirements.txt
 
-# Start Matrix Backend Server
-$ python3 run.py
+# Download Docker via this link if necessary: https://docs.docker.com/get-docker/
+# Build the docker files to prep for server start
+$ docker build
+# Compose Docker to launch web-server and proxy server
+$ docker compose up
 ```
+
 Windows (Local Development)
 ```bash
 Coming soon...
 ```
+
+##Build System
+Docker is the primary system which will be used to manage shipping and running of the application. 
+Once the command ```docker compose up``` is issued, both the web-server and proxy server will be running
+on the ports specified within the dockerfile. Currently, gunicorn is the web-server host that is utilized
+for the backend, but this can easily be configured in the dockerfile. Once the web-server is running, the socket
+specified in the dockerfile can be utilized by the device agent to POST data to the web-server through predefined
+routes for APIs.
+
 
 ## Testing
 ```bash
