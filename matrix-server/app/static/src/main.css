@@ -1,0 +1,11 @@
+/* Import Font Families */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400&display=swap');
+
+/* Tailwind Classes */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn-solid {
+    @apply p-1 text-white md:text-base sm:text-sm font-['roboto'] bg-matrix_blue-100 rounded hover:bg-matrix_blue-200 focus:outline-none transition duration-300
+}

@@ -15,7 +15,7 @@ db = SQLAlchemy()
 
 def init_app():
     """ Initialize the Matrix Server """
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True, static_folder='static')
 
     if app.config['ENV'] == 'production':
         app.config.from_object('config.ProductionConfig')

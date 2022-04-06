@@ -1,0 +1,14 @@
+{
+  "name": "matrix-server",
+  "version": "1.0.0",
+  "description": "Primary Server for Matrix Systems metric collection service.",
+  "main": "index.js",
+  "scripts": {
+    "build-css": "tailwindcss build -i app/static/src/main.css -o app/static/main.css"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tailwindcss": "^3.0.23"
+  }
+}
