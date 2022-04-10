@@ -1,15 +1,20 @@
-<div class="w-full h-16 bg-white shadow-lg">
+<div class="w-full h-16 bg-white shadow-lg z-0">
     <div class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
         <div class="p-4 flex flex-row items-center justify-between">
-            <button type="button" class="h-8 w-20 btn-solid">Login</button>
+            {% if current_user.is_authenticated %}
+                <button type="button" class="h-8 w-20 btn-solid-gray">Logout</button>
+                <p class="md:px-2 font-['roboto'] text-matrix_gray-100 text-sm">welcome, {{ current_user.first_name }}</p>
+            {% else %}
+                <button type="button" class="h-8 w-20 btn-solid-blue">Login</button>
+            {% endif %}
             <button class="md:hidden rounded-lg focus:outline-none focus:shadow-outline nav-button transition duration-300">
-                <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+                <svg fill="#4F4F4F" viewBox="0 0 20 20" class="w-6 h-6">
                     <path class="md:hidden menu-icon" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                     <path class="hidden exit-icon" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                 </svg>
             </button>
         </div>
-        <nav class="hidden md:flex flex-col flex-grow pb-4 md:pb-0 md:justify-end md:flex-row nav-menu">
+        <nav class="hidden md:flex flex-col flex-grow pb-4 md:pb-0 md:justify-end md:flex-row nav-menu z-10">
             <a href="#" class="py-4 px-5 my-0.5 text-matrix_blue-100 hover:text-matrix_blue-200 transition duration-300">About</a>
             <a href="#" class="py-4 px-5 my-0.5 text-matrix_blue-100 hover:text-matrix_blue-200 transition duration-300">Documentation</a>
             <a href="#" class="py-4 pl-5 my-0.5 text-matrix_blue-100 hover:text-matrix_blue-200 transition duration-300">Contact</a>

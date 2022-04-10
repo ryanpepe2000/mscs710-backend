@@ -1,6 +1,7 @@
 module.exports = {
   content: [
       './app/templates/*.html',
+      './app/templates/auth/*.html',
       './app/templates/components/*.html'
   ],
   theme: {
@@ -10,7 +11,10 @@ module.exports = {
           100: '#357DE9',
           200: '#104593'
         },
-        matrix_gray: '#4F4F4F'
+        matrix_gray: {
+          100: '#7A7A7A',
+          200: '#4F4F4F'
+        }
       },
       fontFamily: {
         matrix_body: ['Nunito']
