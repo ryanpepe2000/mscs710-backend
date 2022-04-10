@@ -6,6 +6,7 @@ from ..models import *
 def create_db():
     # Test database stuff
     db.create_all()
+    db.session.commit()
     return "Success"
 
 
@@ -13,4 +14,5 @@ def create_db():
 def delete_db():
     # Test database stuff
     db.drop_all()
+    db.session.commit()
     return "Dropped"

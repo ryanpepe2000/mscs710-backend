@@ -3,10 +3,9 @@
 Matrix Systems
 {% endblock %}
 {% block content %}
-    {% include 'components/matrix_nav.html' %}
     <div class="w-screen h-5/6 items-center justify-center flex flex-col">
         <img class="w-40 h-40 md:w-64 md:h-64" src="{{ url_for('static', filename='assets/matrix-primary.svg') }}" alt="Matrix Systems Logo">
-        <p class="pb-6 pt-10 text-lg text-matrix_gray font-matrix_body">welcome to matrix systems</p>
-        <button type="button" class="h-8 w-32 btn-solid">Get Started</button>
+        <p class="pb-6 pt-10 text-lg text-matrix_gray-100 font-matrix_body">welcome to matrix systems</p>
+        <button type="button" class="h-8 w-32 btn-solid-blue"><a href="{{ url_for('auth.register_page')}}">Get Started</a></button>
     </div>
 {% endblock %}
