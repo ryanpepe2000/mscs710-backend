@@ -50,7 +50,7 @@ class UserRole(db.Model):
 
     # Describe the columns
     role_id = db.Column(db.Integer(), db.ForeignKey('role.role_id'), primary_key=True)
-    user_id = db.Column(db.Integer(), db.ForeignKey('user.user_id'), primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), primary_key=True)
 
     # Foreign Key References
     # user = db.relationship('User', backref='user')
@@ -83,105 +83,105 @@ class User(db.Model, UserMixin):
         self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
 
 
-class DeviceAssignment(db.Model):
-    # Overriding the default name DeviceAssignment with device_assignment
-    __tablename__ = 'device_assignment'
-
-    # Describe the columns
-    device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), primary_key=True)
-    registration_date = db.Column(db.DateTime, index=True, default=datetime.utcnow())
-    is_registered = db.Column(db.Boolean, nullable=False, default=False)
-    is_active = db.Column(db.Boolean, nullable=False, default=False)
-
-    # Foreign Key References
-    user = db.relationship('User', backref='user')
-    device = db.relationship('Device', backref='device')
-
-
-class Device(db.Model):
-    # Overriding the default name "Device" with device
-    __tablename__ = 'device'
-
-    # Describing the columns
-    device_id = db.Column(db.Integer, primary_key=True)
-    mac_address = db.Column(db.NVARCHAR(length=50), nullable=True)
-    os_version = db.Column(db.NVARCHAR(length=50), nullable=True)
-    machine_name = db.Column(db.NVARCHAR(length=50), nullable=False)
-
-    # Back Reference to Role Model
-    # users = db.relationship('DeviceAssignment', backref='device', lazy='dynamic')
-
-    # Foreign Key Values
-    cpu_reports = db.relationship('CPUReport', backref='device')
-    disk_reports = db.relationship('MemoryReport', backref='device')
-    memory_reports = db.relationship('DiskReport', backref='device')
-    process_reports = db.relationship('ProcessReport', backref='device')
+# class DeviceAssignment(db.Model):
+#     # Overriding the default name DeviceAssignment with device_assignment
+#     __tablename__ = 'device_assignment'
+#
+#     # Describe the columns
+#     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+#     registration_date = db.Column(db.DateTime, index=True, default=datetime.utcnow())
+#     is_registered = db.Column(db.Boolean, nullable=False, default=False)
+#     is_active = db.Column(db.Boolean, nullable=False, default=False)
+#
+#     # Foreign Key References
+#     user = db.relationship('User', backref='user')
+#     device = db.relationship('Device', backref='device')
 
 
-class CPUReport(db.Model):
-    # Overriding the default name "Device" with device
-    __tablename__ = 'cpu_report'
-
-    # Column definition
-    cpu_id = db.Column(db.Integer, primary_key=True)
-    sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
-    device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
-    speed_curr = db.Column(db.Float, nullable=False)
-    speed_min = db.Column(db.Float, nullable=False)
-    speed_max = db.Column(db.Float, nullable=False)
-    device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'))
-
-    # Foreign Key Reference
-    device = db.relationship('Device', backref='cpu_reports')
-
-
-class MemoryReport(db.Model):
-    # Overriding the default name "MemoryReport" with memory_report
-    __tablename__ = 'memory_report'
-
-    # Column definition
-    memory_id = db.Column(db.Integer, primary_key=True)
-    sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
-    device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
-    memory_used = db.Column(db.Float, nullable=False)
-    memory_total = db.Column(db.Float, nullable=False)
-    device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'))
-
-    # Foreign Key Reference
-    device = db.relationship('Device', backref='memory_reports')
-
-
-class DiskReport(db.Model):
-    # Overriding the default name "Device" with device
-    __tablename__ = 'disk_report'
-
-    # Column definition
-    cpu_id = db.Column(db.Integer, primary_key=True)
-    sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
-    device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
-    disk_size = db.Column(db.Float, nullable=False)
-    disk_used = db.Column(db.Float, nullable=False)
-    disk_free = db.Column(db.Float, nullable=False)
-    device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'))
-
-    # Foreign Key Reference
-    device = db.relationship('Device', backref='disk_reports')
-
-
-class ProcessReport(db.Model):
-    # Overriding the default name "Device" with device
-    __tablename__ = 'process_report'
-
-    # Column definition
-    cpu_id = db.Column(db.Integer, primary_key=True)
-    sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
-    device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
-    cpu_usage = db.Column(db.Float, nullable=False)
-    mem_usage = db.Column(db.Float, nullable=False)
-    disk_usage = db.Column(db.Float, nullable=False)
-    thread_count = db.Column(db.Integer, nullable=False)
-    device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'))
-
-    # Foreign Key Reference
-    device = db.relationship('Device', backref='process_reports')
+# class Device(db.Model):
+#     # Overriding the default name "Device" with device
+#     __tablename__ = 'device'
+#
+#     # Describing the columns
+#     device_id = db.Column(db.Integer, primary_key=True)
+#     mac_address = db.Column(db.NVARCHAR(length=50), nullable=True)
+#     os_version = db.Column(db.NVARCHAR(length=50), nullable=True)
+#     machine_name = db.Column(db.NVARCHAR(length=50), nullable=False)
+#
+#     # Back Reference to Role Model
+#     # users = db.relationship('DeviceAssignment', backref='device', lazy='dynamic')
+#
+#     # Foreign Key Values
+#     cpu_reports = db.relationship('CPUReport', backref='device')
+#     disk_reports = db.relationship('MemoryReport', backref='device')
+#     memory_reports = db.relationship('DiskReport', backref='device')
+#     process_reports = db.relationship('ProcessReport', backref='device')
+#
+#
+# class CPUReport(db.Model):
+#     # Overriding the default name "Device" with device
+#     __tablename__ = 'cpu_report'
+#
+#     # Column definition
+#     cpu_id = db.Column(db.Integer, primary_key=True)
+#     sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
+#     device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
+#     speed_curr = db.Column(db.Float, nullable=False)
+#     speed_min = db.Column(db.Float, nullable=False)
+#     speed_max = db.Column(db.Float, nullable=False)
+#     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'))
+#
+#     # Foreign Key Reference
+#     device = db.relationship('Device', backref='cpu_reports')
+#
+#
+# class MemoryReport(db.Model):
+#     # Overriding the default name "MemoryReport" with memory_report
+#     __tablename__ = 'memory_report'
+#
+#     # Column definition
+#     memory_id = db.Column(db.Integer, primary_key=True)
+#     sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
+#     device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
+#     memory_used = db.Column(db.Float, nullable=False)
+#     memory_total = db.Column(db.Float, nullable=False)
+#     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'))
+#
+#     # Foreign Key Reference
+#     device = db.relationship('Device', backref='memory_reports')
+#
+#
+# class DiskReport(db.Model):
+#     # Overriding the default name "Device" with device
+#     __tablename__ = 'disk_report'
+#
+#     # Column definition
+#     cpu_id = db.Column(db.Integer, primary_key=True)
+#     sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
+#     device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
+#     disk_size = db.Column(db.Float, nullable=False)
+#     disk_used = db.Column(db.Float, nullable=False)
+#     disk_free = db.Column(db.Float, nullable=False)
+#     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'))
+#
+#     # Foreign Key Reference
+#     device = db.relationship('Device', backref='disk_reports')
+#
+#
+# class ProcessReport(db.Model):
+#     # Overriding the default name "Device" with device
+#     __tablename__ = 'process_report'
+#
+#     # Column definition
+#     cpu_id = db.Column(db.Integer, primary_key=True)
+#     sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
+#     device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
+#     cpu_usage = db.Column(db.Float, nullable=False)
+#     mem_usage = db.Column(db.Float, nullable=False)
+#     disk_usage = db.Column(db.Float, nullable=False)
+#     thread_count = db.Column(db.Integer, nullable=False)
+#     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'))
+#
+#     # Foreign Key Reference
+#     device = db.relationship('Device', backref='process_reports')

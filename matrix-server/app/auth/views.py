@@ -16,11 +16,6 @@ def register_page():
 
     # Registration Submit
     if register_form.validate_on_submit():
-        logger.info(f"Viewing First Name: { register_form.first_name.data }")
-        logger.info(f"Viewing Last Name: { register_form.last_name.data }")
-        logger.info(f"Viewing Email: { register_form.email.data }")
-        logger.info(f"Viewing Password: { register_form.password.data }")
-
         # Insert New User to Database
         new_user = User(first_name=register_form.first_name.data,
                         last_name=register_form.last_name.data,
@@ -45,7 +40,7 @@ def register_page():
         flash(f'Account created successfully! You are now logged in', category='success')
         # return redirect(url_for('main_page')), 201
         # return redirect(url_for('dashboard_page')), 201
-        return render_template('index.html'), 201;
+        return render_template('index.html'), 201
 
     if register_form.errors != {}:
         for err_msg in register_form.errors.values():
@@ -53,5 +48,14 @@ def register_page():
 
     logger.debug("Rendering register.html template")
     return render_template('auth/register.html', form=register_form), 200
+
+
+@auth.route('/logout', methods=['GET'])
+def logout_page():
+    logout_user()
+    flash("You have been logged out!", category='info')
+
+    return redirect(url_for('main.main_page')), 301
+
 
 

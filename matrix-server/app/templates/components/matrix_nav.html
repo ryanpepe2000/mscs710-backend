@@ -2,7 +2,7 @@
     <div class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
         <div class="p-4 flex flex-row items-center justify-between">
             {% if current_user.is_authenticated %}
-                <button type="button" class="h-8 w-20 btn-solid-gray">Logout</button>
+                <button type="button" class="h-8 w-20 btn-solid-gray"><a href="{{ url_for('auth.logout_page')}}">Logout</a></button>
                 <p class="md:px-2 font-['roboto'] text-matrix_gray-100 text-sm">welcome, {{ current_user.first_name }}</p>
             {% else %}
                 <button type="button" class="h-8 w-20 btn-solid-blue">Login</button>
