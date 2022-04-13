@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}
+Matrix - Login
+{% endblock %}
+{% block content %}
+<div class="z-0 w-screen h-5/6 flex items-center justify-center flex-col">
+    <!-- Login Form -->
+    <div class="flex flex-col w-screen mx-auto bg-white justify-center">
+        <h1 class="mx-auto mb-4 text-xl md:text-2xl text-matrix_gray-100 text-center">login</h1>
+
+        <form method="POST" class="m-auto p-4 w-full md:w-2/3 lg:w-1/3 text-center">
+            {{ form.hidden_tag() }}
+
+            <div class="flex flex-col justify-center bg-gray-50 m-4 px-4 py-8 rounded-lg">
+                {{ form.email(class="form-field mx-3.5", placeholder="Email") }}
+
+                {{ form.password(class="form-field mx-3.5", placeholder="Password") }}
+            </div>
+
+            <div class="flex flex-col items-center">
+                <p class="py-2 mt-5 text-sm text-matrix_gray-100">don't have an account?</p>
+                <a href="{{ url_for('auth.register_page') }}"><button type="button" class="h-8 w-20 btn-solid-gray-small">Register</button></a>
+            </div>
+
+            {{ form.submit(class="h-8 w-9/12 md:w-10/12 mx-auto my-14 btn-solid-blue") }}
+        </form>
+    </div>
+</div>
+{% endblock %}
