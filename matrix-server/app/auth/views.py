@@ -29,9 +29,9 @@ def register_page():
             logger.info("Committing new Registered User Account")
 
             # Attach Default Role to New User Record
-            # new_user_role = UserRole(role_id=1, user_id=new_user.user_id)
-            # db.session.add(new_user_role)
-            # db.session.commit()
+            new_user_role = UserRole(role_id=1, user_id=new_user.user_id)
+            db.session.add(new_user_role)
+            db.session.commit()
 
             # Update Login Manager for Authenticated User
             login_user(new_user)
