@@ -496,6 +496,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   z-index: 10;
 }
 
+.z-20{
+  z-index: 20;
+}
+
 .m-auto{
   margin: auto;
 }
@@ -509,16 +513,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: auto;
 }
 
-.my-14{
-  margin-top: 3.5rem;
-  margin-bottom: 3.5rem;
-}
-
-.mx-2{
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-}
-
 .mx-3\.5{
   margin-left: 0.875rem;
   margin-right: 0.875rem;
@@ -527,6 +521,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mx-3{
   margin-left: 0.75rem;
   margin-right: 0.75rem;
+}
+
+.my-14{
+  margin-top: 3.5rem;
+  margin-bottom: 3.5rem;
 }
 
 .my-0\.5{
@@ -541,10 +540,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .mr-4{
   margin-right: 1rem;
-}
-
-.mt-12{
-  margin-top: 3rem;
 }
 
 .mb-4{
@@ -587,18 +582,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 2rem;
 }
 
-.h-10{
-  height: 2.5rem;
-}
-
-.h-0\.5{
-  height: 0.125rem;
-}
-
-.h-0{
-  height: 0px;
-}
-
 .h-72{
   height: 18rem;
 }
@@ -627,16 +610,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 8rem;
 }
 
-.w-1\/2{
-  width: 50%;
+.w-full{
+  width: 100%;
 }
 
 .w-20{
   width: 5rem;
 }
 
-.w-full{
-  width: 100%;
+.w-9\/12{
+  width: 75%;
 }
 
 .w-11\/12{
@@ -671,31 +654,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   justify-content: space-between;
 }
 
-.rounded-full{
-  border-radius: 9999px;
-}
-
 .rounded-lg{
   border-radius: 0.5rem;
-}
-
-.border-2{
-  border-width: 2px;
-}
-
-.border-matrix_blue-100{
-  --tw-border-opacity: 1;
-  border-color: rgb(53 125 233 / var(--tw-border-opacity));
 }
 
 .bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-matrix_blue-100{
-  --tw-bg-opacity: 1;
-  background-color: rgb(53 125 233 / var(--tw-bg-opacity));
 }
 
 .bg-gray-50{
@@ -729,16 +694,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .py-2{
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-}
-
-.px-0\.5{
-  padding-left: 0.125rem;
-  padding-right: 0.125rem;
-}
-
-.px-0{
-  padding-left: 0px;
-  padding-right: 0px;
 }
 
 .py-4{
@@ -789,23 +744,23 @@ Ensure the default browser behavior of the `hidden` attribute.
   line-height: 1.75rem;
 }
 
-.text-2xl{
-  font-size: 1.5rem;
-  line-height: 2rem;
+.text-xl{
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 
 .font-bold{
   font-weight: 700;
 }
 
+.text-matrix_gray-200{
+  --tw-text-opacity: 1;
+  color: rgb(79 79 79 / var(--tw-text-opacity));
+}
+
 .text-matrix_gray-100{
   --tw-text-opacity: 1;
   color: rgb(122 122 122 / var(--tw-text-opacity));
-}
-
-.text-white{
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .text-matrix_blue-100{
@@ -917,6 +872,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(79 79 79 / var(--tw-bg-opacity));
   padding: 0.25rem;
   font-family: 'roboto';
+  font-size: 0.75rem;
+  line-height: 1rem;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
   transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
@@ -934,13 +891,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .btn-solid-gray-small:focus{
   outline: 2px solid transparent;
   outline-offset: 2px;
-}
-
-@media (min-width: 640px){
-  .btn-solid-gray-small{
-    font-size: 0.75rem;
-    line-height: 1rem;
-  }
 }
 
 @media (min-width: 768px){
@@ -1092,20 +1042,16 @@ Ensure the default browser behavior of the `hidden` attribute.
     height: 16rem;
   }
 
-  .md\:h-8{
-    height: 2rem;
-  }
-
   .md\:w-64{
     width: 16rem;
   }
 
-  .md\:w-8{
-    width: 2rem;
-  }
-
   .md\:w-2\/3{
     width: 66.666667%;
+  }
+
+  .md\:w-10\/12{
+    width: 83.333333%;
   }
 
   .md\:w-full{
@@ -1142,9 +1088,9 @@ Ensure the default browser behavior of the `hidden` attribute.
     padding-bottom: 0px;
   }
 
-  .md\:text-base{
-    font-size: 1rem;
-    line-height: 1.5rem;
+  .md\:text-2xl{
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 }
 

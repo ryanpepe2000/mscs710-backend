@@ -50,11 +50,7 @@ class UserRole(db.Model):
 
     # Describe the columns
     role_id = db.Column(db.Integer(), db.ForeignKey('role.role_id'), primary_key=True)
-    user_id = db.Column(db.Integer(), db.ForeignKey('user.user_id'), primary_key=True)
-
-    # Foreign Key References
-    # user = db.relationship('User', backref='user')
-    # role = db.relationship('Role', backref='role')
+    user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), primary_key=True)
 
 
 # Describing the User Table
@@ -70,8 +66,8 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(length=60), nullable=False)
 
     # Back Reference to Role Model
-    #roles = db.relationship('UserRole', backref='user', lazy='dynamic')
-    # devices = db.relationship('DeviceAssignment', backref='device', lazy='dynamic')
+    roles = db.relationship('UserRole', backref='user', lazy='dynamic')
+    devices = db.relationship('DeviceAssignment', backref='device', lazy='dynamic')
 
     # User Authentication Properties
     @property
@@ -82,6 +78,9 @@ class User(db.Model, UserMixin):
     def password(self, plain_text_password):
         self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
 
+    def validate_password(self, attempted_password):
+        return bcrypt.check_password_hash(self.password_hash, attempted_password)
+
 
 class DeviceAssignment(db.Model):
     # Overriding the default name DeviceAssignment with device_assignment
@@ -89,14 +88,14 @@ class DeviceAssignment(db.Model):
 
     # Describe the columns
     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     registration_date = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     is_registered = db.Column(db.Boolean, nullable=False, default=False)
     is_active = db.Column(db.Boolean, nullable=False, default=False)
 
     # Foreign Key References
-    user = db.relationship('User', backref='user')
-    device = db.relationship('Device', backref='device')
+    # user = db.relationship('User', backref='user')
+    # device = db.relationship('Device', backref='device')
 
 
 class Device(db.Model):
@@ -105,18 +104,12 @@ class Device(db.Model):
 
     # Describing the columns
     device_id = db.Column(db.Integer, primary_key=True)
-    mac_address = db.Column(db.NVARCHAR(length=50), nullable=True)
-    os_version = db.Column(db.NVARCHAR(length=50), nullable=True)
-    machine_name = db.Column(db.NVARCHAR(length=50), nullable=False)
+    mac_address = db.Column(db.String(length=50), nullable=True)
+    os_version = db.Column(db.String(length=50), nullable=True)
+    machine_name = db.Column(db.String(length=50), nullable=False)
 
-    # Back Reference to Role Model
-    # users = db.relationship('DeviceAssignment', backref='device', lazy='dynamic')
-
-    # Foreign Key Values
-    cpu_reports = db.relationship('CPUReport', backref='device')
-    disk_reports = db.relationship('MemoryReport', backref='device')
-    memory_reports = db.relationship('DiskReport', backref='device')
-    process_reports = db.relationship('ProcessReport', backref='device')
+    # Back Reference to User Model
+    users = db.relationship('DeviceAssignment', backref='user', lazy='dynamic')
 
 
 class CPUReport(db.Model):
