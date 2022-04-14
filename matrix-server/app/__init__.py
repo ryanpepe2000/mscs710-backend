@@ -40,12 +40,14 @@ def init_app():
     from app.database import database
     from app.agent import agent
     from app.auth import auth
+    from app.dash import dash
 
     # Register Blueprints
     app.register_blueprint(main)
     app.register_blueprint(database)
     app.register_blueprint(agent)
     app.register_blueprint(auth)
+    app.register_blueprint(dash)
 
     # Configure Authentication Plugins
     login_manager.login_view = "login_page"

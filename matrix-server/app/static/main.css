@@ -550,6 +550,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 1.25rem;
 }
 
+.mb-16{
+  margin-bottom: 4rem;
+}
+
 .block{
   display: block;
 }
@@ -584,6 +588,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .h-72{
   height: 18rem;
+}
+
+.h-full{
+  height: 100%;
 }
 
 .h-16{
@@ -622,8 +630,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 75%;
 }
 
-.w-11\/12{
-  width: 91.666667%;
+.w-5\/6{
+  width: 83.333333%;
+}
+
+.w-96{
+  width: 24rem;
+}
+
+.w-44{
+  width: 11rem;
 }
 
 .max-w-screen-xl{
@@ -666,6 +682,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-gray-50{
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.bg-gray-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
 .fill-current{
@@ -794,6 +815,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(53 125 233 / var(--tw-bg-opacity));
   padding: 0.25rem;
   font-family: 'roboto';
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
   transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
@@ -813,15 +836,45 @@ Ensure the default browser behavior of the `hidden` attribute.
   outline-offset: 2px;
 }
 
-@media (min-width: 640px){
+@media (min-width: 768px){
   .btn-solid-blue{
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 }
 
+.btn-outline-blue{
+  border-radius: 0.5rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(53 125 233 / var(--tw-border-opacity));
+  padding: 0.25rem;
+  font-family: 'roboto';
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(53 125 233 / var(--tw-text-opacity));
+  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.btn-outline-blue:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(53 125 233 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.btn-outline-blue:focus{
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
 @media (min-width: 768px){
-  .btn-solid-blue{
+  .btn-outline-blue{
     font-size: 1rem;
     line-height: 1.5rem;
   }
@@ -1030,6 +1083,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 @media (min-width: 768px){
+  .md\:m-12{
+    margin: 3rem;
+  }
+
   .md\:flex{
     display: flex;
   }
@@ -1052,10 +1109,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .md\:w-10\/12{
     width: 83.333333%;
-  }
-
-  .md\:w-full{
-    width: 100%;
   }
 
   .md\:flex-row{
@@ -1091,6 +1144,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   .md\:text-2xl{
     font-size: 1.5rem;
     line-height: 2rem;
+  }
+
+  .md\:text-base{
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 }
 
