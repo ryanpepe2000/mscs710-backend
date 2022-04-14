@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+Matrix - Dashboard
+{% endblock %}
+{% block content %}
+    <div class="z-0 w-screen h-5/6 flex items-center justify-center flex-col">
+        {% if devices != None %}
+            <!-- Dashboard Sub Menu -->
+            <div class="flex flex-row justify-between">
+                <!-- Dropdown Device List -->
+                <!-- Dashboard View Options -->
+            </div>
+            <!-- Dashboard -->
+            <div class="flex flex-col">
+                <!-- Main Chart for Chosen View Option -->
+                <div></div>
+
+                <!-- Sub Cards for Metric Data -->
+                <div class="flex flex-row">
+                    <!-- High-level Metrics -->
+                    <div></div>
+                    <!-- Process Metrics -->
+                    <div></div>
+                </div>
+            </div>
+        {% else %}
+            <!-- No Devices Registered -->
+            <div class="flex flex-col w-5/6 h-full m-6 md:m-12 items-center justify-center bg-gray-100 rounded-lg shadow-lg">
+                <h1 class="mb-2 text-center text-base md:text-xl text-matrix_gray-200 font-matrix_body font-bold">No Devices</h1>
+                <p class="w-96 mb-12 text-center text-sm md:text-base text-matrix_gray-100 font-['roboto']">get started by registering a device.</p>
+                <button type="button" class="h-10 w-44 btn-solid-blue"><span class="pr-2">&#43;</span>Register Device</button>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

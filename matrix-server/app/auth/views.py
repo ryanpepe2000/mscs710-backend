@@ -2,10 +2,9 @@ import logging
 from . import auth
 from . import forms
 from .. import db
-from ..models import User, UserRole
-from ..models import User
+from ..models import User, UserRole, Role
 from flask import render_template, redirect, url_for, flash, request
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user
 
 logger = logging.getLogger(__name__)
 
@@ -22,14 +21,18 @@ def register_page():
                             last_name=register_form.last_name.data,
                             email=register_form.email.data,
                             password=register_form.password.data)
-
             db.session.add(new_user)
             db.session.commit()
 
             logger.info("Committing new Registered User Account")
 
+            # TESTING PURPOSES
+            new_role = Role(role_name='Basic', role_desc='Basic User Role')
+            db.session.add(new_role)
+            db.session.commit()
+
             # Attach Default Role to New User Record
-            new_user_role = UserRole(role_id=1, user_id=new_user.user_id)
+            new_user_role = UserRole(role_id=new_role.role_id, user_id=new_user.id)
             db.session.add(new_user_role)
             db.session.commit()
 
@@ -39,9 +42,7 @@ def register_page():
             # Update User on Account Creation
             logging.info("Rendering dashboard.html template")
             flash(f'Account created successfully! You are now logged in.', category='success')
-            # return redirect(url_for('main_page')), 201
-            # return redirect(url_for('dashboard_page')), 201
-            return render_template('index.html'), 201
+            return redirect(url_for('dash.dashboard_page')), 301
 
         if register_form.errors != {}:
             for err_msg in register_form.errors.values():
@@ -61,9 +62,10 @@ def login_page():
 
             if attempted_user and attempted_user.validate_password(attempted_password=login_form.password.data):
                 login_user(attempted_user)
-                flash(f'You are now logged in.', category='success')
+
                 # Redirect to Dashboard Page
-                redirect(url_for('main.main_page')), 301
+                flash(f'You are now logged in.', category='success')
+                return redirect(url_for('dash.dashboard_page')), 301
             else:
                 flash(f'The email or password given was incorrect. Please try again.', category='danger')
 
@@ -73,9 +75,6 @@ def login_page():
 @auth.route('/logout', methods=['GET'])
 def logout_page():
     logout_user()
+
     flash(f'You have been logged out!', category='info')
-
     return redirect(url_for('main.main_page')), 301
-
-# TODO: TEST LOGIN FUNCTIONALITY AND FINISH UI DESIGN FOR LOGIN PAGE
-
