@@ -1,7 +1,5 @@
 import logging
-
 from flask import request
-
 from . import agent
 
 logger = logging.getLogger(__name__)

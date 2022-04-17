@@ -1,0 +1,53 @@
+/* Import Font Families */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400&display=swap');
+
+/* Tailwind Classes */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Matrix Components */
+.btn-solid-blue {
+    @apply p-1 text-white text-sm md:text-base font-['roboto'] bg-matrix_blue-100 rounded hover:bg-matrix_blue-200 focus:outline-none transition duration-300
+}
+
+.btn-outline-blue {
+    @apply p-1 text-matrix_blue-100 text-sm md:text-base font-['roboto'] border-matrix_blue-100 border rounded-lg hover:text-white hover:bg-matrix_blue-100 focus:outline-none transition duration-300
+}
+
+.btn-solid-gray {
+    @apply p-1 text-white md:text-base sm:text-sm font-['roboto'] bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
+}
+
+.btn-solid-gray-small {
+    @apply p-1 text-white text-xs md:text-sm font-['roboto'] bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
+}
+
+.form-field {
+    @apply p-1 my-2 md:my-3.5 bg-white rounded border border-gray-200 text-matrix_gray-200 text-xs md:text-sm font-matrix_body focus:outline-none focus:border-matrix_blue-100 transition duration-300
+}
+
+/* Flash Components */
+.alert-success {
+    @apply bg-white border-t-4 border-green-500 rounded-b text-matrix_gray-100 px-4 py-3 shadow-md
+}
+
+.alert-danger {
+    @apply bg-white border-t-4 border-red-500 rounded-b text-matrix_gray-100 px-4 py-3 shadow-md
+}
+
+.alert-info {
+    @apply bg-white border-t-4 border-gray-500 rounded-b text-matrix_gray-100 px-4 py-3 shadow-md
+}
+
+.icon-success {
+    @apply text-green-500
+}
+
+.icon-danger {
+    @apply text-red-500
+}
+
+.icon-info {
+    @apply text-gray-500
+}

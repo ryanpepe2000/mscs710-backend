@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href=" {{ url_for('static', filename='main.css') }} ">
+
+    <!-- Title -->
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/matrix-primary.svg') }}">
+</head>
+<body class="w-screen h-screen">
+    {% include 'components/matrix_nav.html' %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div id="flash-banner" class="absolute w-72 top-20 right-8 alert-{{ category }} hover:cursor-pointer transition duration-300" role="alert">
+                    <div class="flex">
+                        <div class="py-1"><svg class="fill-current h-6 w-6 icon-{{ category }} mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+                        <div>
+                            {% if category == 'danger' %}
+                                <p class="font-bold font-['roboto'] text-matrix_gray-200">Error</p>
+                            {% else %}
+                                <p class="font-bold font-['roboto']">{{ category|capitalize }}</p>
+                            {% endif %}
+                            <p class="text-sm text-matrix_body">{{ message }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}
+    {% endblock %}
+    <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
