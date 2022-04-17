@@ -135,7 +135,7 @@ class DiskReport(db.Model):
     __tablename__ = 'disk_report'
 
     # Column definition
-    cpu_id = db.Column(db.Integer, primary_key=True)
+    disk_id = db.Column(db.Integer, primary_key=True)
     sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
     device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
     disk_size = db.Column(db.Float, nullable=False)
@@ -152,7 +152,7 @@ class ProcessReport(db.Model):
     __tablename__ = 'process_report'
 
     # Column definition
-    cpu_id = db.Column(db.Integer, primary_key=True)
+    pid = db.Column(db.Integer, primary_key=True)
     sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
     device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
     cpu_usage = db.Column(db.Float, nullable=False)
