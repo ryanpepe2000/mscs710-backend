@@ -17,6 +17,7 @@ def dashboard_page():
 
         if len(user_devices) > 0:
             logger.info("I think we may have found some devices")
+            return "you have device", 303
         else:
             logger.info("Recognized No Devices!")
             return render_template('dash/dashboard.html', devices=None, metrics=None)

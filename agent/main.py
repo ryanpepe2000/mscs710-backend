@@ -6,21 +6,22 @@ import psutil
 # Constants
 file_path = 'credentials.txt'
 
-data = {}
-
 
 def main():
-    import time
-    start_time = time.time()
-    collect_metrics()
-    print("--- %s seconds ---" % (time.time() - start_time))
+    data = collect_metrics()
+    data['credentials'] = get_credentials()
+    send_metrics(data)
+
+
+def send_metrics(data):
+    r = requests.post('http://127.0.0.1:5000/api/send_data', json=json.dumps(data))
+    print(f"Status Code: {r.status_code}, Response: {r.text}")
 
 
 def collect_metrics():
+    data = {'cpu': (psutil.cpu_freq()._asdict()), 'memory': (psutil.virtual_memory()._asdict()),
+            'disk': (psutil.disk_usage('/')._asdict())}
     # Store relevant data in json object
-    data['cpu'] = (psutil.cpu_freq()._asdict())
-    data['memory'] = (psutil.virtual_memory()._asdict())
-    data['disk'] = (psutil.disk_usage('/')._asdict())
 
     process_data = {}
     for process in psutil.process_iter():
@@ -33,9 +34,7 @@ def collect_metrics():
             threads = process.num_threads()
             process_data[pid] = {'name': name, 'cpu': cpu, 'memory': mem, 'disk': disk, 'threads': threads}
     data['processes'] = process_data
-
-    r = requests.post('http://127.0.0.1:80/api/send_data', json=json.dumps(data))
-    print(f"Status Code: {r.status_code}, Response: {r.json()}")
+    return data
 
 
 def disk_usage(process):
@@ -46,15 +45,19 @@ def disk_usage(process):
     return disk_usage_process / disk_total * 100
 
 
-def validate_credentials():
+def get_credentials():
     try:
+        credentials = {}
         with open(file_path) as f:
-            for line in f:
-                print(line, end='')
+            line = [x.strip().split('=', 1) for x in f]
+            for key, val in line:
+                credentials[key] = val
+            return credentials
 
     except FileNotFoundError:
         print("Error: File was not found.")
         print("Read documentation to learn how to download credentials.txt")
+        return {}
 
 
 if __name__ == '__main__':

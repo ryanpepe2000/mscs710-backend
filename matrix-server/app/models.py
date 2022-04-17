@@ -103,7 +103,7 @@ class Device(db.Model):
     __tablename__ = 'device'
 
     # Describing the columns
-    device_id = db.Column(db.Integer, primary_key=True)
+    device_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     mac_address = db.Column(db.String(length=50), nullable=True)
     os_version = db.Column(db.String(length=50), nullable=True)
     machine_name = db.Column(db.String(length=50), nullable=False)
@@ -117,9 +117,9 @@ class CPUReport(db.Model):
     __tablename__ = 'cpu_report'
 
     # Column definition
-    cpu_id = db.Column(db.Integer, primary_key=True)
-    sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
-    device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
+    cpu_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    sys_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
+    device_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
     speed_curr = db.Column(db.Float, nullable=False)
     speed_min = db.Column(db.Float, nullable=False)
     speed_max = db.Column(db.Float, nullable=False)
@@ -134,9 +134,9 @@ class MemoryReport(db.Model):
     __tablename__ = 'memory_report'
 
     # Column definition
-    memory_id = db.Column(db.Integer, primary_key=True)
-    sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
-    device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
+    memory_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    sys_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
+    device_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
     memory_used = db.Column(db.Float, nullable=False)
     memory_total = db.Column(db.Float, nullable=False)
     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'))
@@ -150,9 +150,9 @@ class DiskReport(db.Model):
     __tablename__ = 'disk_report'
 
     # Column definition
-    disk_id = db.Column(db.Integer, primary_key=True)
-    sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
-    device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
+    disk_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    sys_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
+    device_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
     disk_size = db.Column(db.Float, nullable=False)
     disk_used = db.Column(db.Float, nullable=False)
     disk_free = db.Column(db.Float, nullable=False)
@@ -167,9 +167,11 @@ class ProcessReport(db.Model):
     __tablename__ = 'process_report'
 
     # Column definition
-    pid = db.Column(db.Integer, primary_key=True)
-    sys_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
-    device_time = db.Column(db.Integer, primary_key=True, default=datetime.utcnow())
+    proc_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    sys_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
+    device_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
+    pid = db.Column(db.Integer, nullable=False, autoincrement=True)
+    process_name = db.Column(db.String(length=100), nullable=False)
     cpu_usage = db.Column(db.Float, nullable=False)
     mem_usage = db.Column(db.Float, nullable=False)
     disk_usage = db.Column(db.Float, nullable=False)
