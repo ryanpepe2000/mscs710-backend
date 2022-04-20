@@ -13,8 +13,8 @@ from flask_login import LoginManager
 
 # Global References
 db = SQLAlchemy()
-bcrypt = None
-login_manager = None
+bcrypt = Bcrypt()
+login_manager = LoginManager()
 
 
 def init_app():
@@ -32,8 +32,8 @@ def init_app():
 
     # Initialize Plugins
     db.init_app(app)
-    bcrypt = Bcrypt(app)
-    login_manager = LoginManager(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
 
     # Import these AFTER initializing the database to avoid circular imports
     from app.main import main

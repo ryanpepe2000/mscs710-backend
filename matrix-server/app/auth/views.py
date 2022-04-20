@@ -27,7 +27,7 @@ def register_page():
             logger.info("Committing new Registered User Account")
 
             # TESTING PURPOSES
-            new_role = Role(role_name='Basic', role_desc='Basic User Role')
+            new_role = Role(role_name='User', role_desc='Basic User Role')
             db.session.add(new_role)
             db.session.commit()
 
