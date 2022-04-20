@@ -23,4 +23,5 @@ def dashboard_page():
 
     else:
         # User must log in to view the Dashboard
-        return redirect(url_for('auth.login_page'))
+        flash(f'Please login to view the dashboard.', category='info')
+        return redirect(url_for('auth.login_page')), 301

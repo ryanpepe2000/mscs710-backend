@@ -6,7 +6,7 @@ for PyTest Fixtures used across all test cases.
 @author Christian Saltarelli
 """
 import pytest
-from ..app import init_app, db, models
+from app import init_app, db, models
 
 
 @pytest.fixture(scope='module')
@@ -22,27 +22,40 @@ def test_client():
 
     yield testing_client
 
+    # Pop Application Context
     ctx.pop()
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='function')
 def init_database():
     # Create our Testing Database
     db.create_all()
 
     yield db
 
+    db.session.close()
+
     db.drop_all()
 
 
-@pytest.fixture(scope='module')
-def test_user():
-    user = models.User('test@gmail.com', 'testtesttest')
+@pytest.fixture(scope='function')
+def test_user(init_database):
+    user = models.User(first_name='John',
+                       last_name='Smith',
+                       email='test@gmail.com',
+                       password='testtesttest')
+    init_database.session.add(user)
+    init_database.session.commit()
+
     return user
 
 
-@pytest.fixture(scope='module')
-def test_device():
-    device = models.Device('test_device')
+@pytest.fixture(scope='function')
+def test_device(init_database):
+    device = models.Device(machine_name='test machine')
+    init_database.session.add(device)
+    init_database.session.commit()
+
     return device
+
 
