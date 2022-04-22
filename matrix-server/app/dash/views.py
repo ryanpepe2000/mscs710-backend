@@ -1,7 +1,7 @@
 import logging
 from . import dash
 from .. import db
-from ..models import User, DeviceAssignment, Device
+from ..models import User, Device
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user
 
@@ -13,7 +13,7 @@ def dashboard_page():
 
     if current_user.is_authenticated:
         # Check for Registered Devices (if any)
-        user_devices = DeviceAssignment.query.filter_by(user_id=current_user.id).all()
+        user_devices = Device.query.filter_by(user_id=current_user.id).all()
 
         if len(user_devices) > 0:
             logger.info("I think we may have found some devices")

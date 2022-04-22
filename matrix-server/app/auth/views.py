@@ -2,7 +2,7 @@ import logging
 from . import auth
 from . import forms
 from .. import db
-from ..models import User, UserRole, Role
+from ..models import User, UserRole, Role, Device
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user
 
@@ -34,6 +34,15 @@ def register_page():
             # Attach Default Role to New User Record
             new_user_role = UserRole(role_id=new_role.role_id, user_id=new_user.id)
             db.session.add(new_user_role)
+            db.session.commit()
+
+            # TESTING PURPOSES
+            new_device = Device(user_id=new_user.id,
+                                machine_name='test',
+                                mac_address='testtesttest',
+                                os_version='macos',
+                                is_active=True)
+            db.session.add(new_device)
             db.session.commit()
 
             # Update Login Manager for Authenticated User
