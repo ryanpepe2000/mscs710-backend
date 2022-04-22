@@ -3,17 +3,62 @@
 Matrix - Dashboard
 {% endblock %}
 {% block content %}
-    <div class="z-0 w-screen h-5/6 flex items-center justify-center flex-col">
+    <div class="z-0 max-w-screen-xl h-5/6 mx-auto flex flex-col">
         {% if devices != None %}
             <!-- Dashboard Sub Menu -->
-            <div class="flex flex-row justify-between">
-                <!-- Dropdown Device List -->
-                <!-- Dashboard View Options -->
+            <div class="flex flex-col w-full px-4 mx-auto md:px-6 lg:px-8 justify-between md:justify-start">
+                <!-- Device Dropdown List -->
+                <div class="ml-4 mt-10">
+                    <button type="button" class="p-4 inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100" id="device-menu-button">
+                        {{ current_device }}
+                        <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="hidden mt-4 ml-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" id="device-dropdown" aria-orientation="vertical" tabindex="-1">
+                    {% for device in devices %}
+                        {% if device.device_name == current_device %}
+                            <div class="py-1" role="none">
+                                <a href="{{ url_for('dash.dashboard_device_page', device_name=device.device_name) }}" class="text-gray-700 block px-4 py-2 text-sm font-semibold hover:text-matrix_blue-100 device-item transition duration-300" tabindex="-1">{{ device.device_name }}</a>
+                            </div>
+                        {% else %}
+                            <div class="py-1" role="none">
+                                <a href="{{ url_for('dash.dashboard_device_page', device_name=device.device_name) }}" class="text-gray-700 block px-4 py-2 text-sm hover:text-matrix_blue-100 device-item transition duration-300" tabindex="-1">{{ device.device_name }}</a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
             <!-- Dashboard -->
-            <div class="flex flex-col">
-                <!-- Main Chart for Chosen View Option -->
-                <div></div>
+            <div class="flex w-full px-4 mx-auto md:px-6 lg:px-8">
+                <!-- Dashboard Wrapper -->
+                <div class="flex flex-col w-full bg-gray-50 rounded-lg shadow-lg m-4 mt-10 p-8 justify-between">
+                    <h2 class="text-lg text-matrix_gray-200 font-['roboto'] pb-4">CPU Utilization</h2>
+                    <div class="flex flex-col md:flex-row">
+                        <!-- CPU Card -->
+                        {% with headers=["Consumption", "Threads", "Process Count"], values=["38%", "301", "28"] %}
+                            {% include 'components/metric_card.html' %}
+                        {% endwith %}
+                        <!-- CPU Chart -->
+                    </div>
+                    <h2 class="text-base text-matrix_gray-200 font-['roboto'] py-4">Memory Utilization</h2>
+                    <div class="flex flex-col md:flex-row">
+                        <!-- Memory Card -->
+                        {% with headers=["Used", "Available"], values=["35 Gb", "250 Gb"] %}
+                            {% include 'components/metric_card.html' %}
+                        {% endwith %}
+                        <!-- Memory Chart -->
+                    </div>
+                    <h2 class="text-base text-matrix_gray-200 font-['roboto'] py-4">Disk Utilization</h2>
+                    <div class="flex flex-col md:flex-row">
+                        <!-- Disk Card -->
+                        {% with headers=["Used", "Free", "Available"], values=["38%", "2%", "28"] %}
+                            {% include 'components/metric_card.html' %}
+                        {% endwith %}
+                        <!-- Disk Chart -->
+                    </div>
+                </div>
 
                 <!-- Sub Cards for Metric Data -->
                 <div class="flex flex-row">

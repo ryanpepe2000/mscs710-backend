@@ -1,0 +1,8 @@
+<div class="flex flex-col p-4 w-72 bg-white rounded-lg shadow-lg">
+    {% for i in range(headers|length) %}
+    <div class="flex flex-row justify-between py-2">
+        <p class="text-base text-matrix_gray-100 font-matrix_body">{{ headers[i] }}:</p>
+        <p class="text-base text-matrix_blue-100 font-matrix_body">{{ values[i] }}</p>
+    </div>
+    {% endfor %}
+</div>

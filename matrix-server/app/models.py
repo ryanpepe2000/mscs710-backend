@@ -105,7 +105,7 @@ class Device(db.Model):
     # Describing the columns
     device_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    machine_name = db.Column(db.String(length=25), nullable=False)
+    device_name = db.Column(db.String(length=25), nullable=False)
     mac_address = db.Column(db.String(length=17), nullable=True)
     os_version = db.Column(db.String(length=7), nullable=True)
     registration_date = db.Column(db.DateTime, index=True, default=datetime.utcnow())
@@ -113,6 +113,9 @@ class Device(db.Model):
 
     # Back Reference to User Model
     # users = db.relationship('DeviceAssignment', backref='user', lazy='dynamic')
+
+    def validate_owner(self, attempted_owner):
+        return attempted_owner.id == self.user_id
 
 
 class CPUReport(db.Model):
