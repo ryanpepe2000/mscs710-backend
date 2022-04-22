@@ -38,7 +38,23 @@ def register_page():
 
             # TESTING PURPOSES
             new_device = Device(user_id=new_user.id,
-                                machine_name='test',
+                                device_name='MacBook Pro',
+                                mac_address='testtesttest',
+                                os_version='macos',
+                                is_active=True)
+            db.session.add(new_device)
+            db.session.commit()
+
+            new_device = Device(user_id=new_user.id,
+                                device_name='MacBook Pro 2',
+                                mac_address='testtesttest',
+                                os_version='macos',
+                                is_active=True)
+            db.session.add(new_device)
+            db.session.commit()
+
+            new_device = Device(user_id=new_user.id,
+                                device_name='MacBook Pro 3',
                                 mac_address='testtesttest',
                                 os_version='macos',
                                 is_active=True)
