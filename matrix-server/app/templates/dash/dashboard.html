@@ -41,6 +41,9 @@ Matrix - Dashboard
                             {% include 'components/metric_card.html' %}
                         {% endwith %}
                         <!-- CPU Chart -->
+                        <div>
+                            <canvas class="cpu-chart"></canvas>
+                        </div>
                     </div>
                     <h2 class="text-base text-matrix_gray-200 font-['roboto'] py-4">Memory Utilization</h2>
                     <div class="flex flex-col md:flex-row">
@@ -49,6 +52,9 @@ Matrix - Dashboard
                             {% include 'components/metric_card.html' %}
                         {% endwith %}
                         <!-- Memory Chart -->
+                        <div>
+                            <canvas class="mem-chart"></canvas>
+                        </div>
                     </div>
                     <h2 class="text-base text-matrix_gray-200 font-['roboto'] py-4">Disk Utilization</h2>
                     <div class="flex flex-col md:flex-row">
@@ -57,6 +63,9 @@ Matrix - Dashboard
                             {% include 'components/metric_card.html' %}
                         {% endwith %}
                         <!-- Disk Chart -->
+                        <div>
+                            <canvas class="dsk-chart"></canvas>
+                        </div>
                     </div>
                 </div>
 

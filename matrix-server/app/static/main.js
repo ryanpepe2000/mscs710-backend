@@ -28,7 +28,6 @@ nav_mobile_btn.addEventListener('click', () => {
 // Dashboard Device Dropdown Behavior
 const dash_device_dropdown_btn = document.querySelector('#device-menu-button');
 const dash_device_dropdown_menu = document.querySelector('#device-dropdown');
-const dash_device_dropdown_items = document.querySelectorAll('.device-item');
 
 dash_device_dropdown_btn.addEventListener('click', () => {
     if (window.getComputedStyle(dash_device_dropdown_menu)['display'] === 'none') {
@@ -38,12 +37,6 @@ dash_device_dropdown_btn.addEventListener('click', () => {
         dash_device_dropdown_menu.classList.add('hidden');
     }
 })
-
-
-function updateDashForDevice(event, device_name) {
-    // TODO:- Make GET request to Dashboard passing device name /dashboard<device_name>
-
-}
 
 // Flash Message Display Behavior
 const flash_banner = document.querySelector('#flash-banner');
