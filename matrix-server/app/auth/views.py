@@ -2,7 +2,7 @@ import logging
 from . import auth
 from . import forms
 from .. import db
-from ..models import User, UserRole, Role
+from ..models import User, UserRole, Role, Device
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user
 
@@ -27,13 +27,38 @@ def register_page():
             logger.info("Committing new Registered User Account")
 
             # TESTING PURPOSES
-            new_role = Role(role_name='Basic', role_desc='Basic User Role')
+            new_role = Role(role_name='User', role_desc='Basic User Role')
             db.session.add(new_role)
             db.session.commit()
 
             # Attach Default Role to New User Record
             new_user_role = UserRole(role_id=new_role.role_id, user_id=new_user.id)
             db.session.add(new_user_role)
+            db.session.commit()
+
+            # TESTING PURPOSES
+            new_device = Device(user_id=new_user.id,
+                                device_name='MacBook Pro',
+                                mac_address='testtesttest',
+                                os_version='macos',
+                                is_active=True)
+            db.session.add(new_device)
+            db.session.commit()
+
+            new_device = Device(user_id=new_user.id,
+                                device_name='MacBook Pro 2',
+                                mac_address='testtesttest',
+                                os_version='macos',
+                                is_active=True)
+            db.session.add(new_device)
+            db.session.commit()
+
+            new_device = Device(user_id=new_user.id,
+                                device_name='MacBook Pro 3',
+                                mac_address='testtesttest',
+                                os_version='macos',
+                                is_active=True)
+            db.session.add(new_device)
             db.session.commit()
 
             # Update Login Manager for Authenticated User

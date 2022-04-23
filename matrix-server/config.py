@@ -11,7 +11,6 @@ set FLASK_ENV='development'
 @date 3.16.21
 @author Christian Saltarelli
 """
-import os
 from os import environ, path, remove
 from pathlib import Path
 from dotenv import load_dotenv
@@ -53,11 +52,13 @@ class DevelopmentConfig(Config):
     DEBUG = True
     TESTING = False
     SQLALCHEMY_DATABASE_URI = environ.get('MYSQL_DEVELOPMENT_URI')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLAlchemy_ECHO = True
 
 
 class TestingConfig(Config):
     FLASK_ENV = 'testing'
     DEBUG = True
-    TESTING = False
+    TESTING = True
+    BCRYPT_HASHING_ROUNDS = 4
+    WTF_CSRF_ENABLED = False
+    SQLALCHEMY_DATABASE_URI = environ.get('MYSQL_TESTING_URI')
