@@ -6,6 +6,8 @@ import psutil
 # Constants
 file_path = 'credentials.txt'
 
+DEBUG = True
+
 
 def main():
     data = collect_metrics()
@@ -23,16 +25,26 @@ def collect_metrics():
             'disk': (psutil.disk_usage('/')._asdict())}
     # Store relevant data in json object
 
+    if DEBUG:
+        print("cpu:", data['cpu'])
+        print("memory:", data['memory'])
+        print("disk:", data['disk'])
+
     process_data = {}
     for process in psutil.process_iter():
         if process.is_running():
             pid = process.pid
             name = process.name()
+            if DEBUG:
+                print("Process #" + pid.__str__() + ": " + name)
+                print("-------------------------")
             cpu = process.cpu_percent(interval=0.1)
             mem = process.memory_percent()
             disk = disk_usage(process)
             threads = process.num_threads()
             process_data[pid] = {'name': name, 'cpu': cpu, 'memory': mem, 'disk': disk, 'threads': threads}
+            if DEBUG:
+                print(process_data[pid])
     data['processes'] = process_data
     return data
 
