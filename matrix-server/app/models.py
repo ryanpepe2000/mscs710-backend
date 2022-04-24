@@ -67,7 +67,6 @@ class User(db.Model, UserMixin):
 
     # Back Reference to Role Model
     roles = db.relationship('UserRole', backref='user', lazy='dynamic')
-    # devices = db.relationship('DeviceAssignment', backref='device', lazy='dynamic')
     devices = db.relationship('Device', backref='user', lazy='dynamic')
 
     # User Authentication Properties
@@ -114,7 +113,7 @@ class CPUReport(db.Model):
     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), nullable=False)
 
     # Foreign Key Reference
-    device = db.relationship('Device', backref='cpu_reports')
+    device = db.relationship('Device', backref='cpu_report')
 
 
 class MemoryReport(db.Model):
@@ -130,7 +129,7 @@ class MemoryReport(db.Model):
     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), nullable=False)
 
     # Foreign Key Reference
-    device = db.relationship('Device', backref='memory_reports')
+    device = db.relationship('Device', backref='memory_report')
 
 
 class DiskReport(db.Model):
@@ -147,7 +146,7 @@ class DiskReport(db.Model):
     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), nullable=False)
 
     # Foreign Key Reference
-    device = db.relationship('Device', backref='disk_reports')
+    device = db.relationship('Device', backref='disk_report')
 
 
 class ProcessReport(db.Model):
@@ -167,4 +166,4 @@ class ProcessReport(db.Model):
     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), nullable=False)
 
     # Foreign Key Reference
-    device = db.relationship('Device', backref='process_reports')
+    device = db.relationship('Device', backref='process_report')

@@ -13,13 +13,14 @@ Matrix - Dashboard
 
             <div class="flex flex-col justify-center h-72 bg-gray-50 m-4 px-4 py-8 rounded-lg">
 
+                <p>Please provide a unique name that will help you to distinguish this new device from other devices.</p>
                 {{ form.device_name(class="form-field mx-3.5", placeholder="Device Name") }}
 
             </div>
 
             <div class="flex flex-col items-center">
                 <p class="py-2 mt-5 text-sm text-matrix_gray-100">no longer need to register a device?</p>
-                <a href="{{ url_for('dash.dashboard_page')}}"><button type="button" class="h-8 w-20 btn-solid-gray-small">Back to Dashboard</button></a>
+                <a href="{{ url_for('dash.dashboard_page')}}"><button type="button" class="h-8 w-20 btn-solid-gray-small">Dashboard</button></a>
             </div>
 
             {{ form.submit(class="h-8 w-9/12 md:w-10/12 mx-auto my-14 btn-solid-blue") }}
