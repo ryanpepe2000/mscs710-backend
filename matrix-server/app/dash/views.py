@@ -1,6 +1,7 @@
 import logging
 from . import dash
 from .. import db
+from . import forms
 from ..models import User, Device
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user
@@ -32,7 +33,7 @@ def dashboard_device_page(device_name):
         device_ref = Device.query.filter_by(device_name=device_name, user_id=current_user.id).first()
 
         # Validate Requested Device is Owned by current_user
-        if device_ref.is_active:
+        if device_ref is not None and device_ref.is_active:
             # Get Total Device List
             user_devices = Device.query.filter_by(user_id=current_user.id).all()
 
@@ -45,4 +46,28 @@ def dashboard_device_page(device_name):
     else:
         # User must log in to view the Dashboard
         flash(f'Please login to view the dashboard.', category='info')
+        return redirect(url_for('auth.login_page')), 301
+
+
+@dash.route('/dashboard/register-device', methods=['GET', 'POST'])
+def register_device():
+    register_form = forms.DeviceRegistrationForm()
+    if current_user.is_authenticated:
+        if request.method == "POST":
+            # Registration Submit
+            if register_form.validate_on_submit():
+                # Insert New User to Database
+                new_device = Device(device_name=register_form.device_name.data,
+                                    is_active=True,
+                                    user_id=current_user.id)
+                db.session.add(new_device)
+                db.session.commit()
+
+                logger.info("Committing new Registered User Device")
+
+                return redirect(url_for('dash.dashboard_page')), 301
+        return render_template('dash/register-device.html', form=register_form), 200
+    else:
+        # User must log in to register new devices
+        flash(f'Please login to register a new device.', category='info')
         return redirect(url_for('auth.login_page')), 301
