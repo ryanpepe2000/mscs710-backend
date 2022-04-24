@@ -68,7 +68,7 @@ class User(db.Model, UserMixin):
     # Back Reference to Role Model
     roles = db.relationship('UserRole', backref='user', lazy='dynamic')
     # devices = db.relationship('DeviceAssignment', backref='device', lazy='dynamic')
-    devices = db.relationship('Device', backref='device', lazy='dynamic')
+    devices = db.relationship('Device', backref='user', lazy='dynamic')
 
     # User Authentication Properties
     @property
@@ -83,45 +83,21 @@ class User(db.Model, UserMixin):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
 
 
-# class DeviceAssignment(db.Model):
-#     # Overriding the default name DeviceAssignment with device_assignment
-#     __tablename__ = 'device_assignment'
-#
-#     # Describe the columns
-#     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-#     registration_date = db.Column(db.DateTime, index=True, default=datetime.utcnow())
-#     is_registered = db.Column(db.Boolean, nullable=False, default=False)
-#     is_active = db.Column(db.Boolean, nullable=False, default=False)
-
-    # Foreign Key References
-    # user = db.relationship('User', backref='user')
-    # device = db.relationship('Device', backref='device')
-
-
 class Device(db.Model):
     # Overriding the default name "Device" with device
     __tablename__ = 'device'
 
     # Describing the columns
     device_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     device_name = db.Column(db.String(length=25), nullable=False)
     mac_address = db.Column(db.String(length=17), nullable=True)
     os_version = db.Column(db.String(length=7), nullable=True)
     registration_date = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     is_active = db.Column(db.Boolean, nullable=False, default=False)
-    mac_address = db.Column(db.String(length=50), nullable=True)
-    os_version = db.Column(db.String(length=50), nullable=True)
-    machine_name = db.Column(db.String(length=50), nullable=False)
-    user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
-
-    # Back Reference to User Model
-    # users = db.relationship('DeviceAssignment', backref='user', lazy='dynamic')
 
     def validate_owner(self, attempted_owner):
         return attempted_owner.id == self.user_id
-    user = db.relationship('User', backref='user')
 
 
 class CPUReport(db.Model):
