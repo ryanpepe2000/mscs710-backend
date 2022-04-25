@@ -25,25 +25,15 @@ nav_mobile_btn.addEventListener('click', () => {
     }
 });
 
-// Dashboard Device Dropdown Behavior
-const dash_device_dropdown_btn = document.querySelector('#device-menu-button');
-const dash_device_dropdown_menu = document.querySelector('#device-dropdown');
-
-dash_device_dropdown_btn.addEventListener('click', () => {
-    if (window.getComputedStyle(dash_device_dropdown_menu)['display'] === 'none') {
-        dash_device_dropdown_menu.classList.remove('hidden');
-        // TODO:- Implement JS POST Request w/ Device Name (Device Name will be the ID of the element
-    } else {
-        dash_device_dropdown_menu.classList.add('hidden');
-    }
-})
-
 // Flash Message Display Behavior
 const flash_banner = document.querySelector('#flash-banner');
 
-flash_banner.addEventListener('click', () => {
-   flash_banner.classList.add("hidden");
-});
+if (flash_banner != null) {
+    flash_banner.addEventListener('click', () => {
+        flash_banner.classList.add("hidden");
+    });
+}
+
 
 
 

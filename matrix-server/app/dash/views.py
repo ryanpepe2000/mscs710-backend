@@ -17,7 +17,24 @@ def dashboard_page():
 
         if len(user_devices) > 0:
             logger.info("I think we may have found some devices")
-            return render_template('dash/dashboard.html', devices=user_devices, current_device=user_devices[0].device_name, metrics=None)
+
+            # TESTING PURPOSES ONLY
+            data = [
+                ("01-01-2020", 1597),
+                ("02-01-2020", 1456),
+                ("03-01-2020", 1908),
+                ("04-01-2020", 896),
+                ("05-01-2020", 755),
+                ("06-01-2020", 453),
+                ("07-01-2020", 1100),
+                ("08-01-2020", 1235),
+                ("09-01-2020", 1478)
+            ]
+
+            labels = [row[0] for row in data]
+            values = [row[1] for row in data]
+
+            return render_template('dash/dashboard.html', devices=user_devices, current_device=user_devices[0].device_name, metrics=None, labels=labels, values=values), 200
         else:
             return render_template('dash/dashboard.html', devices=None, metrics=None), 200
 
