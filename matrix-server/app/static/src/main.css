@@ -36,6 +36,23 @@
     @apply bg-matrix_gray-100 w-2
 }
 
+/* Metric Process Data Components */
+.table-header {
+    @apply font-['roboto'] text-matrix_gray-200 text-sm font-medium px-2 py-4
+}
+
+.table-row {
+    @apply text-center bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100
+}
+
+.table-item {
+    @apply font-['roboto'] text-matrix_gray-200 text-sm font-light whitespace-nowrap px-2 py-4
+}
+
+.hidden-row {
+    @apply transition-all ease-in duration-300
+}
+
 /* Flash Components */
 .alert-success {
     @apply bg-white border-t-4 border-green-500 rounded-b text-matrix_gray-100 px-4 py-3 shadow-md

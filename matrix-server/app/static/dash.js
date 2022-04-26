@@ -58,6 +58,8 @@ function setChartData(title, headers, data) {
 //     }
 // };
 
+// TODO:- Finalize Progressive Line Animation
+
 function updateChartData() {
     const chart_data_ref = chart_data[current_index];
 
@@ -150,7 +152,7 @@ dash_carousel_next.addEventListener('click', () => {
 });
 
 function updateChartView() {
-    for(let i = 0; i < dash_charts.length; i++) {
+    for(let i = 0; i < dash_chart_indicators.length; i++) {
         if (i === current_index) {
             dash_chart_indicators[i].classList.add('active-indicator');
             dash_chart_indicators[i].classList.remove('inactive-indicator');
@@ -179,3 +181,27 @@ function updateChartTitle() {
             break;
     }
 }
+
+/* Metric Process Behavior */
+const process_view_wrapper = document.querySelector('.view-more-btn');
+const process_view_text = document.querySelector('button.view-btn');
+const process_view_arrow = document.querySelector('svg.view-arrow');
+const process_hidden_rows = document.querySelectorAll('.hidden-row');
+
+let rotation = 0;
+
+process_view_wrapper.addEventListener('click', () => {
+   for (let i = 0; i < process_hidden_rows.length; i++) {
+       process_hidden_rows[i].classList.toggle('hidden');
+   }
+
+   if (process_view_text.innerHTML.includes('view more')) {
+       process_view_text.innerHTML = 'view less';
+   } else {
+       process_view_text.innerHTML = 'view more';
+   }
+
+   rotation += 180;
+   process_view_arrow.setAttribute("transform", "rotate(" + rotation + ")");
+});
+
