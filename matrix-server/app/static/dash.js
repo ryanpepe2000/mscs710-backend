@@ -19,54 +19,18 @@ dash_device_dropdown_btn.addEventListener('click', () => {
 
 // Chart.js Population + Behavior
 const chart_data = [];
-// const chart_ctx = document.querySelector('.main-chart').getContext('2d');
-
 
 function setChartData(title, headers, data) {
     chart_data.push([title, headers, data]);
 }
 
-// const totalDuration = 10000;
-// const delayBetweenPoints = totalDuration / chart_data[0][0].length;
-// const previousY = (chart_ctx) => chart_ctx.index === 0 ? chart_ctx.chart.scales.y.getPixelForValue(100) : chart_ctx.chart.getDatasetMeta(chart_ctx.datasetIndex).data[chart_ctx.index - 1].getProps(['y'], true).y;
-// const chart_animation = {
-//     x: {
-//         type:'number',
-//         easing: 'linear',
-//         duration: delayBetweenPoints,
-//         from: NaN,
-//         delay(chart_ctx) {
-//             if (chart_ctx.type !== 'data' || chart_ctx.xStarted) {
-//                 return 0;
-//             }
-//             chart_ctx.xStarted = true;
-//             return chart_ctx.index * delayBetweenPoints;
-//         }
-//     },
-//     y: {
-//         type: 'number',
-//         easing: 'linear',
-//         duration: delayBetweenPoints,
-//         from: previousY,
-//         delay(chart_ctx) {
-//             if (chart_ctx.type !== 'data' || chart_ctx.yStarted) {
-//                 return 0;
-//             }
-//             chart_ctx.yStarted = true;
-//             return chart_ctx.index * delayBetweenPoints;
-//         }
-//     }
-// };
-
-// TODO:- Finalize Progressive Line Animation
-
 function updateChartData() {
     const chart_data_ref = chart_data[current_index];
 
     // Clear the current Chart Shown
-    let chart_status = Chart.getChart('chart');
-    if (chart_status !== undefined) {
-        chart_status.destroy();
+    let main_chart_status = Chart.getChart('chart');
+    if (main_chart_status !== undefined) {
+        main_chart_status.destroy();
     }
 
     // Update Chart w/ Respective Data

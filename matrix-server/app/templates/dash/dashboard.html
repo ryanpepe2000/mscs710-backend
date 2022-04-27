@@ -7,21 +7,25 @@ Matrix - Dashboard
         {% if devices != None %}
             <!-- Dashboard Sub Menu -->
             <div class="flex flex-col w-full px-4 mx-auto md:px-6 lg:px-8 justify-between md:justify-start">
-                <!-- Device Dropdown List -->
-                <div class="ml-4 mt-10">
-                    <button type="button" class="p-4 inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100" id="device-menu-button">
+                <div class="mt-10 flex items-center">
+                    <!-- Device Dropdown List -->
+                    <button type="button" class="h-10 inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100" id="device-menu-button">
                         {{ current_device }}
                         <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
                     </button>
-                    <a href="{{ url_for('dash.register_device') }}">
-                        <button type="button" class="p-4 inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100" id="register-device-button">
-                            Register A New Device
+                    <!-- Register Device CTA -->
+                    <a href="{{ url_for('dash.register_device') }}" class="h-10 w-10 mx-2 px-2 py-2 inline-flex justify-center rounded-md shadow-sm border-2 border-matrix_blue-100 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100 transition duration-300">
+                        <button type="button" class="" id="register-device-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-matrix_blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                            </svg>
                         </button>
                     </a>
                 </div>
-                <div class="hidden mt-4 ml-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" id="device-dropdown" aria-orientation="vertical" tabindex="-1">
+                <!-- Device Dropdown -->
+                <div class="hidden mt-4 w-56 absolute top-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" id="device-dropdown" aria-orientation="vertical" tabindex="-1">
                     {% for device in devices %}
                         {% if device.device_name == current_device %}
                             <div class="py-1" role="none">
@@ -38,7 +42,7 @@ Matrix - Dashboard
             <!-- Dashboard -->
             <div class="flex w-full px-4 mx-auto md:px-6 lg:px-8">
                 <!-- Dashboard Wrapper -->
-                <div class="flex flex-col w-full bg-gray-50 rounded-lg shadow-lg mx-4 my-10 p-8 justify-between">
+                <div class="flex flex-col w-full bg-gray-50 rounded-lg shadow-lg my-10 p-8 justify-between">
                     <h2 class="text-xl text-matrix_gray-200 font-['roboto'] pb-4">Dashboard</h2>
 
                     <!-- High-Level Metrics -->
@@ -62,33 +66,33 @@ Matrix - Dashboard
                     <div class="flex flex-row mt-4 justify-center">
                         <div id="chart-carousel" class="w-full relative">
                             <!-- Inner -->
-                            <div class="carousel-inner relative w-full overflow-hidden">
-                                <div class="carousel-item-0 relative w-full float-left px-10 transition duration-500">
+                            <div class="relative w-full overflow-hidden">
+                                <div class="relative w-full float-left px-5 md:px-10 transition duration-500">
                                     <!-- Primary Chart -->
-                                    <div class="p-4 m-4 bg-white rounded-lg shadow-lg">
+                                    <div class="p-2 m-2 md:p-4 md:m-4 bg-white rounded-lg shadow-lg overflow-x-scroll">
                                         <canvas id="chart" class="main-chart w-full" width="1000%" height="200%"></canvas>
                                     </div>
                                 </div>
                             </div>
-
                             <!-- Controls -->
-                            <button class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center m-6 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+                            <button class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center m-2 md:m-6 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
                                 type="button" data-bs-target="#chart-carousel" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
                                 <span class="text-matrix_gray-200">&#8592;</span>
                             </button>
-                            <button class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center m-6 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+                            <button class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center m-2 md:m-6 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
                                 type="button" data-bs-target="#chart-carousel" data-bs-slide="next">
                                 <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
                                 <span class="text-matrix_gray-200">&#8594;</span>
                           </button>
                         </div>
                     </div>
+
                     <!-- Carousel Indicators -->
                     <div class="carousel-indicators flex justify-center p-0 mx-4 h-4 z-20">
-                        <button class="carousel-indicator-0 active-indicator rounded-xl h-2 m-1 transition-all ease-in duration-300" data-bs-target="#chart-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button class="carousel-indicator-1 inactive-indicator rounded-xl h-2 m-1 transition-all ease-in duration-300" data-bs-target="#chart-carousel" data-bs-slide-to="1" aria-label="Slide 1"></button>
-                        <button class="carousel-indicator-2 inactive-indicator rounded-xl h-2 m-1 transition-all ease-in duration-300" data-bs-target="#chart-carousel" data-bs-slide-to="2" aria-label="Slide 1"></button>
+                        <button class="carousel-indicator-0 active-indicator rounded-xl h-2 m-1 cursor-default transition-all ease-in duration-300"></button>
+                        <button class="carousel-indicator-1 inactive-indicator rounded-xl h-2 m-1 cursor-default transition-all ease-in duration-300"></button>
+                        <button class="carousel-indicator-2 inactive-indicator rounded-xl h-2 m-1 cursor-default transition-all ease-in duration-300"></button>
                     </div>
 
                     <!-- Process Metrics -->
@@ -96,15 +100,15 @@ Matrix - Dashboard
                         <h2 class="text-lg text-matrix_gray-200 font-['roboto'] mt-8">Processes</h2>
                         <!-- Process Metrics -->
                         <div class="flex justify-center">
-                            <div class="overflow-hidden w-full m-4 bg-white rounded-lg shadow-xl">
+                            <div class="overflow-x-scroll md:overflow-hidden w-full m-4 p-1 bg-white rounded-lg shadow-xl">
                                 <table class="table-auto min-w-full">
                                     <thead class="bg-white border-b">
                                         <th scope="col" class="table-header">PID</th>
                                         <th scope="col" class="table-header">Process Name</th>
                                         <th scope="col" class="table-header">System Time</th>
-                                        <th scope="col" class="table-header">% CPU</th>
-                                        <th scope="col" class="table-header">% MEM</th>
-                                        <th scope="col" class="table-header">% DSK</th>
+                                        <th scope="col" class="table-header">%CPU</th>
+                                        <th scope="col" class="table-header">%MEM</th>
+                                        <th scope="col" class="table-header">%DSK</th>
                                         <th scope="col" class="table-header">Threads</th>
                                     </thead>
                                     <tbody>
@@ -206,10 +210,14 @@ Matrix - Dashboard
             </div>
         {% else %}
             <!-- No Devices Registered -->
-            <div class="flex flex-col w-5/6 h-full m-6 md:m-12 items-center justify-center bg-gray-100 rounded-lg shadow-lg">
-                <h1 class="mb-2 text-center text-base md:text-xl text-matrix_gray-200 font-matrix_body font-bold">No Devices</h1>
-                <p class="w-96 mb-12 text-center text-sm md:text-base text-matrix_gray-100 font-['roboto']">get started by registering a device.</p>
-                <button type="button" class="h-10 w-44 btn-solid-blue"><span class="pr-2">&#43;</span>Register Device</button>
+            <div class="flex flex-col h-full justify-center items-center">
+                <div class="flex flex-col w-5/6 h-full m-6 md:m-12 items-center justify-center bg-gray-100 rounded-lg shadow-lg">
+                    <h1 class="mb-2 text-center text-base md:text-xl text-matrix_gray-200 font-matrix_body font-bold">No Devices</h1>
+                    <p class="w-96 mb-12 text-center text-sm md:text-base text-matrix_gray-100 font-['roboto']">get started by registering a device.</p>
+                    <a href="{{ url_for('dash.register_device') }}">
+                        <button type="button" class="h-10 w-44 btn-solid-blue"><span class="pr-2">&#43;</span>Register Device</button>
+                    </a>
+                </div>
             </div>
         {% endif %}
     </div>

@@ -15,13 +15,15 @@ nav_mobile_btn.addEventListener('click', () => {
     if (window.getComputedStyle(nav_mobile_menu)['display'] === 'none') {
         nav_mobile_menu_icon.classList.add("hidden");
         nav_mobile_exit_icon.classList.remove('hidden');
+
         nav_mobile_menu.classList.toggle('hidden');
-        nav_mobile_menu.classList.add('flex', 'bg-white', 'border', 'border-matrix_blue-100', 'shadow-lg');
+        nav_mobile_menu.classList.add('flex', 'mobile-menu');
     } else {
         nav_mobile_menu_icon.classList.remove('hidden');
         nav_mobile_exit_icon.classList.add('hidden');
+
         nav_mobile_menu.classList.toggle('hidden');
-        nav_mobile_menu.classList.remove('bg-white', 'border', 'border-matrix_blue-100', 'shadow-lg');
+        nav_mobile_menu.classList.remove('flex', 'mobile-menu');
     }
 });
 

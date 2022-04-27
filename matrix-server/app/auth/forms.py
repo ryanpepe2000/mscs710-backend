@@ -20,7 +20,7 @@ class RegistrationForm(FlaskForm):
         email = User.query.filter_by(email=email_to_check.data).first()
 
         if email:
-            raise ValidationError('Email is already in use. Please try a different email address')
+            raise ValidationError(f'Email is already in use. Please try a different email address')
 
     # Registration Fields
     first_name = StringField(label='First name', validators=[DataRequired()])

@@ -2,7 +2,8 @@ import logging
 from . import auth
 from . import forms
 from .. import db
-from ..models import User, UserRole, Role, Device
+from .. import util
+from ..models import User, UserRole, Role
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user
 
@@ -24,7 +25,7 @@ def register_page():
             db.session.add(new_user)
             db.session.commit()
 
-            logger.info("Committing new Registered User Account")
+            logger.info(f'Committing new Registered User Account: {new_user.email}')
 
             # TESTING PURPOSES
             new_role = Role(role_name='User', role_desc='Basic User Role')
@@ -34,31 +35,6 @@ def register_page():
             # Attach Default Role to New User Record
             new_user_role = UserRole(role_id=new_role.role_id, user_id=new_user.id)
             db.session.add(new_user_role)
-            db.session.commit()
-
-            # TESTING PURPOSES
-            new_device = Device(user_id=new_user.id,
-                                device_name='MacBook Pro',
-                                mac_address='testtesttest',
-                                os_version='macos',
-                                is_active=True)
-            db.session.add(new_device)
-            db.session.commit()
-
-            new_device = Device(user_id=new_user.id,
-                                device_name='MacBook Pro 2',
-                                mac_address='testtesttest',
-                                os_version='macos',
-                                is_active=True)
-            db.session.add(new_device)
-            db.session.commit()
-
-            new_device = Device(user_id=new_user.id,
-                                device_name='MacBook Pro 3',
-                                mac_address='testtesttest',
-                                os_version='macos',
-                                is_active=True)
-            db.session.add(new_device)
             db.session.commit()
 
             # Update Login Manager for Authenticated User
@@ -71,7 +47,7 @@ def register_page():
 
         if register_form.errors != {}:
             for err_msg in register_form.errors.values():
-                flash(f'{err_msg}', category='danger')
+                flash(f'{util.clean_error_msg(err_msg[0])}', category='danger')
 
     logger.debug("Rendering register.html template")
     return render_template('auth/register.html', form=register_form), 200
@@ -101,5 +77,5 @@ def login_page():
 def logout_page():
     logout_user()
 
-    flash(f'You have been logged out!', category='info')
+    flash(f'You have been logged out.', category='info')
     return redirect(url_for('main.main_page')), 301

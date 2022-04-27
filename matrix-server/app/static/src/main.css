@@ -38,7 +38,7 @@
 
 /* Metric Process Data Components */
 .table-header {
-    @apply font-['roboto'] text-matrix_gray-200 text-sm font-medium px-2 py-4
+    @apply font-['roboto'] text-matrix_gray-200 text-xs md:text-sm font-medium px-1 md:px-2 py-4
 }
 
 .table-row {
@@ -51,6 +51,11 @@
 
 .hidden-row {
     @apply transition-all ease-in duration-300
+}
+
+/* Mobile Menu Components */
+.mobile-menu {
+    @apply w-screen h-screen bg-white shadow-lg -ml-3.5 border-t border-gray-100
 }
 
 /* Flash Components */
