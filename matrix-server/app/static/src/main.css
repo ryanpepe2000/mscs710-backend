@@ -27,6 +27,37 @@
     @apply p-1 my-2 md:my-3.5 bg-white rounded border border-gray-200 text-matrix_gray-200 text-xs md:text-sm font-matrix_body focus:outline-none focus:border-matrix_blue-100 transition duration-300
 }
 
+/* Metric Chart Carousel Components */
+.active-indicator {
+    @apply bg-matrix_gray-200 w-6
+}
+
+.inactive-indicator {
+    @apply bg-matrix_gray-100 w-2
+}
+
+/* Metric Process Data Components */
+.table-header {
+    @apply font-['roboto'] text-matrix_gray-200 text-xs md:text-sm font-medium px-1 md:px-2 py-4
+}
+
+.table-row {
+    @apply text-center bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100
+}
+
+.table-item {
+    @apply font-['roboto'] text-matrix_gray-200 text-sm font-light whitespace-nowrap px-2 py-4
+}
+
+.hidden-row {
+    @apply transition-all ease-in duration-300
+}
+
+/* Mobile Menu Components */
+.mobile-menu {
+    @apply w-screen h-screen bg-white shadow-lg -ml-3.5 border-t border-gray-100
+}
+
 /* Flash Components */
 .alert-success {
     @apply bg-white border-t-4 border-green-500 rounded-b text-matrix_gray-100 px-4 py-3 shadow-md

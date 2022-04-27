@@ -2,7 +2,8 @@ import logging
 from . import dash
 from .. import db
 from . import forms
-from ..models import User, Device
+from .. import util
+from ..models import Device
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user
 
@@ -16,8 +17,24 @@ def dashboard_page():
         user_devices = Device.query.filter_by(user_id=current_user.id).all()
 
         if len(user_devices) > 0:
-            logger.info("I think we may have found some devices")
-            return render_template('dash/dashboard.html', devices=user_devices, current_device=user_devices[0].device_name, metrics=None)
+            # TODO:- Implement Collect Metrics for Device 0 of user_devices
+            # TESTING PURPOSES ONLY
+            data = [
+                ("01-01-2020", 1597),
+                ("02-01-2020", 1456),
+                ("03-01-2020", 1908),
+                ("04-01-2020", 896),
+                ("05-01-2020", 755),
+                ("06-01-2020", 453),
+                ("07-01-2020", 1100),
+                ("08-01-2020", 1235),
+                ("09-01-2020", 1478)
+            ]
+
+            labels = [row[0] for row in data]
+            values = [row[1] for row in data]
+
+            return render_template('dash/dashboard.html', devices=user_devices, current_device=user_devices[0].device_name, metrics=None, labels=labels, values=values), 200
         else:
             return render_template('dash/dashboard.html', devices=None, metrics=None), 200
 
@@ -52,11 +69,12 @@ def dashboard_device_page(device_name):
 @dash.route('/dashboard/register-device', methods=['GET', 'POST'])
 def register_device():
     register_form = forms.DeviceRegistrationForm()
+
     if current_user.is_authenticated:
         if request.method == "POST":
             # Registration Submit
             if register_form.validate_on_submit():
-                # Insert New User to Database
+                # Insert New Device to Database
                 new_device = Device(device_name=register_form.device_name.data,
                                     is_active=True,
                                     user_id=current_user.id)
@@ -64,10 +82,14 @@ def register_device():
                 db.session.commit()
 
                 logger.info("Committing new Registered User Device")
-
                 return redirect(url_for('dash.dashboard_page')), 301
+
+            if register_form.errors != {}:
+                for err_msg in register_form.errors.values():
+                    flash(f'{util.clean_error_msg(err_msg[0])}', category='danger')
+
         return render_template('dash/register-device.html', form=register_form), 200
-    else:
-        # User must log in to register new devices
-        flash(f'Please login to register a new device.', category='info')
-        return redirect(url_for('auth.login_page')), 301
+
+    # User must log in to register new devices
+    flash(f'Please login to register a new device.', category='info')
+    return redirect(url_for('auth.login_page')), 301
