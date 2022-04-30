@@ -15,22 +15,27 @@ nav_mobile_btn.addEventListener('click', () => {
     if (window.getComputedStyle(nav_mobile_menu)['display'] === 'none') {
         nav_mobile_menu_icon.classList.add("hidden");
         nav_mobile_exit_icon.classList.remove('hidden');
+
         nav_mobile_menu.classList.toggle('hidden');
-        nav_mobile_menu.classList.add('flex', 'bg-white', 'border', 'border-matrix_blue-100', 'shadow-lg');
+        nav_mobile_menu.classList.add('flex', 'mobile-menu');
     } else {
         nav_mobile_menu_icon.classList.remove('hidden');
         nav_mobile_exit_icon.classList.add('hidden');
+
         nav_mobile_menu.classList.toggle('hidden');
-        nav_mobile_menu.classList.remove('bg-white', 'border', 'border-matrix_blue-100', 'shadow-lg');
+        nav_mobile_menu.classList.remove('flex', 'mobile-menu');
     }
 });
 
 // Flash Message Display Behavior
 const flash_banner = document.querySelector('#flash-banner');
 
-flash_banner.addEventListener('click', () => {
-   flash_banner.classList.add("hidden");
-});
+if (flash_banner != null) {
+    flash_banner.addEventListener('click', () => {
+        flash_banner.classList.add("hidden");
+    });
+}
+
 
 
 

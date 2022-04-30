@@ -2,6 +2,7 @@ import logging
 from . import auth
 from . import forms
 from .. import db
+from .. import util
 from ..models import User, UserRole, Role
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user
@@ -24,10 +25,10 @@ def register_page():
             db.session.add(new_user)
             db.session.commit()
 
-            logger.info("Committing new Registered User Account")
+            logger.info(f'Committing new Registered User Account: {new_user.email}')
 
             # TESTING PURPOSES
-            new_role = Role(role_name='Basic', role_desc='Basic User Role')
+            new_role = Role(role_name='User', role_desc='Basic User Role')
             db.session.add(new_role)
             db.session.commit()
 
@@ -46,7 +47,7 @@ def register_page():
 
         if register_form.errors != {}:
             for err_msg in register_form.errors.values():
-                flash(f'{err_msg}', category='danger')
+                flash(f'{util.clean_error_msg(err_msg[0])}', category='danger')
 
     logger.debug("Rendering register.html template")
     return render_template('auth/register.html', form=register_form), 200
@@ -76,5 +77,5 @@ def login_page():
 def logout_page():
     logout_user()
 
-    flash(f'You have been logged out!', category='info')
+    flash(f'You have been logged out.', category='info')
     return redirect(url_for('main.main_page')), 301
