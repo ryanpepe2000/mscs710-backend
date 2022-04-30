@@ -6,7 +6,7 @@ application factory pattern.
 @author Christian Saltarelli
 """
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
@@ -49,8 +49,15 @@ def init_app():
     app.register_blueprint(auth)
     app.register_blueprint(dash)
 
+    # Register Error Handling Routes
+    app.register_error_handler(404, page_not_found)
+
     # Configure Authentication Plugins
     login_manager.login_view = "login_page"
     login_manager.login_message_category = "info"
 
     return app
+
+
+def page_not_found(error):
+    return render_template('404.html'), 404
