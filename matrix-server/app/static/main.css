@@ -613,6 +613,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 1.25rem;
 }
 
+.mb-10{
+  margin-bottom: 2.5rem;
+}
+
 .mt-10{
   margin-top: 2.5rem;
 }
@@ -793,6 +797,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 11rem;
 }
 
+.w-8{
+  width: 2rem;
+}
+
 .min-w-full{
   min-width: 100%;
 }
@@ -888,6 +896,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-bottom-width: 1px;
 }
 
+.border-t{
+  border-top-width: 1px;
+}
+
 .border-gray-300{
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
@@ -974,6 +986,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .px-5{
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+
+.py-6{
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .py-4{
@@ -1076,6 +1093,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-matrix_blue-200{
   --tw-text-opacity: 1;
   color: rgb(16 69 147 / var(--tw-text-opacity));
+}
+
+.text-gray-500{
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
 .text-matrix_blue-100{
@@ -1526,6 +1548,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(53 125 233 / var(--tw-text-opacity));
 }
 
+.hover\:text-gray-900:hover{
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
 .hover\:text-matrix_blue-200:hover{
   --tw-text-opacity: 1;
   color: rgb(16 69 147 / var(--tw-text-opacity));
@@ -1568,6 +1595,13 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .focus\:ring-offset-gray-100:focus{
   --tw-ring-offset-color: #f3f4f6;
+}
+
+@media (prefers-color-scheme: dark){
+  .dark\:hover\:text-white:hover{
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+  }
 }
 
 @media (min-width: 768px){
@@ -1649,11 +1683,6 @@ Ensure the default browser behavior of the `hidden` attribute.
     padding-right: 2.5rem;
   }
 
-  .md\:px-2{
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-
   .md\:pb-0{
     padding-bottom: 0px;
   }
@@ -1671,6 +1700,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   .md\:text-base{
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+
+  .md\:text-sm{
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 }
 

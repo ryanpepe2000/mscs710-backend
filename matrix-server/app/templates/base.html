@@ -18,7 +18,7 @@
     </title>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/matrix-primary.svg') }}">
 </head>
-<body class="w-screen h-screen">
+<body id="content" class="w-screen h-screen">
     {% include 'components/matrix_nav.html' %}
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
