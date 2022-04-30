@@ -42,7 +42,7 @@ def collect_metrics():
             disk = disk_usage(process)
             threads = process.num_threads()
             process_data[pid] = {'name': name, 'cpu': cpu, 'memory': mem, 'disk': disk, 'threads': threads}
-        except NoSuchProcess:
+        except psutil.NoSuchProcess:
             continue
     data['processes'] = process_data
     return data
