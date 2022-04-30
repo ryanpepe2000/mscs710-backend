@@ -1,12 +1,13 @@
 import json
 import requests
+import time
 
 import psutil
 
 # Constants
-file_path = 'credentials.txt'
+file_path = r'credentials.txt'
 
-DEBUG = True
+DEBUG = False
 
 
 def main():
@@ -14,37 +15,35 @@ def main():
     data['credentials'] = get_credentials()
     send_metrics(data)
 
-
-def send_metrics(data):
-    r = requests.post('http://127.0.0.1:5000/api/send_data', json=json.dumps(data))
-    print(f"Status Code: {r.status_code}, Response: {r.text}")
-
-
 def collect_metrics():
+    # Store relevant data in json object
     data = {'cpu': (psutil.cpu_freq()._asdict()), 'memory': (psutil.virtual_memory()._asdict()),
             'disk': (psutil.disk_usage('/')._asdict())}
-    # Store relevant data in json object
 
     if DEBUG:
         print("cpu:", data['cpu'])
         print("memory:", data['memory'])
         print("disk:", data['disk'])
 
+    processes = []
     process_data = {}
+
     for process in psutil.process_iter():
         if process.is_running():
+            process.cpu_percent()
+            processes.append(process)
+    time.sleep(1)
+    for process in processes:
+        try:
             pid = process.pid
             name = process.name()
-            if DEBUG:
-                print("Process #" + pid.__str__() + ": " + name)
-                print("-------------------------")
-            cpu = process.cpu_percent(interval=0.1)
+            cpu = process.cpu_percent()
             mem = process.memory_percent()
             disk = disk_usage(process)
             threads = process.num_threads()
             process_data[pid] = {'name': name, 'cpu': cpu, 'memory': mem, 'disk': disk, 'threads': threads}
-            if DEBUG:
-                print(process_data[pid])
+        except NoSuchProcess:
+            continue
     data['processes'] = process_data
     return data
 
@@ -67,10 +66,20 @@ def get_credentials():
             return credentials
 
     except FileNotFoundError:
-        print("Error: File was not found.")
-        print("Read documentation to learn how to download credentials.txt")
+        print("Error: File was not found. Attempting to create...")
+        try:
+            # create file
+            with open(file_path, 'x') as f:
+                f.write("device_name=\nemail=\npassword=")
+                print("Please enter credentials and try again.")
+        except:
+            print("Something went wrong. Please download credentials.txt")
+            return {}
         return {}
 
+def send_metrics(data):
+    r = requests.post('http://127.0.0.1:5000/api/send_data', json=json.dumps(data))
+    print(f"Status Code: {r.status_code}, Response: {r.text}")
 
 if __name__ == '__main__':
     main()
