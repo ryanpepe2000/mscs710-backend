@@ -1,6 +1,6 @@
 import json
 import logging
-from flask import request
+from flask import request, send_file
 from . import agent
 from ..models import *
 
@@ -11,11 +11,10 @@ logger = logging.getLogger(__name__)
 def post_data():
     data = json.loads(request.get_json())
     credentials = data['credentials']
-    print(data)
 
-    if credentials['email'] is not None and credentials['password'] is not None and credentials['device_id'] is not None:
+    if credentials['email'] is not None and credentials['password'] is not None and credentials['device_name'] is not None:
         user = User.query.filter_by(email=credentials['email']).first()
-        device = Device.query.filter_by(device_id=credentials['device_id'], user_id=user.id).first()
+        device = Device.query.filter_by(device_name=credentials['device_name'], user_id=user.id).first()
         if user and user.validate_password(attempted_password=credentials['password']) and device:
             # CPU Report
             cpu_data = data['cpu']
@@ -62,3 +61,12 @@ def post_data():
     else:
         logger.debug("Credentials have not been provided.")
         return 'Missing credentials', 400
+
+
+@agent.route("/api/download-agent")
+def download_agent(path='static/agent/agent.zip'):
+    try:
+        return send_file(path, as_attachment=True)
+    except Exception as e:
+        logger.debug(e)
+        return 'An error has occured while downloading your file', 404
