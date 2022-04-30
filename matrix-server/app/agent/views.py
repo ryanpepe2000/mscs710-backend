@@ -14,7 +14,11 @@ def post_data():
 
     if credentials['email'] is not None and credentials['password'] is not None and credentials['device_name'] is not None:
         user = User.query.filter_by(email=credentials['email']).first()
+        if user is None:
+            return "Credentials could not be verified", 400
         device = Device.query.filter_by(device_name=credentials['device_name'], user_id=user.id).first()
+        if device is None:
+            return "Device name could not be verified", 400
         if user and user.validate_password(attempted_password=credentials['password']) and device:
             # CPU Report
             cpu_data = data['cpu']
@@ -69,4 +73,4 @@ def download_agent(path='static/agent/agent.zip'):
         return send_file(path, as_attachment=True)
     except Exception as e:
         logger.debug(e)
-        return 'An error has occured while downloading your file', 404
+        return 'An error has occured while downloading your file', 400
