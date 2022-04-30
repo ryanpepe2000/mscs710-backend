@@ -613,6 +613,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 1.25rem;
 }
 
+.mb-10{
+  margin-bottom: 2.5rem;
+}
+
 .mt-10{
   margin-top: 2.5rem;
 }
@@ -1701,6 +1705,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   .md\:text-base{
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+
+  .md\:text-sm{
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 }
 

@@ -10,6 +10,7 @@ const nav_mobile_btn = document.querySelector('button.nav-button');
 const nav_mobile_menu = document.querySelector('.nav-menu');
 const nav_mobile_menu_icon = document.querySelector('.menu-icon');
 const nav_mobile_exit_icon = document.querySelector('.exit-icon');
+const page_content = document.querySelector('#content');
 
 nav_mobile_btn.addEventListener('click', () => {
     if (window.getComputedStyle(nav_mobile_menu)['display'] === 'none') {
@@ -18,23 +19,26 @@ nav_mobile_btn.addEventListener('click', () => {
 
         nav_mobile_menu.classList.toggle('hidden');
         nav_mobile_menu.classList.add('flex', 'mobile-menu');
+
+        page_content.style.overflow = 'hidden';
     } else {
         nav_mobile_menu_icon.classList.remove('hidden');
         nav_mobile_exit_icon.classList.add('hidden');
 
         nav_mobile_menu.classList.toggle('hidden');
         nav_mobile_menu.classList.remove('flex', 'mobile-menu');
+
+        page_content.style.overflow = 'visible';
     }
 });
 
 // Flash Message Display Behavior
 const flash_banner = document.querySelector('#flash-banner');
 
-if (flash_banner != null) {
-    flash_banner.addEventListener('click', () => {
-        flash_banner.classList.add("hidden");
-    });
-}
+flash_banner.addEventListener('click', () => {
+    flash_banner.classList.add("hidden");
+});
+
 
 
 
