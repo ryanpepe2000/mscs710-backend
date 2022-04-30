@@ -10,8 +10,7 @@ from datetime import datetime
 from . import db, bcrypt, login_manager
 from flask_login import UserMixin
 
-logger = logging.getLogger(__name__)
-
+logger = logging.getLogger(__name__.split(".", 1)[1])
 """
 Login Manager
 """
