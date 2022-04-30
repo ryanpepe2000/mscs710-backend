@@ -3,7 +3,7 @@
 Matrix - Dashboard
 {% endblock %}
 {% block content %}
-    <div class="z-0 max-w-screen-xl h-5/6 mx-auto flex flex-col">
+    <div class="z-0 max-w-screen-xl mx-auto flex flex-col flex-grow mb-10">
         {% if devices != None %}
             <!-- Dashboard Sub Menu -->
             <div class="flex flex-col w-full px-4 mx-auto md:px-6 lg:px-8 justify-between md:justify-start">
@@ -229,6 +229,7 @@ Matrix - Dashboard
             </div>
         {% endif %}
     </div>
+    {% include 'components/matrix_footer.html' %}
     <script type="text/javascript" src="{{ url_for('static', filename='dash.js') }}"></script>
     <script type="text/javascript">
         // Send Metric Chart Data for Chart.js Population

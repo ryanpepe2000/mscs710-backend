@@ -1,12 +1,14 @@
 <div class="z-10 w-full h-16 bg-white shadow-lg">
-    <div class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
+    <div class="flex flex-col max-w-screen-xl mx-auto md:items-center md:justify-between md:flex-row px-4 md:px-6 lg:px-8">
         <div class="p-4 flex flex-row items-center justify-between">
-            {% if current_user.is_authenticated %}
-                <a href="{{ url_for('auth.logout_page')}}"><button type="button" class="h-8 w-20 btn-solid-gray">Logout</button></a>
-                <p class="md:px-2 font-['roboto'] text-matrix_gray-100 text-sm">welcome, {{ current_user.first_name }}</p>
-            {% else %}
-                <a href="{{ url_for('auth.login_page')}}"><button type="button" class="h-8 w-20 btn-solid-blue">Login</button></a>
-            {% endif %}
+            <div class="flex flex-row items-center">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('auth.logout_page')}}"><button type="button" class="h-8 w-20 btn-solid-gray">Logout</button></a>
+                    <p class="px-2 font-['roboto'] text-matrix_gray-100 text-sm">welcome, {{ current_user.first_name }}</p>
+                {% else %}
+                    <a href="{{ url_for('auth.login_page')}}"><button type="button" class="h-8 w-20 btn-solid-blue">Login</button></a>
+                {% endif %}
+            </div>
             <button class="md:hidden rounded-lg focus:outline-none focus:shadow-outline nav-button transition duration-300">
                 <svg fill="#4F4F4F" viewBox="0 0 20 20" class="w-6 h-6">
                     <path class="md:hidden menu-icon" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>

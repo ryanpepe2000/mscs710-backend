@@ -7,7 +7,7 @@ from ..models import User, UserRole, Role
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__.split(".", 1)[1])
 
 
 @auth.route('/register', methods=['GET', 'POST'])

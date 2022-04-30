@@ -12,8 +12,7 @@ from wtforms.validators import DataRequired, ValidationError
 from ..models import Device
 from flask_login import current_user
 
-logger = logging.getLogger(__name__)
-
+logger = logging.getLogger(__name__.split(".", 1)[1])
 
 class DeviceRegistrationForm(FlaskForm):
     def validate_device_name(self, device_name_to_check):
