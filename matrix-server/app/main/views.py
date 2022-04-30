@@ -1,8 +1,9 @@
 import logging
+from os import path
 from . import main
 from flask import render_template, redirect, url_for, flash
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__.split(".", 1)[1])
 
 
 @main.route('/', methods=['GET'])

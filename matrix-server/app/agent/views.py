@@ -4,7 +4,7 @@ from flask import request
 from . import agent
 from ..models import *
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__.split(".", 1)[1])
 
 
 @agent.route('/api/send_data', methods=['POST'])
