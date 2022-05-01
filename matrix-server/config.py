@@ -49,7 +49,7 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     FLASK_ENV = 'development'
-    DEBUG = True
+    DEBUG = False
     TESTING = False
     SQLALCHEMY_DATABASE_URI = environ.get('MYSQL_DEVELOPMENT_URI')
     SQLAlchemy_ECHO = True
