@@ -29,6 +29,14 @@ must be issued in order for the client agent to function as intended:
 
 CONFIGURATION
 -------------
+##Configuring `credentials.txt`
+It is extremely important to set up credentials.txt in order for the agent to work as intended. Credentials.txt should be located in the 
+same directory as the main agent executable. Here is an example as to what credentials.txt should look like:
+```
+device_name=MacBook Pro 1
+email=john.smith@example.com
+password=PaSsWoRd123
+```
 ###MacOS
 * Open up your terminal command prompt on your Mac and navigate to the home directory by running `cd ~/`.
 * Copy the installation path of python3 via the command `which python3`. This should display something like this: `/usr/local/bin/python3`
