@@ -70,4 +70,4 @@ MAINTAINERS
 -----------
 
  * Ryan Pepe
- * Christian Salterelli
+ * Christian Saltarelli
