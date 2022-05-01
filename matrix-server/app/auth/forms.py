@@ -12,7 +12,7 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
 from ..models import User
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__.split(".", 1)[1])
 
 
 class RegistrationForm(FlaskForm):

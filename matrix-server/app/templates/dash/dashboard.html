@@ -3,13 +3,13 @@
 Matrix - Dashboard
 {% endblock %}
 {% block content %}
-    <div class="z-0 max-w-screen-xl h-5/6 mx-auto flex flex-col">
+    <div class="z-0 max-w-screen-xl mx-auto flex flex-col flex-grow mb-10">
         {% if devices != None %}
             <!-- Dashboard Sub Menu -->
             <div class="flex flex-col w-full px-4 mx-auto md:px-6 lg:px-8 justify-between md:justify-start">
                 <div class="mt-10 flex items-center">
                     <!-- Device Dropdown List -->
-                    <button type="button" class="h-10 inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100" id="device-menu-button">
+                    <button type="button" class="h-10 inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-['Roboto'] font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100" id="device-menu-button">
                         {{ current_device }}
                         <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -51,7 +51,7 @@ Matrix - Dashboard
             <div class="flex w-full px-4 mx-auto md:px-6 lg:px-8">
                 <!-- Dashboard Wrapper -->
                 <div class="flex flex-col w-full bg-gray-50 rounded-lg shadow-lg my-10 p-8 justify-between">
-                    <h2 class="text-xl text-matrix_gray-200 font-['roboto'] pb-4">Dashboard</h2>
+                    <h2 class="text-xl text-matrix_gray-200 font-['Roboto'] pb-4">Dashboard</h2>
 
                     <!-- High-Level Metrics -->
                     <div class="flex flex-col md:flex-row justify-between m-4 mt-8">
@@ -70,7 +70,7 @@ Matrix - Dashboard
                     </div>
 
                     <!-- Metric Chart Carousel -->
-                    <h2 class="chart-title text-lg text-matrix_gray-200 font-['roboto'] mt-8 transition-all ease-in duration-500">CPU Utilization</h2>
+                    <h2 class="chart-title text-lg text-matrix_gray-200 font-['Roboto'] mt-8 transition-all ease-in duration-500">CPU Utilization</h2>
                     <div class="flex flex-row mt-4 justify-center">
                         <div id="chart-carousel" class="w-full relative">
                             <!-- Inner -->
@@ -105,7 +105,7 @@ Matrix - Dashboard
 
                     <!-- Process Metrics -->
                     <div class="flex flex-col">
-                        <h2 class="text-lg text-matrix_gray-200 font-['roboto'] mt-8">Processes</h2>
+                        <h2 class="text-lg text-matrix_gray-200 font-['Roboto'] mt-8">Processes</h2>
                         <!-- Process Metrics -->
                         <div class="flex justify-center">
                             <div class="overflow-x-scroll md:overflow-hidden w-full m-4 p-1 bg-white rounded-lg shadow-xl">
@@ -203,7 +203,7 @@ Matrix - Dashboard
                         <!-- Process Metrics CTA -->
                         <div class="flex justify-center">
                             <div class="view-more-btn flex flex-row items-center hover:cursor-pointer">
-                                <button type="button" class="view-btn inline-flex py-2 text-sm font-medium text-gray-700 focus:outline-none" id="process-list-button">
+                                <button type="button" class="view-btn inline-flex py-2 text-sm font-['Roboto'] font-medium text-gray-700 focus:outline-none" id="process-list-button">
                                 view more
                                 </button>
                                 <svg class="view-arrow -mr-1 ml-2 h-5 w-5 transition-all ease-in duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -220,8 +220,8 @@ Matrix - Dashboard
             <!-- No Devices Registered -->
             <div class="flex flex-col h-full justify-center items-center">
                 <div class="flex flex-col w-5/6 h-full m-6 md:m-12 items-center justify-center bg-gray-100 rounded-lg shadow-lg">
-                    <h1 class="mb-2 text-center text-base md:text-xl text-matrix_gray-200 font-matrix_body font-bold">No Devices</h1>
-                    <p class="w-96 mb-12 text-center text-sm md:text-base text-matrix_gray-100 font-['roboto']">get started by registering a device.</p>
+                    <h1 class="mb-2 text-center text-base md:text-xl text-matrix_gray-200 font-['Roboto'] font-bold">No Devices</h1>
+                    <p class="w-96 mb-12 text-center text-sm md:text-base text-matrix_gray-100 font-matrix_body">get started by registering a device.</p>
                     <a href="{{ url_for('dash.register_device') }}">
                         <button type="button" class="h-10 w-44 btn-solid-blue"><span class="pr-2">&#43;</span>Register Device</button>
                     </a>
@@ -229,6 +229,7 @@ Matrix - Dashboard
             </div>
         {% endif %}
     </div>
+    {% include 'components/matrix_footer.html' %}
     <script type="text/javascript" src="{{ url_for('static', filename='dash.js') }}"></script>
     <script type="text/javascript">
         // Send Metric Chart Data for Chart.js Population
