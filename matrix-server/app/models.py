@@ -154,16 +154,16 @@ class ProcessReport(db.Model):
     __tablename__ = 'process_report'
 
     # Column definition
-    proc_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    proc_id = db.Column(db.Integer, primary_key=True, autoincrement=False)
     sys_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
     device_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
-    pid = db.Column(db.Integer, nullable=False, autoincrement=True)
+    pid = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     process_name = db.Column(db.String(length=100), nullable=False)
     cpu_usage = db.Column(db.Float, nullable=False)
     mem_usage = db.Column(db.Float, nullable=False)
     disk_usage = db.Column(db.Float, nullable=False)
     thread_count = db.Column(db.Integer, nullable=False)
-    device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), nullable=False)
+    device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), nullable=False, primary_key=True)
 
     # Foreign Key Reference
     device = db.relationship('Device', backref='process_report')

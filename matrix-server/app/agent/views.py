@@ -1,6 +1,9 @@
 import json
 import logging
 from flask import request, send_file
+from flask_sqlalchemy import model
+from sqlalchemy import func, desc
+
 from . import agent
 from ..models import *
 
@@ -46,10 +49,18 @@ def post_data():
             db.session.add(disk_report)
             db.session.commit()
 
+            # Get the max ID of the available proc reports for that device
+            last_process_report = ProcessReport.query.filter_by(device_id=device.device_id).order_by(desc(ProcessReport.proc_id)).first()
+            if last_process_report is None:
+                next_proc_id = 0
+            else:
+                next_proc_id = last_process_report.proc_id + 1
+
             # Process Reports
             processes = data['processes']
             for proc_id, process_data in processes.items():
-                process_report = ProcessReport(pid=proc_id,
+                process_report = ProcessReport(proc_id=next_proc_id,
+                                               pid=proc_id,
                                                process_name=process_data['name'],
                                                cpu_usage=process_data['cpu'],
                                                mem_usage=process_data['memory'],
@@ -73,4 +84,4 @@ def download_agent(path='static/agent/agent.zip'):
         return send_file(path, as_attachment=True)
     except Exception as e:
         logger.debug(e)
-        return 'An error has occured while downloading your file', 400
+        return 'An error has occurred while downloading your file', 400
