@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import json
 import requests
 import time
@@ -14,6 +15,7 @@ def main():
     data = collect_metrics()
     data['credentials'] = get_credentials()
     send_metrics(data)
+
 
 def collect_metrics():
     # Store relevant data in json object
@@ -77,9 +79,11 @@ def get_credentials():
             return {}
         return {}
 
+
 def send_metrics(data):
     r = requests.post('http://127.0.0.1:5000/api/send_data', json=json.dumps(data))
     print(f"Status Code: {r.status_code}, Response: {r.text}")
+
 
 if __name__ == '__main__':
     main()
