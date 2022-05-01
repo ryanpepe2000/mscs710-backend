@@ -1046,10 +1046,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-family: Nunito;
 }
 
-.font-\[\'roboto\'\]{
-  font-family: 'roboto';
-}
-
 .text-xs{
   font-size: 0.75rem;
   line-height: 1rem;
