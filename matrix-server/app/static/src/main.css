@@ -8,19 +8,19 @@
 
 /* Matrix Components */
 .btn-solid-blue {
-    @apply p-1 text-white text-sm md:text-base font-['roboto'] bg-matrix_blue-100 rounded hover:bg-matrix_blue-200 focus:outline-none transition duration-300
+    @apply p-1 text-white text-sm md:text-base font-['Roboto'] bg-matrix_blue-100 rounded hover:bg-matrix_blue-200 focus:outline-none transition duration-300
 }
 
 .btn-outline-blue {
-    @apply p-1 text-matrix_blue-100 text-sm md:text-base font-['roboto'] border-matrix_blue-100 border rounded-lg hover:text-white hover:bg-matrix_blue-100 focus:outline-none transition duration-300
+    @apply p-1 text-matrix_blue-100 text-sm md:text-base font-['Roboto'] border-matrix_blue-100 border rounded-lg hover:text-white hover:bg-matrix_blue-100 focus:outline-none transition duration-300
 }
 
 .btn-solid-gray {
-    @apply p-1 text-white md:text-base sm:text-sm font-['roboto'] bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
+    @apply p-1 text-white md:text-base sm:text-sm font-['Roboto'] bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
 }
 
 .btn-solid-gray-small {
-    @apply p-1 text-white text-xs md:text-sm font-['roboto'] bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
+    @apply p-1 text-white text-xs md:text-sm font-['Roboto'] bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
 }
 
 .form-field {
@@ -38,7 +38,7 @@
 
 /* Metric Process Data Components */
 .table-header {
-    @apply font-['roboto'] text-matrix_gray-200 text-xs md:text-sm font-medium px-1 md:px-2 py-4
+    @apply font-['Roboto'] text-matrix_gray-200 text-xs md:text-sm font-medium px-1 md:px-2 py-4
 }
 
 .table-row {
@@ -46,7 +46,7 @@
 }
 
 .table-item {
-    @apply font-['roboto'] text-matrix_gray-200 text-sm font-light whitespace-nowrap px-2 py-4
+    @apply font-matrix_body text-matrix_gray-200 text-sm font-light whitespace-nowrap px-2 py-4
 }
 
 .hidden-row {

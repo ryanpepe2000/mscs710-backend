@@ -633,6 +633,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: 0.5rem;
 }
 
+.mr-2{
+  margin-right: 0.5rem;
+}
+
 .mt-4{
   margin-top: 1rem;
 }
@@ -781,12 +785,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 1.25rem;
 }
 
-.w-10{
-  width: 2.5rem;
-}
-
 .w-4{
   width: 1rem;
+}
+
+.w-10{
+  width: 2.5rem;
 }
 
 .w-56{
@@ -1034,12 +1038,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   text-align: center;
 }
 
-.font-\[\'roboto\'\]{
-  font-family: 'roboto';
+.font-\[\'Roboto\'\]{
+  font-family: 'Roboto';
 }
 
 .font-matrix_body{
   font-family: Nunito;
+}
+
+.font-\[\'roboto\'\]{
+  font-family: 'roboto';
 }
 
 .text-xs{
@@ -1192,7 +1200,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(53 125 233 / var(--tw-bg-opacity));
   padding: 0.25rem;
-  font-family: 'roboto';
+  font-family: 'Roboto';
   font-size: 0.875rem;
   line-height: 1.25rem;
   --tw-text-opacity: 1;
@@ -1227,7 +1235,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-border-opacity: 1;
   border-color: rgb(53 125 233 / var(--tw-border-opacity));
   padding: 0.25rem;
-  font-family: 'roboto';
+  font-family: 'Roboto';
   font-size: 0.875rem;
   line-height: 1.25rem;
   --tw-text-opacity: 1;
@@ -1263,7 +1271,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(79 79 79 / var(--tw-bg-opacity));
   padding: 0.25rem;
-  font-family: 'roboto';
+  font-family: 'Roboto';
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
   transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
@@ -1302,7 +1310,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(79 79 79 / var(--tw-bg-opacity));
   padding: 0.25rem;
-  font-family: 'roboto';
+  font-family: 'Roboto';
   font-size: 0.75rem;
   line-height: 1rem;
   --tw-text-opacity: 1;
@@ -1393,7 +1401,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-right: 0.25rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  font-family: 'roboto';
+  font-family: 'Roboto';
   font-size: 0.75rem;
   line-height: 1rem;
   font-weight: 500;
@@ -1436,7 +1444,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-right: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  font-family: 'roboto';
+  font-family: Nunito;
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 300;
@@ -1607,13 +1615,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .focus\:ring-offset-gray-100:focus{
   --tw-ring-offset-color: #f3f4f6;
-}
-
-@media (prefers-color-scheme: dark){
-  .dark\:hover\:text-white:hover{
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity));
-  }
 }
 
 @media (min-width: 768px){
