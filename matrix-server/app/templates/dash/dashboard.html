@@ -55,18 +55,27 @@ Matrix - Dashboard
 
                     <!-- High-Level Metrics -->
                     <div class="flex flex-col md:flex-row justify-between m-4 mt-8">
-                        <!-- CPU Card -->
-                        {% with title="CPU", headers=["Consumption", "Threads", "Process Count"], values=["38%", "301", "28"] %}
-                            {% include 'components/metric_card.html' %}
-                        {% endwith %}
-                        <!-- Memory Card -->
-                        {% with title="Memory", headers=["Used", "Available"], values=["35 Gb", "250 Gb"] %}
-                            {% include 'components/metric_card.html' %}
-                        {% endwith %}
-                        <!-- Disk Card -->
-                        {% with title="Disk", headers=["Used", "Free", "Available"], values=["38%", "2%", "28"] %}
-                            {% include 'components/metric_card.html' %}
-                        {% endwith %}
+                        {% if metrics != None and metrics.is_valid() %}
+                            <!-- CPU Card -->
+                            {% with title="CPU", headers=["Consumption", "Threads", "Process Count"], values=[metrics.new_cpu_report.speed_curr, "301", "28"] %}
+                                {% include 'components/metric_card.html' %}
+                            {% endwith %}
+                            <!-- Memory Card -->
+                            {% with title="Memory", headers=["Used", "Available"], values=["35 Gb", "250 Gb"] %}
+                                {% include 'components/metric_card.html' %}
+                            {% endwith %}
+                            <!-- Disk Card -->
+                            {% with title="Disk", headers=["Used", "Free", "Available"], values=["38%", "2%", "28"] %}
+                                {% include 'components/metric_card.html' %}
+                            {% endwith %}
+                        {% else %}
+                            <div class="w-full md:w-48 lg:w-64 xl:w-72 mb-8 md:pb-0 bg-white rounded-lg shadow-lg">
+                                <div class="flex flex-col justify-center p-4 relative -top-3">
+                                    No data has been found.
+                                </div>
+                            </div>
+                        {% endif %}
+
                     </div>
 
                     <!-- Metric Chart Carousel -->

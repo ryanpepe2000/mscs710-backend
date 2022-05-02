@@ -1,9 +1,10 @@
 import logging
 from . import dash
-from .. import db
 from . import forms
+from .. import db
 from .. import util
 from ..models import Device
+from ..metrics import Metrics
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user
 
@@ -54,7 +55,11 @@ def dashboard_device_page(device_name):
             user_devices = Device.query.filter_by(user_id=current_user.id).all()
 
             flash(f'Now viewing metrics collected for {device_ref.device_name}', category='info')
-            return render_template('dash/dashboard.html', devices=user_devices, current_device=device_ref.device_name, metrics=None), 200
+
+            # Query all metrics
+            metrics = Metrics(device_ref)
+
+            return render_template('dash/dashboard.html', devices=user_devices, current_device=device_ref.device_name, metrics=metrics), 200
         else:
             flash(f'Device requested does not exist or the device does not belong to you.', category='danger')
             return "Nope", 404

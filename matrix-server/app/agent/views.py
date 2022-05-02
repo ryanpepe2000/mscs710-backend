@@ -2,7 +2,7 @@ import json
 import logging
 from flask import request, send_file
 from flask_sqlalchemy import model
-from sqlalchemy import func, desc
+from sqlalchemy import desc
 
 from . import agent
 from ..models import *
