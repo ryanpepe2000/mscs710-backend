@@ -10,6 +10,8 @@
 
     <!-- JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='jquery-3.6.0.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='datatables.min.js') }}"></script>
 
     <!-- Title -->
     <title>
@@ -17,6 +19,8 @@
         {% endblock %}
     </title>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/matrix-primary.svg') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='datatables.min.css') }}"/>
+
 </head>
 <body id="content" class="w-screen h-screen">
     {% include 'components/matrix_nav.html' %}

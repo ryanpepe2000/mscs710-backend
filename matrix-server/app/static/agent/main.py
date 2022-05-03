@@ -2,11 +2,14 @@
 import json
 import requests
 import time
+from datetime import datetime
 
 import psutil
 
 # Constants
 file_path = r'credentials.txt'
+base_url = "http://127.0.0.1:5000/"
+api_route = "api/send_data"
 
 DEBUG = False
 
@@ -19,8 +22,17 @@ def main():
 
 def collect_metrics():
     # Store relevant data in json object
-    data = {'cpu': (psutil.cpu_freq()._asdict()), 'memory': (psutil.virtual_memory()._asdict()),
-            'disk': (psutil.disk_usage('/')._asdict())}
+    data = {}
+    # CPU Data
+    data['cpu'] = psutil.cpu_freq()._asdict()
+    data['cpu']['time'] = str(datetime.utcnow())
+    # Memory Data
+    data['memory'] = psutil.virtual_memory()._asdict()
+    data['memory']['time'] = str(datetime.utcnow())
+    # Disk Data
+    data['disk'] = psutil.disk_io_counters()._asdict()
+    data['disk'].update(psutil.disk_usage('/')._asdict())
+    data['disk']['time'] = str(datetime.utcnow())
 
     if DEBUG:
         print("cpu:", data['cpu'])
@@ -43,7 +55,7 @@ def collect_metrics():
             mem = process.memory_percent()
             disk = disk_usage(process)
             threads = process.num_threads()
-            process_data[pid] = {'name': name, 'cpu': cpu, 'memory': mem, 'disk': disk, 'threads': threads}
+            process_data[pid] = {'name': name, 'cpu': cpu, 'memory': mem, 'disk': disk, 'threads': threads, 'time': str(datetime.utcnow())}
         except psutil.NoSuchProcess:
             continue
     data['processes'] = process_data
@@ -81,8 +93,13 @@ def get_credentials():
 
 
 def send_metrics(data):
-    r = requests.post('http://127.0.0.1:5000/api/send_data', json=json.dumps(data))
-    print(f"Status Code: {r.status_code}, Response: {r.text}")
+    try:
+        requests.get(base_url)
+    except requests.exceptions.ConnectionError:
+        print(f"Error: Could not connect to web-server.")
+    else:
+        r = requests.post(base_url + api_route, json=json.dumps(data))
+        print(f"Status Code: {r.status_code}, Response: {r.text}")
 
 
 if __name__ == '__main__':

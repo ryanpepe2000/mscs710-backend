@@ -57,15 +57,15 @@ Matrix - Dashboard
                     <div class="flex flex-col md:flex-row justify-between m-4 mt-8">
                         {% if metrics != None and metrics.is_valid() %}
                             <!-- CPU Card -->
-                            {% with title="CPU", headers=["Consumption", "Threads", "Process Count"], values=[metrics.new_cpu_report.speed_curr, "301", "28"] %}
+                            {% with title="CPU", headers=metrics.get_cpu_display_titles(), values=metrics.get_cpu_display_vals() %}
                                 {% include 'components/metric_card.html' %}
                             {% endwith %}
                             <!-- Memory Card -->
-                            {% with title="Memory", headers=["Used", "Available"], values=["35 Gb", "250 Gb"] %}
+                            {% with title="Memory", headers=metrics.get_mem_display_titles(), values=metrics.get_mem_display_vals() %}
                                 {% include 'components/metric_card.html' %}
                             {% endwith %}
                             <!-- Disk Card -->
-                            {% with title="Disk", headers=["Used", "Free", "Available"], values=["38%", "2%", "28"] %}
+                            {% with title="Disk", headers=metrics.get_disk_display_titles(), values=metrics.get_disk_display_vals() %}
                                 {% include 'components/metric_card.html' %}
                             {% endwith %}
                         {% else %}
@@ -118,106 +118,36 @@ Matrix - Dashboard
                         <!-- Process Metrics -->
                         <div class="flex justify-center">
                             <div class="overflow-x-scroll md:overflow-hidden w-full m-4 p-1 bg-white rounded-lg shadow-xl">
-                                <table class="table-auto min-w-full">
-                                    <thead class="bg-white border-b">
-                                        <th scope="col" class="table-header">PID</th>
-                                        <th scope="col" class="table-header">Process Name</th>
-                                        <th scope="col" class="table-header">System Time</th>
-                                        <th scope="col" class="table-header">%CPU</th>
-                                        <th scope="col" class="table-header">%MEM</th>
-                                        <th scope="col" class="table-header">%DSK</th>
-                                        <th scope="col" class="table-header">Threads</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="table-row">
-                                            <td class="whitespace-nowrap text-sm font-['roboto'] font-medium text-matrix_gray-200 p-2">1</td>
-                                            <td class="table-item">Google Chrome</td>
-                                            <td class="table-item">12:00:21</td>
-                                            <td class="table-item">14.3</td>
-                                            <td class="table-item">2.3</td>
-                                            <td class="table-item">4.8</td>
-                                            <td class="table-item">12</td>
-                                        </tr>
-                                        <tr class="table-row">
-                                            <td class="whitespace-nowrap text-sm font-['roboto'] font-medium text-matrix_gray-200 p-2">1</td>
-                                            <td class="table-item">Google Chrome</td>
-                                            <td class="table-item">12:00:21</td>
-                                            <td class="table-item">14.3</td>
-                                            <td class="table-item">2.3</td>
-                                            <td class="table-item">4.8</td>
-                                            <td class="table-item">12</td>
-                                        </tr>
-                                        <tr class="table-row">
-                                            <td class="whitespace-nowrap text-sm font-['roboto'] font-medium text-matrix_gray-200 p-2">1</td>
-                                            <td class="table-item">Google Chrome</td>
-                                            <td class="table-item">12:00:21</td>
-                                            <td class="table-item">14.3</td>
-                                            <td class="table-item">2.3</td>
-                                            <td class="table-item">4.8</td>
-                                            <td class="table-item">12</td>
-                                        </tr>
-                                        <tr class="table-row">
-                                            <td class="whitespace-nowrap text-sm font-['roboto'] font-medium text-matrix_gray-200 p-2">1</td>
-                                            <td class="table-item">Google Chrome</td>
-                                            <td class="table-item">12:00:21</td>
-                                            <td class="table-item">14.3</td>
-                                            <td class="table-item">2.3</td>
-                                            <td class="table-item">4.8</td>
-                                            <td class="table-item">12</td>
-                                        </tr>
-                                        <tr class="table-row">
-                                            <td class="whitespace-nowrap text-sm font-['roboto'] font-medium text-matrix_gray-200 p-2">1</td>
-                                            <td class="table-item">Google Chrome</td>
-                                            <td class="table-item">12:00:21</td>
-                                            <td class="table-item">14.3</td>
-                                            <td class="table-item">2.3</td>
-                                            <td class="table-item">4.8</td>
-                                            <td class="table-item">12</td>
-                                        </tr>
-
-
-                                        <!-- Hidden Process Items -->
-                                        <tr class="hidden-row hidden table-row">
-                                            <td class="whitespace-nowrap text-sm font-['roboto'] font-medium text-matrix_gray-200 p-2">1</td>
-                                            <td class="table-item">Google Chrome Hidden</td>
-                                            <td class="table-item">12:00:21</td>
-                                            <td class="table-item">14.3</td>
-                                            <td class="table-item">2.3</td>
-                                            <td class="table-item">4.8</td>
-                                            <td class="table-item">12</td>
-                                        </tr>
-                                        <tr class="hidden-row hidden table-row">
-                                            <td class="whitespace-nowrap text-sm font-['roboto'] font-medium text-matrix_gray-200 p-2">1</td>
-                                            <td class="table-item">Google Chrome Hidden</td>
-                                            <td class="table-item">12:00:21</td>
-                                            <td class="table-item">14.3</td>
-                                            <td class="table-item">2.3</td>
-                                            <td class="table-item">4.8</td>
-                                            <td class="table-item">12</td>
-                                        </tr>
-                                        <tr class="hidden-row hidden table-row">
-                                            <td class="whitespace-nowrap text-sm font-['roboto'] font-medium text-matrix_gray-200 p-2">1</td>
-                                            <td class="table-item">Google Chrome Hidden</td>
-                                            <td class="table-item">12:00:21</td>
-                                            <td class="table-item">14.3</td>
-                                            <td class="table-item">2.3</td>
-                                            <td class="table-item">4.8</td>
-                                            <td class="table-item">12</td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- Process Metrics CTA -->
-                        <div class="flex justify-center">
-                            <div class="view-more-btn flex flex-row items-center hover:cursor-pointer">
-                                <button type="button" class="view-btn inline-flex py-2 text-sm font-['Roboto'] font-medium text-gray-700 focus:outline-none" id="process-list-button">
-                                view more
-                                </button>
-                                <svg class="view-arrow -mr-1 ml-2 h-5 w-5 transition-all ease-in duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
+                                {% if metrics != None and metrics.is_valid() %}
+                                    <table id="process_table" class="table-auto min-w-full" hidden>
+                                        <thead class="bg-white border-b">
+                                            <tr class="table-header">
+                                                <th>PID</th>
+                                                <th>Process Name</th>
+                                                <th>Device Time</th>
+                                                <th>CPU %</th>
+                                                <th>Memory %</th>
+                                                <th>Disk %</th>
+                                                <th>Threads</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for process in metrics.proc_report %}
+                                                <tr class="table-row">
+                                                    <td class="whitespace-nowrap text-sm font-['roboto'] font-medium text-matrix_gray-200 p-2">{{ process.pid }}</td>
+                                                    <td class="table-item">{{ process.process_name }}</td>
+                                                    <td class="table-item">{{ process.device_time }}</td>
+                                                    <td class="table-item">{{ process.cpu_usage }}</td>
+                                                    <td class="table-item">{{ process.mem_usage }}</td>
+                                                    <td class="table-item">{{ process.disk_usage }}</td>
+                                                    <td class="table-item">{{ process.thread_count }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>Process data is not currently available.</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -240,13 +170,33 @@ Matrix - Dashboard
     </div>
     {% include 'components/matrix_footer.html' %}
     <script type="text/javascript" src="{{ url_for('static', filename='dash.js') }}"></script>
+    {% if metrics != None and metrics.is_valid() and chart_data != None %}
+        <script>
+            // Send Metric Chart Data for Chart.js Population
+            setChartData("CPU Utilization", {{ chart_data.get_cpu_labels() | safe }}, {{ chart_data.get_cpu_values() | safe }});
+            setChartData("Memory Utilization", {{ chart_data.get_mem_labels() | safe }}, {{ chart_data.get_mem_values()  | safe }});
+            setChartData("Disk IO Utilization", {{ chart_data.get_disk_labels() | safe }}, {{ chart_data.get_disk_values()  | safe }});
+        </script>
+    {% endif %}
     <script type="text/javascript">
-        // Send Metric Chart Data for Chart.js Population
-        setChartData("CPU Utilization", {{ labels | safe }}, {{ values | safe }});
-        setChartData("Memory Utilization", {{ labels | safe }}, {{ values | safe }});
-        setChartData("Disk Utilization", {{ labels | safe }}, {{ values | safe }});
-
         // Populate First Chart.js View
         updateChartData();
+    </script>
+    <script>
+        $(document).ready(function() {
+            const proc_table = $('#process_table');
+            proc_table.DataTable( {
+                deferRender: true,
+                columnDefs: [ {
+                    targets: 1,
+                    render: function ( data, type, row ) {
+                        if (data.length > 20) {
+                            return data.substring(0, 20) + "...";
+                        } else return data;
+                    },
+                }]
+            });
+            proc_table.show();
+        });
     </script>
 {% endblock %}

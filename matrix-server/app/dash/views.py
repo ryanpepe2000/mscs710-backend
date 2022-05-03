@@ -4,7 +4,7 @@ from . import forms
 from .. import db
 from .. import util
 from ..models import Device
-from ..metrics import Metrics
+from ..metrics import Metrics, ChartMetrics
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user
 
@@ -58,8 +58,13 @@ def dashboard_device_page(device_name):
 
             # Query all metrics
             metrics = Metrics(device_ref)
+            if metrics.is_valid():
+                chart_data = ChartMetrics(metrics)
+            else:
+                chart_data = None
 
-            return render_template('dash/dashboard.html', devices=user_devices, current_device=device_ref.device_name, metrics=metrics), 200
+            return render_template('dash/dashboard.html', devices=user_devices, current_device=device_ref.device_name,
+                                   metrics=metrics, chart_data=chart_data), 200
         else:
             flash(f'Device requested does not exist or the device does not belong to you.', category='danger')
             return "Nope", 404

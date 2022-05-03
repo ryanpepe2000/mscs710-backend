@@ -142,7 +142,8 @@ class DiskReport(db.Model):
     device_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
     disk_size = db.Column(db.Float, nullable=False)
     disk_used = db.Column(db.Float, nullable=False)
-    disk_free = db.Column(db.Float, nullable=False)
+    disk_read_bytes = db.Column(db.Float, nullable=False)
+    disk_write_bytes = db.Column(db.Float, nullable=False)
     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), nullable=False)
 
     # Foreign Key Reference

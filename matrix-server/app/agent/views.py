@@ -28,6 +28,7 @@ def post_data():
             cpu_report = CPUReport(speed_curr=cpu_data['current'],
                                    speed_min=cpu_data['min'],
                                    speed_max=cpu_data['max'],
+                                   device_time=cpu_data['time'],
                                    device_id=device.device_id)
             db.session.add(cpu_report)
             db.session.commit()
@@ -36,6 +37,7 @@ def post_data():
             memory_data = data['memory']
             memory_report = MemoryReport(memory_used=memory_data['used'],
                                          memory_total=memory_data['total'],
+                                         device_time=memory_data['time'],
                                          device_id=device.device_id)
             db.session.add(memory_report)
             db.session.commit()
@@ -44,7 +46,9 @@ def post_data():
             disk_data = data['disk']
             disk_report = DiskReport(disk_size=disk_data['total'],
                                      disk_used=disk_data['used'],
-                                     disk_free=disk_data['free'],
+                                     disk_read_bytes=disk_data['read_bytes'],
+                                     disk_write_bytes=disk_data['write_bytes'],
+                                     device_time=disk_data['time'],
                                      device_id=device.device_id)
             db.session.add(disk_report)
             db.session.commit()
@@ -66,6 +70,7 @@ def post_data():
                                                mem_usage=process_data['memory'],
                                                disk_usage=process_data['disk'],
                                                thread_count=process_data['threads'],
+                                               device_time=process_data['time'],
                                                device_id=device.device_id)
                 db.session.add(process_report)
             db.session.commit()
