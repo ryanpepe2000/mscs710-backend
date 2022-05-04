@@ -3,27 +3,27 @@
 Matrix - Registration
 {% endblock %}
 {% block content %}
-    <div class="z-0 w-screen h-5/6 md:flex items-center justify-center flex-col mb-12">
+    <div class="z-0 w-screen h-5/6 flex items-center justify-center flex-col mb-16">
         <!-- Registration Form -->
         <div class="md:flex flex-col w-screen mx-auto bg-white justify-center">
             <h1 class="mx-auto mb-4 text-xl md:text-2xl text-matrix_gray-200 text-center font-['Roboto'] font-medium">Create an Account</h1>
 
-            <form method="POST" class="m-auto p-4 w-full md:w-2/3 lg:w-1/3 text-center">
+            <form method="POST" class="m-auto p-4 text-center">
                 {{ form.hidden_tag() }}
 
                 <div class="flex flex-col justify-center h-72 bg-gray-50 m-4 px-4 py-8 rounded-lg">
 
-                    <div class="flex flex-col xl:flex-row justify-between">
-                        {{ form.first_name(class="mx-3.5 form-field", placeholder="First name") }}
+                    <div class="flex flex-col md:flex-row justify-between">
+                        {{ form.first_name(class="mx-2 md:mx-3 xl:mx-3.5 form-field", placeholder="First name") }}
 
-                        {{ form.last_name(class="mx-3.5 form-field", placeholder="Last name") }}
+                        {{ form.last_name(class="mx-2 md:mx-3 xl:mx-3.5 form-field", placeholder="Last name") }}
                     </div>
 
-                    {{ form.email(class="form-field mx-3.5", placeholder="Email") }}
+                    {{ form.email(class="form-field mx-2 md:mx-3 xl:mx-3.5", placeholder="Email") }}
 
-                    {{ form.password(class="form-field mx-3.5", placeholder="Password") }}
+                    {{ form.password(class="form-field mx-2 md:mx-3 xl:mx-3.5", placeholder="Password") }}
 
-                    {{ form.password_conf(class="form-field mx-3.5", placeholder="Password confirmation") }}
+                    {{ form.password_conf(class="form-field mx-2 md:mx-3 xl:mx-3.5", placeholder="Password confirmation") }}
 
                 </div>
 

@@ -33,11 +33,13 @@ nav_mobile_btn.addEventListener('click', () => {
 });
 
 // Flash Message Display Behavior
-const flash_banner = document.querySelector('#flash-banner');
+const flash_banners = document.querySelectorAll('#flash-banner');
 
-flash_banner.addEventListener('click', () => {
-    flash_banner.classList.add("hidden");
-});
+flash_banners.forEach(banner => {
+    banner.addEventListener('click', () => {
+        banner.classList.add("hidden");
+    });
+})
 
 
 
