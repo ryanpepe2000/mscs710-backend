@@ -6,7 +6,7 @@ and account login.
 @date 4.6.22
 @author Christian Saltarelli
 """
-import logging
+import logging, re
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
@@ -21,6 +21,10 @@ class RegistrationForm(FlaskForm):
 
         if email:
             raise ValidationError(f'Email is already in use. Please try a different email address')
+
+    def validate_password(self, password_to_check):
+        regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
+
 
     # Registration Fields
     first_name = StringField(label='First name', validators=[DataRequired()])
