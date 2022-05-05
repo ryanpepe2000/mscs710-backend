@@ -1,61 +1,71 @@
 {% extends 'base.html' %}
+{% if device != None and metrics != None and chart_data != None %}
+    {% block scripts %}
+        <script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='/src/jquery-3.6.0.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='/src/datatables.min.js') }}"></script>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/src/datatables.min.css') }}"/>
+    {% endblock %}
+{% endif %}
 {% block title %}
 Matrix - Dashboard
 {% endblock %}
 {% block content %}
-    <div class="z-0 max-w-screen-xl mx-auto flex flex-col flex-grow mb-10">
+    <div class="z-0 max-w-screen-xl {% if devices == None or metrics == None %} h-5/6 mb-12 {% else %} mb-10 {% endif %} mx-auto flex flex-col flex-grow">
         {% if devices != None %}
             <!-- Dashboard Sub Menu -->
-            <div class="flex flex-col w-full px-4 mx-auto md:px-6 lg:px-8 justify-between md:justify-start">
+            <div class="flex flex-row w-full px-4 mx-auto md:px-6 lg:px-8 justify-between">
                 <div class="mt-10 flex items-center">
                     <!-- Device Dropdown List -->
-                    <button type="button" class="h-10 inline-flex rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-['Roboto'] font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100" id="device-menu-button">
+                    <button type="button" class="h-10 inline-flex items-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-['Roboto'] font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100" id="device-menu-button">
                         {{ current_device }}
-                        <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <svg id="dropdown-icon" class="-mr-1 ml-2 h-5 w-5 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
                     </button>
-                    <!-- Download Agent -->
-                    <a href="{{ url_for('agent.download_agent') }}" class="h-10 w-50 mx-2 px-2 py-2 inline-flex justify-center rounded-md shadow-sm border-2 border-matrix_blue-100 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100 transition duration-300">
-                        <button type="button" class="" id="download-agent-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 fill-current mr-2 text-matrix_blue-200" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"></path>
-                            </svg>
-                        </button>
-                    </a>
+                    <!-- Device Dropdown -->
+                    <div class="hidden mt-4 w-56 absolute top-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" id="device-dropdown" aria-orientation="vertical" tabindex="-1">
+                        {% for device in devices %}
+                            {% if device.device_name == current_device %}
+                                <div class="py-1" role="none">
+                                    <a href="{{ url_for('dash.dashboard_device_page', device_name=device.device_name) }}" class="text-gray-700 block px-4 py-2 text-sm font-semibold hover:text-matrix_blue-100 device-item transition duration-300" tabindex="-1">{{ device.device_name }}</a>
+                                </div>
+                            {% else %}
+                                <div class="py-1" role="none">
+                                    <a href="{{ url_for('dash.dashboard_device_page', device_name=device.device_name) }}" class="text-gray-700 block px-4 py-2 text-sm hover:text-matrix_blue-100 device-item transition duration-300" tabindex="-1">{{ device.device_name }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                     <!-- Register Device CTA -->
                     <a href="{{ url_for('dash.register_device') }}" class="h-10 w-10 mx-2 px-2 py-2 inline-flex justify-center rounded-md shadow-sm border-2 border-matrix_blue-100 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100 transition duration-300">
                         <button type="button" class="" id="register-device-button">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-matrix_blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
                             </svg>
                         </button>
                     </a>
                 </div>
-                <!-- Device Dropdown -->
-                <div class="hidden mt-4 w-56 absolute top-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" id="device-dropdown" aria-orientation="vertical" tabindex="-1">
-                    {% for device in devices %}
-                        {% if device.device_name == current_device %}
-                            <div class="py-1" role="none">
-                                <a href="{{ url_for('dash.dashboard_device_page', device_name=device.device_name) }}" class="text-gray-700 block px-4 py-2 text-sm font-semibold hover:text-matrix_blue-100 device-item transition duration-300" tabindex="-1">{{ device.device_name }}</a>
-                            </div>
-                        {% else %}
-                            <div class="py-1" role="none">
-                                <a href="{{ url_for('dash.dashboard_device_page', device_name=device.device_name) }}" class="text-gray-700 block px-4 py-2 text-sm hover:text-matrix_blue-100 device-item transition duration-300" tabindex="-1">{{ device.device_name }}</a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                <div class="mt-10 flex items-center">
+                    <!-- Download Agent -->
+                    <a href="{{ url_for('agent.download_agent') }}" class="h-10 w-24 mx-2 px-2 py-2 inline-flex justify-center rounded-md shadow-sm border-2 border-gray-400 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100 transition-all duration-300">
+                        <button type="button" class="flex flex-row items-center text-sm font-['Roboto'] font-medium text-gray-700" id="download-agent-button">
+                            <span>Agent</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5"/>
+                            </svg>
+                        </button>
+                    </a>
                 </div>
             </div>
             <!-- Dashboard -->
-            <div class="flex w-full px-4 mx-auto md:px-6 lg:px-8">
+            <div class="flex w-full {% if metrics == None %} h-5/6 {% endif %} px-4 mx-auto md:px-6 lg:px-8">
                 <!-- Dashboard Wrapper -->
                 <div class="flex flex-col w-full bg-gray-50 rounded-lg shadow-lg my-10 p-8 justify-between">
                     <h2 class="text-xl text-matrix_gray-200 font-['Roboto'] pb-4">Dashboard</h2>
 
-                    <!-- High-Level Metrics -->
-                    <div class="flex flex-col md:flex-row justify-between m-4 mt-8">
-                        {% if metrics != None and metrics.is_valid() %}
+                    {% if metrics != None and metrics.is_valid() %}
+                        <!-- High-Level Metrics -->
+                        <div class="flex flex-col md:flex-row justify-between m-4 mt-8">
                             <!-- CPU Card -->
                             {% with title="CPU", headers=metrics.get_cpu_display_titles(), values=metrics.get_cpu_display_vals() %}
                                 {% include 'components/metric_card.html' %}
@@ -68,57 +78,48 @@ Matrix - Dashboard
                             {% with title="Disk", headers=metrics.get_disk_display_titles(), values=metrics.get_disk_display_vals() %}
                                 {% include 'components/metric_card.html' %}
                             {% endwith %}
-                        {% else %}
-                            <div class="w-full md:w-48 lg:w-64 xl:w-72 mb-8 md:pb-0 bg-white rounded-lg shadow-lg">
-                                <div class="flex flex-col justify-center p-4 relative -top-3">
-                                    No data has been found.
-                                </div>
-                            </div>
-                        {% endif %}
+                        </div>
 
-                    </div>
-
-                    <!-- Metric Chart Carousel -->
-                    <h2 class="chart-title text-lg text-matrix_gray-200 font-['Roboto'] mt-8 transition-all ease-in duration-500">CPU Utilization</h2>
-                    <div class="flex flex-row mt-4 justify-center">
-                        <div id="chart-carousel" class="w-full relative">
-                            <!-- Inner -->
-                            <div class="relative w-full overflow-hidden">
-                                <div class="relative w-full float-left px-5 md:px-10 transition duration-500">
-                                    <!-- Primary Chart -->
-                                    <div class="p-2 m-2 md:p-4 md:m-4 bg-white rounded-lg shadow-lg overflow-x-scroll">
-                                        <canvas id="chart" class="main-chart w-full" width="1000%" height="200%"></canvas>
+                        <!-- Metric Chart Carousel -->
+                        <h2 class="chart-title text-lg text-matrix_gray-200 font-['Roboto'] mt-8 transition-all ease-in duration-500">CPU Utilization</h2>
+                        <div class="flex flex-row mt-4 justify-center">
+                            <div id="chart-carousel" class="w-full relative">
+                                <!-- Inner -->
+                                <div class="relative w-full overflow-hidden">
+                                    <div class="relative w-full float-left px-5 md:px-10 transition duration-500">
+                                        <!-- Primary Chart -->
+                                        <div class="p-2 m-2 md:p-4 md:m-4 bg-white rounded-lg shadow-lg overflow-x-scroll">
+                                            <canvas id="chart" class="main-chart w-full" width="1000%" height="200%"></canvas>
+                                        </div>
                                     </div>
                                 </div>
+                                <!-- Controls -->
+                                <button class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center m-2 md:m-6 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+                                    type="button" data-bs-target="#chart-carousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                                    <span class="text-matrix_gray-200">&#8592;</span>
+                                </button>
+                                <button class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center m-2 md:m-6 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+                                    type="button" data-bs-target="#chart-carousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                                    <span class="text-matrix_gray-200">&#8594;</span>
+                              </button>
                             </div>
-                            <!-- Controls -->
-                            <button class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center m-2 md:m-6 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
-                                type="button" data-bs-target="#chart-carousel" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-                                <span class="text-matrix_gray-200">&#8592;</span>
-                            </button>
-                            <button class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center m-2 md:m-6 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
-                                type="button" data-bs-target="#chart-carousel" data-bs-slide="next">
-                                <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-                                <span class="text-matrix_gray-200">&#8594;</span>
-                          </button>
                         </div>
-                    </div>
 
-                    <!-- Carousel Indicators -->
-                    <div class="carousel-indicators flex justify-center p-0 mx-4 h-4 z-20">
-                        <button class="carousel-indicator-0 active-indicator rounded-xl h-2 m-1 cursor-default transition-all ease-in duration-300"></button>
-                        <button class="carousel-indicator-1 inactive-indicator rounded-xl h-2 m-1 cursor-default transition-all ease-in duration-300"></button>
-                        <button class="carousel-indicator-2 inactive-indicator rounded-xl h-2 m-1 cursor-default transition-all ease-in duration-300"></button>
-                    </div>
+                        <!-- Carousel Indicators -->
+                        <div class="carousel-indicators flex justify-center p-0 mx-4 h-4 z-20">
+                            <button class="carousel-indicator-0 active-indicator rounded-xl h-2 m-1 cursor-default transition-all ease-in duration-300"></button>
+                            <button class="carousel-indicator-1 inactive-indicator rounded-xl h-2 m-1 cursor-default transition-all ease-in duration-300"></button>
+                            <button class="carousel-indicator-2 inactive-indicator rounded-xl h-2 m-1 cursor-default transition-all ease-in duration-300"></button>
+                        </div>
 
-                    <!-- Process Metrics -->
-                    <div class="flex flex-col">
-                        <h2 class="text-lg text-matrix_gray-200 font-['Roboto'] mt-8">Processes</h2>
                         <!-- Process Metrics -->
-                        <div class="flex justify-center">
-                            <div class="overflow-x-scroll md:overflow-hidden w-full m-4 p-1 bg-white rounded-lg shadow-xl">
-                                {% if metrics != None and metrics.is_valid() %}
+                        <div class="flex flex-col">
+                            <h2 class="text-lg text-matrix_gray-200 font-['Roboto'] mt-8">Processes</h2>
+                            <!-- Process Metrics -->
+                            <div class="flex justify-center">
+                                <div class="overflow-x-scroll md:overflow-hidden w-full m-4 p-1 bg-white rounded-lg shadow-xl">
                                     <table id="process_table" class="table-auto min-w-full" hidden>
                                         <thead class="bg-white border-b">
                                             <tr class="table-header">
@@ -150,24 +151,35 @@ Matrix - Dashboard
                                             {% endfor %}
                                         </tbody>
                                     </table>
-                                {% else %}
-                                    <p>Process data is not currently available.</p>
-                                {% endif %}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% else %}
+                        <!-- No Agent Installed -->
+                        <div class="w-full h-full flex flex-col justify-center items-center mb-16">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2" viewBox="0 0 24 24" fill="none" stroke="#357DE9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <h1 class="mb-6 text-center text-xs md:text-sm text-matrix_blue-100 font-['Roboto'] font-bold leading-6">NO METRICS AVAILABLE</h1>
+                            <p class="w-4/5 md:w-1/2 text-center text-base md:text-lg text-matrix_gray-100 font-matrix_body leading-6">
+                                Device agent not found. Please download and configure our agent following the instructions within for this device.
+                            </p>
+                        </div>
+                    {% endif %}
                 </div> <!-- Dashboard Wrapper -->
-
-
             </div>
         {% else %}
             <!-- No Devices Registered -->
             <div class="flex flex-col h-full justify-center items-center">
-                <div class="flex flex-col w-5/6 h-full m-6 md:m-12 items-center justify-center bg-gray-100 rounded-lg shadow-lg">
-                    <h1 class="mb-2 text-center text-base md:text-xl text-matrix_gray-200 font-['Roboto'] font-bold">No Devices</h1>
-                    <p class="w-96 mb-12 text-center text-sm md:text-base text-matrix_gray-100 font-matrix_body">get started by registering a device.</p>
+                <div class="flex flex-col w-full h-full m-6 md:m-12 items-center justify-center bg-gray-50 shadow-lg rounded-lg">
+                    <svg class="h-14 w-14 mb-4" viewBox="0 0 20 20" fill="#4F4F4F">
+                        <path d="M17.237,3.056H2.93c-0.694,0-1.263,0.568-1.263,1.263v8.837c0,0.694,0.568,1.263,1.263,1.263h4.629v0.879c-0.015,0.086-0.183,0.306-0.273,0.423c-0.223,0.293-0.455,0.592-0.293,0.92c0.07,0.139,0.226,0.303,0.577,0.303h4.819c0.208,0,0.696,0,0.862-0.379c0.162-0.37-0.124-0.682-0.374-0.955c-0.089-0.097-0.231-0.252-0.268-0.328v-0.862h4.629c0.694,0,1.263-0.568,1.263-1.263V4.319C18.5,3.625,17.932,3.056,17.237,3.056 M8.053,16.102C8.232,15.862,8.4,15.597,8.4,15.309v-0.89h3.366v0.89c0,0.303,0.211,0.562,0.419,0.793H8.053z M17.658,13.156c0,0.228-0.193,0.421-0.421,0.421H2.93c-0.228,0-0.421-0.193-0.421-0.421v-1.263h15.149V13.156z M17.658,11.052H2.509V4.319c0-0.228,0.193-0.421,0.421-0.421h14.308c0.228,0,0.421,0.193,0.421,0.421V11.052z"></path>
+                    </svg>
+                    <h1 class="text-center text-xs md:text-sm text-matrix_gray-200 font-['Roboto'] font-bold">NO DEVICES FOUND</h1>
+                    <p class="w-96 mb-10 text-base md:text-md text-matrix_gray-100 font-matrix_body text-center leading-6">get started by registering a device.</p>
                     <a href="{{ url_for('dash.register_device') }}">
-                        <button type="button" class="h-10 w-44 btn-solid-blue"><span class="pr-2">&#43;</span>Register Device</button>
+                        <button type="button" class="h-10 w-36 btn-solid-blue"><span class="pr-2">&#43;</span>Add Device</button>
                     </a>
                 </div>
             </div>
@@ -176,32 +188,32 @@ Matrix - Dashboard
     {% include 'components/matrix_footer.html' %}
     <script type="text/javascript" src="{{ url_for('static', filename='dash.js') }}"></script>
     {% if metrics != None and metrics.is_valid() and chart_data != None %}
-        <script>
+        <script type="text/javascript">
             // Send Metric Chart Data for Chart.js Population
             setChartData("CPU Utilization", {{ chart_data.get_cpu_labels() | safe }}, {{ chart_data.get_cpu_values() | safe }});
             setChartData("Memory Utilization", {{ chart_data.get_mem_labels() | safe }}, {{ chart_data.get_mem_values()  | safe }});
             setChartData("Disk IO Utilization", {{ chart_data.get_disk_labels() | safe }}, {{ chart_data.get_disk_values()  | safe }});
+
+            // Populate First Chart.js View
+            updateChartData();
+
+            // Configure Process Table
+            $(document).ready(function() {
+                const proc_table = $('#process_table');
+                proc_table.DataTable( {
+                    deferRender: true,
+                    columnDefs: [{
+                        targets: 1,
+                        render: function ( data, type, row ) {
+                            if (data.length > 20) {
+                                return data.substring(0, 20) + "...";
+                            } else return data;
+                        },
+                    }]
+                });
+
+                proc_table.show();
+            });
         </script>
     {% endif %}
-    <script type="text/javascript">
-        // Populate First Chart.js View
-        updateChartData();
-    </script>
-    <script>
-        $(document).ready(function() {
-            const proc_table = $('#process_table');
-            proc_table.DataTable( {
-                deferRender: true,
-                columnDefs: [{
-                    targets: 1,
-                    render: function ( data, type, row ) {
-                        if (data.length > 20) {
-                            return data.substring(0, 20) + "...";
-                        } else return data;
-                    },
-                }]
-            });
-            proc_table.show();
-        });
-    </script>
 {% endblock %}

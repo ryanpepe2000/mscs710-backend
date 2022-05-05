@@ -1,14 +1,13 @@
 import logging
-from . import dash
-from . import forms
-from .. import db
-from .. import util
+from . import dash, forms
+from .. import db, util
 from ..models import Device
 from ..metrics import Metrics, ChartMetrics
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user
 
 logger = logging.getLogger(__name__.split(".", 1)[1])
+
 
 @dash.route('/dashboard', methods=['GET'])
 def dashboard_page():
@@ -91,6 +90,7 @@ def register_device():
                 db.session.commit()
 
                 logger.info("Committing new Registered User Device")
+                flash(f'Device registered successfully!', category='success')
                 return redirect(url_for('dash.dashboard_page')), 301
 
             if register_form.errors != {}:

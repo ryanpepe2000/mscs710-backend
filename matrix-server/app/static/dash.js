@@ -8,6 +8,8 @@
 // Dashboard Device Dropdown Behavior
 const dash_device_dropdown_btn = document.querySelector('#device-menu-button');
 const dash_device_dropdown_menu = document.querySelector('#device-dropdown');
+const dash_device_dropdown_icon = document.querySelector('#dropdown-icon');
+let dropdown_icon_rotation = 0;
 
 dash_device_dropdown_btn.addEventListener('click', () => {
     if (window.getComputedStyle(dash_device_dropdown_menu)['display'] === 'none') {
@@ -15,6 +17,9 @@ dash_device_dropdown_btn.addEventListener('click', () => {
     } else {
         dash_device_dropdown_menu.classList.add('hidden');
     }
+
+    dropdown_icon_rotation -= 180;
+    dash_device_dropdown_icon.setAttribute("transform", "rotate(" + dropdown_icon_rotation + ")");
 })
 
 // Chart.js Population + Behavior
@@ -149,7 +154,6 @@ function updateChartTitle() {
 /* Metric Process Behavior */
 const process_view_wrapper = document.querySelector('.view-more-btn');
 const process_view_text = document.querySelector('button.view-btn');
-const process_view_arrow = document.querySelector('svg.view-arrow');
 const process_hidden_rows = document.querySelectorAll('.hidden-row');
 
 let rotation = 0;
@@ -164,8 +168,5 @@ process_view_wrapper.addEventListener('click', () => {
    } else {
        process_view_text.innerHTML = 'view more';
    }
-
-   rotation += 180;
-   process_view_arrow.setAttribute("transform", "rotate(" + rotation + ")");
 });
 

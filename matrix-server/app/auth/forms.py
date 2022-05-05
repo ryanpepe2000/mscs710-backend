@@ -6,10 +6,12 @@ and account login.
 @date 4.6.22
 @author Christian Saltarelli
 """
-import logging, re
+import logging
+import re
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
+
 from ..models import User
 
 logger = logging.getLogger(__name__.split(".", 1)[1])
@@ -26,8 +28,8 @@ class RegistrationForm(FlaskForm):
         regex = re.compile('[_!#$%^&*()<>?/|}"\/{~:]')
         result = regex.search(password_to_check.data)
 
-        if result.group():
-            raise ValidationError(f'Illegal character "{result.group()}" not allowed. Please try again.')
+        if result:
+            raise ValidationError(f'Illegal character "{result.group()}" in password not allowed. Please try again.')
 
     # Registration Fields
     first_name = StringField(label='First name', validators=[DataRequired()])
