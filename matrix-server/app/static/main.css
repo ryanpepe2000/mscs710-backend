@@ -496,6 +496,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   top: 9rem;
 }
 
+.-top-3{
+  top: -0.75rem;
+}
+
 .top-0{
   top: 0px;
 }
@@ -514,10 +518,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .left-3{
   left: 0.75rem;
-}
-
-.-top-3{
-  top: -0.75rem;
 }
 
 .z-0{
@@ -561,24 +561,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: auto;
 }
 
-.mx-3\.5{
-  margin-left: 0.875rem;
-  margin-right: 0.875rem;
-}
-
-.mx-3{
-  margin-left: 0.75rem;
-  margin-right: 0.75rem;
+.mx-2{
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .my-14{
   margin-top: 3.5rem;
   margin-bottom: 3.5rem;
-}
-
-.mx-2{
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
 }
 
 .my-10{
@@ -589,6 +579,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mx-4{
   margin-left: 1rem;
   margin-right: 1rem;
+}
+
+.mx-3\.5{
+  margin-left: 0.875rem;
+  margin-right: 0.875rem;
+}
+
+.mx-3{
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
 }
 
 .my-0\.5{
@@ -615,6 +615,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .mr-4{
   margin-right: 1rem;
+}
+
+.mb-16{
+  margin-bottom: 4rem;
 }
 
 .mt-5{
@@ -645,6 +649,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 2rem;
 }
 
+.mb-8{
+  margin-bottom: 2rem;
+}
+
 .mb-2{
   margin-bottom: 0.5rem;
 }
@@ -659,10 +667,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .-ml-1{
   margin-left: -0.25rem;
-}
-
-.mb-8{
-  margin-bottom: 2rem;
 }
 
 .block{
@@ -769,16 +773,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 8rem;
 }
 
-.w-full{
-  width: 100%;
-}
-
 .w-20{
   width: 5rem;
 }
 
 .w-9\/12{
   width: 75%;
+}
+
+.w-full{
+  width: 100%;
 }
 
 .w-5{
@@ -1044,6 +1048,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .font-matrix_body{
   font-family: Nunito;
+}
+
+.font-\[\'roboto\'\]{
+  font-family: 'roboto';
 }
 
 .text-xs{
@@ -1626,6 +1634,11 @@ Ensure the default browser behavior of the `hidden` attribute.
     margin: 3rem;
   }
 
+  .md\:mx-3{
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+  }
+
   .md\:flex{
     display: flex;
   }
@@ -1646,16 +1659,16 @@ Ensure the default browser behavior of the `hidden` attribute.
     width: 16rem;
   }
 
-  .md\:w-2\/3{
-    width: 66.666667%;
-  }
-
   .md\:w-10\/12{
     width: 83.333333%;
   }
 
   .md\:w-48{
     width: 12rem;
+  }
+
+  .md\:w-2\/3{
+    width: 66.666667%;
   }
 
   .md\:flex-row{
@@ -1727,12 +1740,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 @media (min-width: 1024px){
-  .lg\:w-1\/3{
-    width: 33.333333%;
-  }
-
   .lg\:w-64{
     width: 16rem;
+  }
+
+  .lg\:w-1\/3{
+    width: 33.333333%;
   }
 
   .lg\:px-8{
@@ -1742,11 +1755,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 @media (min-width: 1280px){
-  .xl\:w-72{
-    width: 18rem;
+  .xl\:mx-3\.5{
+    margin-left: 0.875rem;
+    margin-right: 0.875rem;
   }
 
-  .xl\:flex-row{
-    flex-direction: row;
+  .xl\:mx-3{
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+  }
+
+  .xl\:w-72{
+    width: 18rem;
   }
 }

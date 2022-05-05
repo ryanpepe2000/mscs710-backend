@@ -6,7 +6,7 @@ and account login.
 @date 4.6.22
 @author Christian Saltarelli
 """
-import logging
+import logging, re
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
@@ -20,7 +20,14 @@ class RegistrationForm(FlaskForm):
         email = User.query.filter_by(email=email_to_check.data).first()
 
         if email:
-            raise ValidationError(f'Email is already in use. Please try a different email address')
+            raise ValidationError(f'Email is already in use. Please try a different email address.')
+
+    def validate_password(self, password_to_check):
+        regex = re.compile('[_!#$%^&*()<>?/|}"\/{~:]')
+        result = regex.search(password_to_check.data)
+
+        if result.group():
+            raise ValidationError(f'Illegal character "{result.group()}" not allowed. Please try again.')
 
     # Registration Fields
     first_name = StringField(label='First name', validators=[DataRequired()])
