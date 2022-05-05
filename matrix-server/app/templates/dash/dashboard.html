@@ -127,7 +127,7 @@ Matrix - Dashboard
                                                 <th>Device Time</th>
                                                 <th>CPU %</th>
                                                 <th>Memory %</th>
-                                                <th>Disk %</th>
+                                                <th>Disk IO</th>
                                                 <th>Threads</th>
                                             </tr>
                                         </thead>
@@ -139,7 +139,12 @@ Matrix - Dashboard
                                                     <td class="table-item">{{ process.device_time }}</td>
                                                     <td class="table-item">{{ process.cpu_usage }}</td>
                                                     <td class="table-item">{{ process.mem_usage }}</td>
-                                                    <td class="table-item">{{ process.disk_usage }}</td>
+                                                    <td class="table-item" data-order='{{ process.disk_read_bytes_per_sec + process.disk_write_bytes_per_sec }}'>
+                                                        <div>
+                                                            {{ conv_bytes(process.disk_read_bytes_per_sec +
+                                                            process.disk_write_bytes_per_sec) }}
+                                                        </div>
+                                                    </td>
                                                     <td class="table-item">{{ process.thread_count }}</td>
                                                 </tr>
                                             {% endfor %}
@@ -187,7 +192,7 @@ Matrix - Dashboard
             const proc_table = $('#process_table');
             proc_table.DataTable( {
                 deferRender: true,
-                columnDefs: [ {
+                columnDefs: [{
                     targets: 1,
                     render: function ( data, type, row ) {
                         if (data.length > 20) {

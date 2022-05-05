@@ -64,7 +64,7 @@ def dashboard_device_page(device_name):
                 chart_data = None
 
             return render_template('dash/dashboard.html', devices=user_devices, current_device=device_ref.device_name,
-                                   metrics=metrics, chart_data=chart_data), 200
+                                   metrics=metrics, chart_data=chart_data, conv_bytes=util.bytes_to_amt_per_sec), 200
         else:
             flash(f'Device requested does not exist or the device does not belong to you.', category='danger')
             return "Nope", 404

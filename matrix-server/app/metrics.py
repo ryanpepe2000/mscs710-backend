@@ -7,6 +7,7 @@ Defines the metrics object that will be created and passed to the dashboard.
 from typing import List
 
 from sqlalchemy import desc, func
+from . import util
 
 from .models import *
 
@@ -33,13 +34,14 @@ class Metrics:
                and self.new_disk_report is not None and self.proc_report is not None
 
     def get_cpu_display_titles(self):
-        return ["Consumption", "Active Threads", "Process Count"]
+        return ["User Consumption", "System Consumption", "Active Threads", "Process Count"]
 
     def get_cpu_display_vals(self):
-        percent_usage = f'{str(round(self.new_cpu_report.speed_curr / self.new_cpu_report.speed_max * 100, 1))}%'
+        user_consumption = f'{str(round(self.new_cpu_report.user, 1))}%'
+        sys_consumption = f'{str(round(self.new_cpu_report.system, 1))}%'
         num_threads = sum(proc.thread_count for proc in self.proc_report)
         proc_count = len(self.proc_report)
-        return [percent_usage, num_threads, proc_count]
+        return [user_consumption, sys_consumption, num_threads, proc_count]
 
     def get_mem_display_titles(self):
         return ["Percent Used", "Amount Used", "Amount Available"]
@@ -51,13 +53,14 @@ class Metrics:
         return [percent_usage, mem_used, mem_total]
 
     def get_disk_display_titles(self):
-        return ["Disk IO Percent", "GB Used", "Disk Size"]
+        return ["Disk Read", "Disk Write", "GB Used", "Disk Size"]
 
     def get_disk_display_vals(self):
-        percent_usage = f'{str(round((self.new_disk_report.disk_read_bytes + self.new_disk_report.disk_write_bytes) / self.new_disk_report.disk_size * 100, 1))}% '
+        disk_read = f'{util.bytes_to_amt_per_sec(self.new_disk_report.read_bytes_per_sec)}'
+        disk_write = f'{util.bytes_to_amt_per_sec(self.new_disk_report.write_bytes_per_sec)}'
         disk_used = f'{round(self.new_disk_report.disk_used / 1024 / 1024 / 1024)} GB'
         disk_total = f'{round(self.new_disk_report.disk_size / 1024 / 1024 / 1024)} GB'
-        return [percent_usage, disk_used, disk_total]
+        return [disk_read, disk_write, disk_used, disk_total]
 
     def get_cpu_report(self):
         cpu_report: CPUReport = CPUReport.query.filter_by(device_id=self.device.device_id).order_by(
@@ -146,8 +149,8 @@ class Metrics:
         data = []
         for disk_report in self.all_disk_reports:
             time = str(disk_report.sys_time)[:16]
-            percent = round(((disk_report.disk_read_bytes / 1024 / 1024 / 1024 + disk_report.disk_write_bytes / 1024 / 1024 / 1024)), 1)
-            data.append((time, percent))
+            amt_per_sec = util.bytes_to_amt_per_sec(disk_report.read_bytes_per_sec + disk_report.write_bytes_per_sec)
+            data.append((time, amt_per_sec))
 
         return data
 

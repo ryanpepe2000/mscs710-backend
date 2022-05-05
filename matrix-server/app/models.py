@@ -110,6 +110,8 @@ class CPUReport(db.Model):
     speed_curr = db.Column(db.Float, nullable=False)
     speed_min = db.Column(db.Float, nullable=False)
     speed_max = db.Column(db.Float, nullable=False)
+    user = db.Column(db.Float, nullable=False)
+    system = db.Column(db.Float, nullable=False)
     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), nullable=False)
 
     # Foreign Key Reference
@@ -142,8 +144,10 @@ class DiskReport(db.Model):
     device_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
     disk_size = db.Column(db.Float, nullable=False)
     disk_used = db.Column(db.Float, nullable=False)
-    disk_read_bytes = db.Column(db.Float, nullable=False)
-    disk_write_bytes = db.Column(db.Float, nullable=False)
+    read_bytes = db.Column(db.Float, nullable=False)
+    write_bytes = db.Column(db.Float, nullable=False)
+    read_bytes_per_sec = db.Column(db.BigInteger, nullable=False)
+    write_bytes_per_sec = db.Column(db.BigInteger, nullable=False)
     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), nullable=False)
 
     # Foreign Key Reference
@@ -163,6 +167,8 @@ class ProcessReport(db.Model):
     cpu_usage = db.Column(db.Float, nullable=False)
     mem_usage = db.Column(db.Float, nullable=False)
     disk_usage = db.Column(db.Float, nullable=False)
+    disk_read_bytes_per_sec = db.Column(db.BigInteger, nullable=False)
+    disk_write_bytes_per_sec = db.Column(db.BigInteger, nullable=False)
     thread_count = db.Column(db.Integer, nullable=False)
     device_id = db.Column(db.Integer, db.ForeignKey('device.device_id'), nullable=False, primary_key=True)
 

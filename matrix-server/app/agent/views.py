@@ -29,6 +29,8 @@ def post_data():
                                    speed_min=cpu_data['min'],
                                    speed_max=cpu_data['max'],
                                    device_time=cpu_data['time'],
+                                   system=cpu_data['system'],
+                                   user=cpu_data['user'],
                                    device_id=device.device_id)
             db.session.add(cpu_report)
             db.session.commit()
@@ -46,8 +48,10 @@ def post_data():
             disk_data = data['disk']
             disk_report = DiskReport(disk_size=disk_data['total'],
                                      disk_used=disk_data['used'],
-                                     disk_read_bytes=disk_data['read_bytes'],
-                                     disk_write_bytes=disk_data['write_bytes'],
+                                     read_bytes=disk_data['read_bytes'],
+                                     write_bytes=disk_data['write_bytes'],
+                                     read_bytes_per_sec=disk_data['read_time'],
+                                     write_bytes_per_sec=disk_data['write_time'],
                                      device_time=disk_data['time'],
                                      device_id=device.device_id)
             db.session.add(disk_report)
@@ -69,6 +73,8 @@ def post_data():
                                                cpu_usage=process_data['cpu'],
                                                mem_usage=process_data['memory'],
                                                disk_usage=process_data['disk'],
+                                               disk_read_bytes_per_sec=process_data['disk_read_per_sec'],
+                                               disk_write_bytes_per_sec=process_data['disk_write_per_sec'],
                                                thread_count=process_data['threads'],
                                                device_time=process_data['time'],
                                                device_id=device.device_id)

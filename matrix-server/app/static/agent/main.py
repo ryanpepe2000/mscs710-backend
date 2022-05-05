@@ -25,6 +25,7 @@ def collect_metrics():
     data = {}
     # CPU Data
     data['cpu'] = psutil.cpu_freq()._asdict()
+    data['cpu'].update(psutil.cpu_times_percent(interval=1)._asdict())
     data['cpu']['time'] = str(datetime.utcnow())
     # Memory Data
     data['memory'] = psutil.virtual_memory()._asdict()
@@ -39,25 +40,51 @@ def collect_metrics():
         print("memory:", data['memory'])
         print("disk:", data['disk'])
 
-    processes = []
+    processes = [p for p in psutil.process_iter()]
     process_data = {}
 
-    for process in psutil.process_iter():
-        if process.is_running():
-            process.cpu_percent()
-            processes.append(process)
-    time.sleep(1)
-    for process in processes:
+    for process in processes[:]:
         try:
-            pid = process.pid
-            name = process.name()
-            cpu = process.cpu_percent()
-            mem = process.memory_percent()
-            disk = disk_usage(process)
-            threads = process.num_threads()
-            process_data[pid] = {'name': name, 'cpu': cpu, 'memory': mem, 'disk': disk, 'threads': threads, 'time': str(datetime.utcnow())}
-        except psutil.NoSuchProcess:
+            process.cpu_percent()
+            process._io_before = process.io_counters()
+        except psutil.Error:
+            processes.remove(process)
             continue
+    disk_io_before = psutil.disk_io_counters()
+
+    # Sleep for one second so we can get io per sec
+    time.sleep(1)
+
+    # Go through processes and get updated info
+    for process in processes[:]:
+        with process.oneshot():
+            try:
+                pid = process.pid
+                name = process.name()
+                cpu = process.cpu_percent()
+                mem = process.memory_percent()
+                disk = disk_usage(process)
+                threads = process.num_threads()
+                process.io_after = process.io_counters()
+                read_per_sec = process.io_after.read_bytes - process._io_before.read_bytes
+                write_per_sec = process.io_after.write_bytes - process._io_before.write_bytes
+                process_data[pid] = {
+                    'name': name, 'cpu': cpu, 'memory': mem, 'disk': disk,
+                    'threads': threads, 'time': str(datetime.utcnow()),
+                    'disk_read_per_sec': read_per_sec, 'disk_write_per_sec': write_per_sec
+                }
+            except (psutil.NoSuchProcess, psutil.ZombieProcess):
+                continue
+
+    # Disk operations after interval
+    disk_io_after = psutil.disk_io_counters()
+    disks_read_per_sec = disk_io_after.read_bytes - disk_io_before.read_bytes
+    disks_write_per_sec = disk_io_after.write_bytes - disk_io_before.write_bytes
+    data['disk']['read_per_sec'] = disks_read_per_sec
+    data['disk']['write_per_sec'] = disks_write_per_sec
+
+
+    # Update processes dict
     data['processes'] = process_data
     return data
 
