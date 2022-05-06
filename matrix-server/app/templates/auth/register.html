@@ -3,7 +3,7 @@
 Matrix - Registration
 {% endblock %}
 {% block content %}
-    <div class="z-0 w-screen h-5/6 flex items-center justify-center flex-col mb-16">
+    <div class="z-0 w-screen h-5/6 flex items-center justify-center flex-col mb-12">
         <!-- Registration Form -->
         <div class="md:flex flex-col w-screen mx-auto bg-white justify-center">
             <h1 class="mx-auto mb-4 text-xl md:text-2xl text-matrix_gray-200 text-center font-['Roboto'] font-medium">Create an Account</h1>
@@ -28,11 +28,13 @@ Matrix - Registration
                 </div>
 
                 <div class="flex flex-col items-center">
-                    <p class="py-2 mt-5 text-sm text-matrix_gray-100 font-matrix_body">already have an account?</p>
-                    <a href="{{ url_for('auth.login_page')}}"><button type="button" class="h-8 w-20 btn-solid-gray-small">Login</button></a>
+                    <a href="{{ url_for('auth.login_page') }}" class="mx-auto my-6 text-xs md:text-sm text-matrix_gray-100 text-center font-matrix_body hover:text-matrix_gray-200 hover:outline-none">
+                        Already have an account? Login
+                        <span>&#8594;</span>
+                    </a>
                 </div>
 
-                {{ form.submit(class="h-8 w-9/12 md:w-10/12 mx-auto my-14 btn-solid-blue") }}
+                {{ form.submit(class="h-8 w-9/12 md:w-10/12 mt-4 mx-auto btn-solid-blue") }}
 
             </form>
         </div>

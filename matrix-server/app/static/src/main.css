@@ -8,7 +8,7 @@
 
 /* Matrix Components */
 .btn-solid-blue {
-    @apply p-1 text-white text-sm md:text-base font-['Roboto'] bg-matrix_blue-100 rounded hover:bg-matrix_blue-200 focus:outline-none transition duration-300
+    @apply p-1 text-white text-xs md:text-sm font-['Roboto'] bg-matrix_blue-100 rounded-md hover:bg-matrix_blue-200 focus:outline-none transition duration-300
 }
 
 .btn-outline-blue {
@@ -16,7 +16,7 @@
 }
 
 .btn-solid-gray {
-    @apply p-1 text-white md:text-base sm:text-sm font-['Roboto'] bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
+    @apply p-1 text-white text-xs md:text-sm font-['Roboto'] bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
 }
 
 .btn-solid-gray-small {
