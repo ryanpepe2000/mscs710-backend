@@ -15,27 +15,27 @@ def dashboard_page():
         # Check for Registered Devices (if any)
         user_devices = Device.query.filter_by(user_id=current_user.id).all()
 
-        if len(user_devices) > 0:
-            # TODO:- Implement Collect Metrics for Device 0 of user_devices
-            # TESTING PURPOSES ONLY
-            data = [
-                ("01-01-2020", 1597),
-                ("02-01-2020", 1456),
-                ("03-01-2020", 1908),
-                ("04-01-2020", 896),
-                ("05-01-2020", 755),
-                ("06-01-2020", 453),
-                ("07-01-2020", 1100),
-                ("08-01-2020", 1235),
-                ("09-01-2020", 1478)
-            ]
+        if user_devices is not None and len(user_devices) > 0:
+            # Get First Device Ref
+            device_ref = user_devices[0]
 
-            labels = [row[0] for row in data]
-            values = [row[1] for row in data]
+            # Query all metrics
+            metrics = Metrics(device_ref)
 
-            return render_template('dash/dashboard.html', devices=user_devices, current_device=user_devices[0].device_name, metrics=None, labels=labels, values=values), 200
+            logger.info(f"Metric Validation Outcome: {metrics.is_valid()}")
+
+            if metrics.is_valid():
+                chart_data = ChartMetrics(metrics)
+            else:
+                metrics = None
+                chart_data = None
+
+            flash(f'Now viewing metrics collected for {device_ref.device_name}', category='info')
+            return render_template('dash/dashboard.html', devices=user_devices, current_device=device_ref.device_name,
+                                   metrics=metrics, chart_data=chart_data, conv_bytes=util.bytes_to_amt_per_sec), 200
         else:
-            return render_template('dash/dashboard.html', devices=None, metrics=None), 200
+            return render_template('dash/dashboard.html', devices=None, current_device=None,
+                                   metrics=None, chart_data=None, conv_bytes=util.bytes_to_amt_per_sec), 200
 
     else:
         # User must log in to view the Dashboard
@@ -53,15 +53,18 @@ def dashboard_device_page(device_name):
             # Get Total Device List
             user_devices = Device.query.filter_by(user_id=current_user.id).all()
 
-            flash(f'Now viewing metrics collected for {device_ref.device_name}', category='info')
-
             # Query all metrics
             metrics = Metrics(device_ref)
+
+            logger.info(f"Metric Validation Outcome: {metrics.is_valid()}")
+
             if metrics.is_valid():
                 chart_data = ChartMetrics(metrics)
             else:
+                metrics = None
                 chart_data = None
 
+            flash(f'Now viewing metrics collected for {device_ref.device_name}', category='info')
             return render_template('dash/dashboard.html', devices=user_devices, current_device=device_ref.device_name,
                                    metrics=metrics, chart_data=chart_data, conv_bytes=util.bytes_to_amt_per_sec), 200
         else:
@@ -90,8 +93,8 @@ def register_device():
                 db.session.commit()
 
                 logger.info("Committing new Registered User Device")
-                flash(f'Device registered successfully!', category='success')
-                return redirect(url_for('dash.dashboard_page')), 301
+                flash(f'Device registered successfully! Now viewing {new_device.device_name}', category='success')
+                return redirect(url_for('dash.dashboard_device_page', device_name=new_device.device_name)), 301
 
             if register_form.errors != {}:
                 for err_msg in register_form.errors.values():

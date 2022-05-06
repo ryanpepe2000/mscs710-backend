@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% if device != None and metrics != None and chart_data != None %}
+{% if devices != None and metrics != None %}
     {% block scripts %}
         <script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='/src/jquery-3.6.0.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='/src/datatables.min.js') }}"></script>
@@ -58,7 +58,7 @@ Matrix - Dashboard
                 </div>
             </div>
             <!-- Dashboard -->
-            <div class="flex w-full {% if metrics == None %} h-5/6 {% endif %} px-4 mx-auto md:px-6 lg:px-8">
+            <div class="flex w-full {% if metrics == None or not metrics.is_valid() %} h-5/6 {% endif %} px-4 mx-auto md:px-6 lg:px-8">
                 <!-- Dashboard Wrapper -->
                 <div class="flex flex-col w-full bg-gray-50 rounded-lg shadow-lg my-10 p-8 justify-between">
                     <h2 class="text-xl text-matrix_gray-200 font-['Roboto'] pb-4">Dashboard</h2>
