@@ -2,6 +2,7 @@
 import json
 import requests
 import time
+import platform
 from datetime import datetime
 
 import psutil
@@ -11,8 +12,6 @@ file_path = r'credentials.txt'
 base_url = "http://127.0.0.1:5000/"
 api_route = "api/send_data"
 
-DEBUG = False
-
 
 def main():
     data = collect_metrics()
@@ -21,32 +20,45 @@ def main():
 
 
 def collect_metrics():
-    # Store relevant data in json object
+    # Store relevant data in JSON Object
     data = {}
-    # CPU Data
+
+    # Collect Device Information
+    data['os'] = platform.system()
+
+    # Collect CPU Data
     data['cpu'] = psutil.cpu_freq()._asdict()
     data['cpu'].update(psutil.cpu_times_percent(interval=1)._asdict())
     data['cpu']['time'] = str(datetime.utcnow())
-    # Memory Data
+
+    # Collect Memory Data
     data['memory'] = psutil.virtual_memory()._asdict()
     data['memory']['time'] = str(datetime.utcnow())
-    # Disk Data
+
+    # Collect Disk Data
     data['disk'] = psutil.disk_io_counters()._asdict()
     data['disk'].update(psutil.disk_usage('/')._asdict())
     data['disk']['time'] = str(datetime.utcnow())
 
-    if DEBUG:
-        print("cpu:", data['cpu'])
-        print("memory:", data['memory'])
-        print("disk:", data['disk'])
-
+    # Collect Process Data
     processes = [p for p in psutil.process_iter()]
     process_data = {}
+
+    # Determine Collection Method based on Availability (OS)
+    available = True if platform.system() == 'Windows' else False
+    print(f"Base OS Determined: {available}")
 
     for process in processes[:]:
         try:
             process.cpu_percent()
-            process._io_before = process.io_counters()
+
+            if available:
+                # Windows
+                process._io_before = process.io_counters()
+            else:
+                # Linux or MacOS
+                process._io_before = 0
+
         except psutil.Error:
             processes.remove(process)
             continue
@@ -63,11 +75,21 @@ def collect_metrics():
                 name = process.name()
                 cpu = process.cpu_percent()
                 mem = process.memory_percent()
-                disk = disk_usage(process)
                 threads = process.num_threads()
-                process.io_after = process.io_counters()
-                read_per_sec = process.io_after.read_bytes - process._io_before.read_bytes
-                write_per_sec = process.io_after.write_bytes - process._io_before.write_bytes
+
+                if available:
+                    # Collect per Process Disk IO (Windows)
+                    disk = disk_usage(process)
+                    process.io_after = process.io_counters()
+                    read_per_sec = process.io_after.read_bytes - process._io_before.read_bytes
+                    write_per_sec = process.io_after.write_bytes - process._io_before.write_bytes
+                else:
+                    # Collection Method not Available - Default (Linux or MacOS)
+                    disk = 0
+                    process.io_after = 0
+                    read_per_sec = 0
+                    write_per_sec = 0
+
                 process_data[pid] = {
                     'name': name, 'cpu': cpu, 'memory': mem, 'disk': disk,
                     'threads': threads, 'time': str(datetime.utcnow()),
@@ -86,6 +108,7 @@ def collect_metrics():
 
     # Update processes dict
     data['processes'] = process_data
+
     return data
 
 
