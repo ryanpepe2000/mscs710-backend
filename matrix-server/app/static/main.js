@@ -35,9 +35,12 @@ nav_mobile_btn.addEventListener('click', () => {
 // Flash Message Display Behavior
 const flash_banners = document.querySelectorAll('#flash-banner');
 
+
 flash_banners.forEach(banner => {
+    setTimeout(() => { banner.remove(); }, 5000);
+
     banner.addEventListener('click', () => {
-        banner.classList.add("hidden");
+        banner.remove();
     });
 })
 

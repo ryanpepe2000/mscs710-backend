@@ -91,7 +91,7 @@ class Device(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     device_name = db.Column(db.String(length=25), nullable=False)
     mac_address = db.Column(db.String(length=17), nullable=True)
-    os_version = db.Column(db.String(length=50), nullable=True)
+    os_version = db.Column(db.String(length=200), nullable=True)
     registration_date = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     is_active = db.Column(db.Boolean, nullable=False, default=False)
 
@@ -160,13 +160,13 @@ class ProcessReport(db.Model):
 
     # Column definition
     proc_id = db.Column(db.Integer, primary_key=True, autoincrement=False)
-    sys_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
-    device_time = db.Column(db.DateTime, primary_key=True, default=datetime.utcnow())
-    pid = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+    sys_time = db.Column(db.DateTime, default=datetime.utcnow())
+    device_time = db.Column(db.DateTime, default=datetime.utcnow())
+    pid = db.Column(db.Integer, nullable=False, primary_key=True)
     process_name = db.Column(db.String(length=100), nullable=False)
     cpu_usage = db.Column(db.Float, nullable=False)
     mem_usage = db.Column(db.Float, nullable=False)
-    disk_usage = db.Column(db.Float, nullable=False)
+    disk_usage = db.Column(db.Float, nullable=True)
     disk_read_bytes_per_sec = db.Column(db.BigInteger, nullable=True)
     disk_write_bytes_per_sec = db.Column(db.BigInteger, nullable=True)
     thread_count = db.Column(db.Integer, nullable=False)

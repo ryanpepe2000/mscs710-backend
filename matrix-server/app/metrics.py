@@ -136,7 +136,8 @@ class Metrics:
         data = []
         for cpu_report in self.all_cpu_reports:
             time = str(cpu_report.sys_time)[:16]
-            percent = round(cpu_report.speed_curr / cpu_report.speed_max * 100, 1)
+            # percent = round(cpu_report.speed_curr / cpu_report.speed_max * 100, 1)
+            percent = round(cpu_report.system + cpu_report.user, 1)
             data.append((time, percent))
 
         return data
@@ -154,7 +155,8 @@ class Metrics:
         data = []
         for disk_report in self.all_disk_reports:
             time = str(disk_report.sys_time)[:16]
-            amt_per_sec = util.bytes_to_amt_per_sec(disk_report.read_bytes_per_sec + disk_report.write_bytes_per_sec)
+            # amt_per_sec = util.bytes_to_amt_per_sec(disk_report.read_bytes_per_sec + disk_report.write_bytes_per_sec)
+            amt_per_sec = disk_report.read_bytes_per_sec + disk_report.write_bytes_per_sec
             data.append((time, amt_per_sec))
 
         return data

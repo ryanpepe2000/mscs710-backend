@@ -1,10 +1,10 @@
 import json
 import logging
-from flask import request, send_file
+from flask import request, send_file, redirect, url_for, flash
 from sqlalchemy import desc
 from . import agent
-from .. import db
 from ..models import *
+from flask_login import current_user
 
 logger = logging.getLogger(__name__.split(".", 1)[1])
 
@@ -31,7 +31,6 @@ def post_data():
             device.is_active = system_data['is_active']
             device.mac_address = system_data['mac_address']
             device.os_version = system_data['os_version']
-            print("Test: " + str(system_data['is_active']))
             db.session.commit()
 
             # Insert New CPU Report to Database
@@ -102,8 +101,13 @@ def post_data():
 
 @agent.route("/api/download-agent")
 def download_agent(path='static/agent/agent.zip'):
-    try:
-        return send_file(path, as_attachment=True)
-    except Exception as e:
-        logger.debug(e)
-        return 'An error has occurred while downloading your file', 400
+    if current_user.is_authenticated:
+        try:
+            return send_file(path, as_attachment=True), 200
+        except Exception as e:
+            logger.debug(e)
+            return 'An error has occurred while downloading your file', 400
+
+    logger.info(f'Received Non-Authenticated Request for Agent from {request.remote_addr}')
+    flash(f'Please login to download our agent.', category='danger')
+    return redirect(url_for('auth.login_page')), 301

@@ -75,19 +75,20 @@ def collect_metrics():
                 name = process.name()
                 cpu = process.cpu_percent()
                 mem = process.memory_percent()
-                disk = disk_usage(process)
+                disk = None
                 threads = process.num_threads()
                 process_data[pid] = {
                     'name': name, 'cpu': cpu, 'memory': mem, 'disk': disk,
                     'threads': threads, 'time': str(datetime.utcnow())
                 }
                 try:
+                    disk = disk_usage(process)
                     process._io_after = process.io_counters()
                     read_per_sec = (process._io_after.read_bytes - process._io_before.read_bytes)
                     write_per_sec = (process._io_after.write_bytes - process._io_before.write_bytes)
-                    process_data[pid].update({'disk_read_per_sec': read_per_sec, 'disk_write_per_sec': write_per_sec})
+                    process_data[pid].update({'disk_read_per_sec': read_per_sec, 'disk_write_per_sec': write_per_sec, 'disk': disk})
                 except AttributeError:
-                    print(f"Process data not supported on OS: {data['system']['os_version']}")
+                    continue
             except (psutil.NoSuchProcess, psutil.ZombieProcess):
                 continue
 

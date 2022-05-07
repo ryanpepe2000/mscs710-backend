@@ -57,6 +57,24 @@ function updateChartData() {
         options: {
             responsive: false,
             plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            if (current_index ==2) {
+                                let label = context.dataset.label || '';
+
+                                if (context.parsed.y !== null) {
+                                    label = formatFileSize(context.parsed.y, 2);
+                                }
+
+                                return label;
+                            } else {
+                                return context.dataset.label + ': ' + context.parsed.y + '%';
+                            }
+
+                        }
+                    }
+                },
                 legend: {
                     display: false
                 }
@@ -64,7 +82,14 @@ function updateChartData() {
             scales: {
                 x: {
                     ticks: {
-                        display: false
+                        display: false,
+                        callback: function(value, index, ticks) {
+                            if (current_index == 2) {
+                                return formatFileSize(value, 2);
+                            } else {
+                                return value + '%';
+                            }
+                        }
                     },
                     grid: {
                         display: false
@@ -74,6 +99,13 @@ function updateChartData() {
                     ticks: {
                         font: {
                             size: 10
+                        },
+                        callback: function(value, index, ticks) {
+                            if (current_index == 2) {
+                                return formatFileSize(value, 2);
+                            } else {
+                                return value + '%';
+                            }
                         }
                     },
                     grid: {
@@ -83,6 +115,20 @@ function updateChartData() {
             }
         }
     });
+}
+
+function formatFileSize(bytes,decimalPoint) {
+   if(bytes === 0) return '0 Bytes';
+   let k = 1000,
+       dm = decimalPoint || 2,
+       sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+       i = Math.floor(Math.log(bytes) / Math.log(k));
+
+   if (bytes > 0 && bytes < 1) {
+       return "." + bytes + sizes[0] + "/s";
+   }
+
+   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i] + "/s";
 }
 
 // Metric Carousel Behavior
@@ -136,19 +182,7 @@ function updateChartView() {
 }
 
 function updateChartTitle() {
-    switch(current_index) {
-        case 0:
-            dash_chart_title.innerHTML = "CPU Utilization"
-            break;
-
-        case 1:
-            dash_chart_title.innerHTML = "Memory Utilization"
-            break;
-
-        case 2:
-            dash_chart_title.innerHTML = "Disk Utilization"
-            break;
-    }
+    dash_chart_title.innerHTML = chart_data[current_index][0];
 }
 
 /* Metric Process Behavior */

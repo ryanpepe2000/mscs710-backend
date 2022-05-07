@@ -141,7 +141,7 @@ Matrix - Dashboard
                                                     <td class="table-item">{{ process.process_name }}</td>
                                                     <td class="table-item">{{ process.device_time }}</td>
                                                     <td class="table-item">{{ process.cpu_usage }}</td>
-                                                    <td class="table-item">{{ process.mem_usage }}</td>
+                                                    <td class="table-item">{{ '%0.2f' | format(process.mem_usage|float) }}</td>
                                                     {% if process.disk_read_bytes_per_sec != None and process.disk_write_bytes_per_sec != None %}
                                                         <td class="table-item" data-order='{{ process.disk_read_bytes_per_sec + process.disk_write_bytes_per_sec }}'>
                                                             <div>
@@ -196,7 +196,7 @@ Matrix - Dashboard
             // Send Metric Chart Data for Chart.js Population
             setChartData("CPU Utilization", {{ chart_data.get_cpu_labels() | safe }}, {{ chart_data.get_cpu_values() | safe }});
             setChartData("Memory Utilization", {{ chart_data.get_mem_labels() | safe }}, {{ chart_data.get_mem_values()  | safe }});
-            setChartData("Disk IO Utilization", {{ chart_data.get_disk_labels() | safe }}, {{ chart_data.get_disk_values()  | safe }});
+            setChartData("Disk Utilization", {{ chart_data.get_disk_labels() | safe }}, {{ chart_data.get_disk_values()  | safe }});
 
             // Populate First Chart.js View
             updateChartData();
