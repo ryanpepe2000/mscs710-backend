@@ -8,19 +8,19 @@
 
 /* Matrix Components */
 .btn-solid-blue {
-    @apply p-1 text-white text-xs md:text-sm font-['Roboto'] bg-matrix_blue-100 rounded-md hover:bg-matrix_blue-200 focus:outline-none transition duration-300
+    @apply p-1 text-white text-xs md:text-sm font-sans bg-matrix_blue-100 rounded-md hover:bg-matrix_blue-200 focus:outline-none transition duration-300
 }
 
 .btn-outline-blue {
-    @apply p-1 text-matrix_blue-100 text-sm md:text-base font-['Roboto'] border-matrix_blue-100 border rounded-lg hover:text-white hover:bg-matrix_blue-100 focus:outline-none transition duration-300
+    @apply p-1 text-matrix_blue-100 text-sm md:text-base font-sans border-matrix_blue-100 border rounded-lg hover:text-white hover:bg-matrix_blue-100 focus:outline-none transition duration-300
 }
 
 .btn-solid-gray {
-    @apply p-1 text-white text-xs md:text-sm font-['Roboto'] bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
+    @apply p-1 text-white text-xs md:text-sm font-sans bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
 }
 
 .btn-solid-gray-small {
-    @apply p-1 text-white text-xs md:text-sm font-['Roboto'] bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
+    @apply p-1 text-white text-xs md:text-sm font-sans bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
 }
 
 .form-field {
@@ -42,15 +42,15 @@
 }
 
 .entries-select {
-    @apply h-6 w-12 font-['Roboto'] text-matrix_gray-200 border-matrix_gray-100 text-xs focus:outline-none focus:ring-0 transition duration-300
+    @apply h-6 w-12 font-sans text-matrix_gray-200 border-matrix_gray-100 text-xs focus:outline-none focus:ring-0 transition duration-300
 }
 
 .table-filter {
-    @apply pt-1 pr-2 h-8 font-['Roboto'] text-matrix_gray-100 text-xs md:text-sm
+    @apply pt-1 pr-2 h-8 font-sans text-matrix_gray-100 text-xs md:text-sm
 }
 
 .table-search-bar {
-    @apply ml-2 h-6 font-['Roboto'] text-matrix_gray-200 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100 transition-all duration-300
+    @apply ml-2 h-6 font-sans text-matrix_gray-200 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100 transition-all duration-300
 }
 
 .table-info {
@@ -62,7 +62,7 @@
 }
 
 .table-header {
-    @apply font-['Roboto'] text-matrix_gray-200 text-xs md:text-sm font-medium px-1 md:px-2 py-4
+    @apply font-sans text-matrix_gray-200 text-xs md:text-sm font-medium px-1 md:px-2 py-4
 }
 
 .table-row {

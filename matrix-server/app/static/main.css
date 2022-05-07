@@ -1079,24 +1079,20 @@ Ensure the default browser behavior of the `hidden` attribute.
   text-align: center;
 }
 
-.font-\[\'Roboto\'\]{
-  font-family: 'Roboto';
+.font-sans{
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .font-matrix_body{
   font-family: Nunito;
 }
 
-.font-\[\'roboto\'\]{
-  font-family: 'roboto';
-}
-
-.\!font-\[\'Roboto\'\]{
-  font-family: 'Roboto' !important;
-}
-
 .\!font-matrix_body{
   font-family: Nunito !important;
+}
+
+.\!font-sans{
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
 }
 
 .text-xs{
@@ -1254,7 +1250,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(53 125 233 / var(--tw-bg-opacity));
   padding: 0.25rem;
-  font-family: 'Roboto';
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 0.75rem;
   line-height: 1rem;
   --tw-text-opacity: 1;
@@ -1289,7 +1285,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-border-opacity: 1;
   border-color: rgb(53 125 233 / var(--tw-border-opacity));
   padding: 0.25rem;
-  font-family: 'Roboto';
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 0.875rem;
   line-height: 1.25rem;
   --tw-text-opacity: 1;
@@ -1325,7 +1321,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(79 79 79 / var(--tw-bg-opacity));
   padding: 0.25rem;
-  font-family: 'Roboto';
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 0.75rem;
   line-height: 1rem;
   --tw-text-opacity: 1;
@@ -1359,7 +1355,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(79 79 79 / var(--tw-bg-opacity));
   padding: 0.25rem;
-  font-family: 'Roboto';
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 0.75rem;
   line-height: 1rem;
   --tw-text-opacity: 1;
@@ -1467,7 +1463,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 3rem;
   --tw-border-opacity: 1;
   border-color: rgb(122 122 122 / var(--tw-border-opacity));
-  font-family: 'Roboto';
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 0.75rem;
   line-height: 1rem;
   --tw-text-opacity: 1;
@@ -1491,7 +1487,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 2rem;
   padding-top: 0.25rem;
   padding-right: 0.5rem;
-  font-family: 'Roboto';
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 0.75rem;
   line-height: 1rem;
   --tw-text-opacity: 1;
@@ -1508,7 +1504,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 .table-search-bar{
   margin-left: 0.5rem;
   height: 1.5rem;
-  font-family: 'Roboto';
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 0.75rem;
   line-height: 1rem;
   --tw-text-opacity: 1;
@@ -1581,7 +1577,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-right: 0.25rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  font-family: 'Roboto';
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 0.75rem;
   line-height: 1rem;
   font-weight: 500;

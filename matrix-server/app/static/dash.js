@@ -223,7 +223,7 @@ function updateTableView() {
                 if (page.classList.contains('current')) {
                     page.style.removeProperty('background');
                     page.classList.remove('current');
-                    page.classList.add("!font-['Roboto']", '!font-bold', 'hover:!bg-gray-200');
+                    page.classList.add('!font-bold', 'hover:!bg-gray-200');
                 }
             })
 
@@ -246,7 +246,7 @@ function addPageListeners(pages) {
                 if (page.classList.contains('current')) {
                     page.style.removeProperty('color');
                     page.classList.remove('current');
-                    page.classList.add("!font-['Roboto']", '!font-bold', 'hover:!bg-opacity-0');
+                    page.classList.add("!font-sans", '!font-bold', 'hover:!bg-opacity-0');
                 }
             })
 
