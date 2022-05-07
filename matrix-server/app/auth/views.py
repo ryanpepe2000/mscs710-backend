@@ -68,6 +68,7 @@ def login_page():
                 flash(f'You are now logged in.', category='success')
                 return redirect(url_for('dash.dashboard_page')), 301
             else:
+                logger.warning(f'Invalid login attempt for user ({login_form.email.data}) from {request.remote_addr}')
                 flash(f'The email or password given was incorrect. Please try again.', category='danger')
 
     return render_template('auth/login.html', form=login_form), 200

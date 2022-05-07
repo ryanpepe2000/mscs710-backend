@@ -1,6 +1,6 @@
 import logging
 from . import main
-from flask import render_template, redirect, url_for, flash
+from flask import render_template
 from flask_login import current_user
 
 logger = logging.getLogger(__name__.split(".", 1)[1])

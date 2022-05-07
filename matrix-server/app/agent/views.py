@@ -1,5 +1,4 @@
 import json
-import logging
 from flask import request, send_file, redirect, url_for, flash
 from sqlalchemy import desc
 from . import agent
@@ -18,14 +17,15 @@ def post_data():
         user = User.query.filter_by(email=credentials['email']).first()
 
         if user is None:
-            return "Account Credentials could not be verified", 400
+            return "Account Credentials could not be verified.", 400
 
         device = Device.query.filter_by(device_name=credentials['device_name'], user_id=user.id).first()
 
         if device is None:
-            return "Device name could not be verified", 400
+            return "Device name could not be verified for your account.", 400
 
         if user and user.validate_password(attempted_password=credentials['password']) and device:
+            sys_time = datetime.utcnow()
 
             system_data = data['system']
             device.is_active = system_data['is_active']
@@ -39,6 +39,7 @@ def post_data():
                                    speed_min=cpu_data['min'],
                                    speed_max=cpu_data['max'],
                                    device_time=cpu_data['time'],
+                                   sys_time=sys_time,
                                    system=cpu_data['system'],
                                    user=cpu_data['user'],
                                    device_id=device.device_id)
@@ -50,6 +51,7 @@ def post_data():
             memory_report = MemoryReport(memory_used=memory_data['used'],
                                          memory_total=memory_data['total'],
                                          device_time=memory_data['time'],
+                                         sys_time=sys_time,
                                          device_id=device.device_id)
             db.session.add(memory_report)
             db.session.commit()
@@ -63,6 +65,7 @@ def post_data():
                                      read_bytes_per_sec=disk_data['read_time'],
                                      write_bytes_per_sec=disk_data['write_time'],
                                      device_time=disk_data['time'],
+                                     sys_time=sys_time,
                                      device_id=device.device_id)
             db.session.add(disk_report)
             db.session.commit()
@@ -87,16 +90,19 @@ def post_data():
                                                disk_write_bytes_per_sec=process_data.get('disk_write_per_sec', None),
                                                thread_count=process_data['threads'],
                                                device_time=process_data['time'],
+                                               sys_time=sys_time,
                                                device_id=device.device_id)
                 db.session.add(process_report)
             db.session.commit()
-            return "Metrics Recorded Successfully", 200
+            logger.info(f'Committed Agent metrics for device ({device.device_name}) for user: {user.email} from: {request.remote_addr}')
+
+            return "Metrics Recorded Successfully.", 200
         else:
-            logger.debug("Incorrect credentials/device ID have been provided.")
-            return 'Invalid Account Credentials', 400
+            logger.warning(f'Incorrect credentials/device ID have been provided from: {request.remote_addr}.')
+            return 'Invalid Account Credentials.', 400
     else:
-        logger.debug("Credentials have not been provided.")
-        return 'Missing credentials', 400
+        logger.debug(f'Credentials file could not be located or missing information from: {request.remote_addr}.')
+        return 'Missing credentials.', 400
 
 
 @agent.route("/api/download-agent")
@@ -105,9 +111,10 @@ def download_agent(path='static/agent/agent.zip'):
         try:
             return send_file(path, as_attachment=True), 200
         except Exception as e:
-            logger.debug(e)
-            return 'An error has occurred while downloading your file', 400
+            logger.debug(f'Could not find file: {path} within local server.')
+            flash(f'Unable to find Device Agent at this time. Please try again later.', category='danger')
+            return redirect(url_for('dash.dashboard_page')), 301
 
-    logger.info(f'Received Non-Authenticated Request for Agent from {request.remote_addr}')
+    logger.warning(f'Received Non-Authenticated Request for Agent from {request.remote_addr}')
     flash(f'Please login to download our agent.', category='danger')
     return redirect(url_for('auth.login_page')), 301
