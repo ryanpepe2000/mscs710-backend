@@ -33,6 +33,11 @@ class Metrics:
         return self.device is not None and self.new_cpu_report is not None and self.new_mem_report is not None \
                and self.new_disk_report is not None and self.proc_report is not None
 
+    def has_process_io(self):
+        if self.proc_report[0].disk_read_bytes_per_sec is None or self.proc_report[0].disk_write_bytes_per_sec is None:
+            return False
+        return True
+
     def get_cpu_display_titles(self):
         return ["User Consumption", "System Consumption", "Active Threads", "Process Count"]
 

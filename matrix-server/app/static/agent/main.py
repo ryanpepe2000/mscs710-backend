@@ -2,6 +2,9 @@
 import json
 import requests
 import time
+import platform
+import uuid
+
 from datetime import datetime
 
 import psutil
@@ -23,6 +26,13 @@ def main():
 def collect_metrics():
     # Store relevant data in json object
     data = {}
+    # General system info
+    data['system'] = {
+        "os_version": platform.system() + " " + platform.version(),
+        "mac_address": (
+            ':'.join(['{:02x}'.format((uuid.getnode() >> ele) & 0xff) for ele in range(0, 8 * 6, 8)][::-1])),
+        "is_active": True
+    }
     # CPU Data
     data['cpu'] = psutil.cpu_freq()._asdict()
     data['cpu'].update(psutil.cpu_times_percent(interval=1)._asdict())
@@ -40,8 +50,8 @@ def collect_metrics():
         print("memory:", data['memory'])
         print("disk:", data['disk'])
 
-    processes = [p for p in psutil.process_iter()]
     process_data = {}
+    processes = [p for p in psutil.process_iter()]
 
     for process in processes[:]:
         try:
@@ -49,6 +59,8 @@ def collect_metrics():
             process._io_before = process.io_counters()
         except psutil.Error:
             processes.remove(process)
+            continue
+        except AttributeError:
             continue
     disk_io_before = psutil.disk_io_counters()
 
@@ -65,14 +77,17 @@ def collect_metrics():
                 mem = process.memory_percent()
                 disk = disk_usage(process)
                 threads = process.num_threads()
-                process.io_after = process.io_counters()
-                read_per_sec = process.io_after.read_bytes - process._io_before.read_bytes
-                write_per_sec = process.io_after.write_bytes - process._io_before.write_bytes
                 process_data[pid] = {
                     'name': name, 'cpu': cpu, 'memory': mem, 'disk': disk,
-                    'threads': threads, 'time': str(datetime.utcnow()),
-                    'disk_read_per_sec': read_per_sec, 'disk_write_per_sec': write_per_sec
+                    'threads': threads, 'time': str(datetime.utcnow())
                 }
+                try:
+                    process._io_after = process.io_counters()
+                    read_per_sec = (process._io_after.read_bytes - process._io_before.read_bytes)
+                    write_per_sec = (process._io_after.write_bytes - process._io_before.write_bytes)
+                    process_data[pid].update({'disk_read_per_sec': read_per_sec, 'disk_write_per_sec': write_per_sec})
+                except AttributeError:
+                    print(f"Process data not supported on OS: {data['system']['os_version']}")
             except (psutil.NoSuchProcess, psutil.ZombieProcess):
                 continue
 
@@ -82,7 +97,6 @@ def collect_metrics():
     disks_write_per_sec = disk_io_after.write_bytes - disk_io_before.write_bytes
     data['disk']['read_per_sec'] = disks_read_per_sec
     data['disk']['write_per_sec'] = disks_write_per_sec
-
 
     # Update processes dict
     data['processes'] = process_data

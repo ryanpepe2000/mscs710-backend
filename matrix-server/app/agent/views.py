@@ -26,6 +26,14 @@ def post_data():
             return "Device name could not be verified", 400
 
         if user and user.validate_password(attempted_password=credentials['password']) and device:
+
+            system_data = data['system']
+            device.is_active = system_data['is_active']
+            device.mac_address = system_data['mac_address']
+            device.os_version = system_data['os_version']
+            print("Test: " + str(system_data['is_active']))
+            db.session.commit()
+
             # Insert New CPU Report to Database
             cpu_data = data['cpu']
             cpu_report = CPUReport(speed_curr=cpu_data['current'],
@@ -76,8 +84,8 @@ def post_data():
                                                cpu_usage=process_data['cpu'],
                                                mem_usage=process_data['memory'],
                                                disk_usage=process_data['disk'],
-                                               disk_read_bytes_per_sec=process_data['disk_read_per_sec'],
-                                               disk_write_bytes_per_sec=process_data['disk_write_per_sec'],
+                                               disk_read_bytes_per_sec=process_data.get('disk_read_per_sec', None),
+                                               disk_write_bytes_per_sec=process_data.get('disk_write_per_sec', None),
                                                thread_count=process_data['threads'],
                                                device_time=process_data['time'],
                                                device_id=device.device_id)

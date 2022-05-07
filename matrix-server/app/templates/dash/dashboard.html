@@ -128,7 +128,9 @@ Matrix - Dashboard
                                                 <th>Device Time</th>
                                                 <th>CPU %</th>
                                                 <th>Memory %</th>
-                                                <th>Disk IO</th>
+                                                {% if metrics.has_process_io() %}
+                                                    <th>Disk IO</th>
+                                                {% endif %}
                                                 <th>Threads</th>
                                             </tr>
                                         </thead>
@@ -140,12 +142,14 @@ Matrix - Dashboard
                                                     <td class="table-item">{{ process.device_time }}</td>
                                                     <td class="table-item">{{ process.cpu_usage }}</td>
                                                     <td class="table-item">{{ process.mem_usage }}</td>
-                                                    <td class="table-item" data-order='{{ process.disk_read_bytes_per_sec + process.disk_write_bytes_per_sec }}'>
-                                                        <div>
-                                                            {{ conv_bytes(process.disk_read_bytes_per_sec +
-                                                            process.disk_write_bytes_per_sec) }}
-                                                        </div>
-                                                    </td>
+                                                    {% if process.disk_read_bytes_per_sec != None and process.disk_write_bytes_per_sec != None %}
+                                                        <td class="table-item" data-order='{{ process.disk_read_bytes_per_sec + process.disk_write_bytes_per_sec }}'>
+                                                            <div>
+                                                                {{ conv_bytes(process.disk_read_bytes_per_sec +
+                                                                process.disk_write_bytes_per_sec) }}
+                                                            </div>
+                                                        </td>
+                                                    {% endif %}
                                                     <td class="table-item">{{ process.thread_count }}</td>
                                                 </tr>
                                             {% endfor %}
@@ -211,7 +215,6 @@ Matrix - Dashboard
                         },
                     }]
                 });
-
                 proc_table.show();
             });
         </script>

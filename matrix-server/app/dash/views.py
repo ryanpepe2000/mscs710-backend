@@ -49,7 +49,7 @@ def dashboard_device_page(device_name):
         device_ref = Device.query.filter_by(device_name=device_name, user_id=current_user.id).first()
 
         # Validate Requested Device is Owned by current_user
-        if device_ref is not None and device_ref.is_active:
+        if device_ref is not None:
             # Get Total Device List
             user_devices = Device.query.filter_by(user_id=current_user.id).all()
 
@@ -87,7 +87,6 @@ def register_device():
             if register_form.validate_on_submit():
                 # Insert New Device to Database
                 new_device = Device(device_name=register_form.device_name.data,
-                                    is_active=True,
                                     user_id=current_user.id)
                 db.session.add(new_device)
                 db.session.commit()
