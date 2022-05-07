@@ -6,7 +6,7 @@ Defines the metrics object that will be created and passed to the dashboard.
 """
 from typing import List
 
-from sqlalchemy import desc, func
+from sqlalchemy import desc, asc
 from . import util
 
 from .models import *
@@ -77,7 +77,7 @@ class Metrics:
 
     def get_all_cpu_reports(self):
         cpu_reports: List[CPUReport] = CPUReport.query.filter_by(device_id=self.device.device_id).order_by(
-            desc(CPUReport.cpu_id)).all()
+            CPUReport.cpu_id).all()
         if cpu_reports is None:
             raise MetricException
         else:
@@ -93,7 +93,7 @@ class Metrics:
 
     def get_all_mem_reports(self):
         mem_reports: List[MemoryReport] = MemoryReport.query.filter_by(device_id=self.device.device_id).order_by(
-            desc(MemoryReport.memory_id)).all()
+            MemoryReport.memory_id).all()
         if mem_reports is None:
             raise MetricException
         else:
@@ -109,7 +109,7 @@ class Metrics:
 
     def get_all_disk_reports(self):
         disk_reports: List[DiskReport] = DiskReport.query.filter_by(device_id=self.device.device_id).order_by(
-            desc(DiskReport.disk_id)).all()
+            DiskReport.disk_id).all()
         if disk_reports is None:
             raise MetricException
         else:

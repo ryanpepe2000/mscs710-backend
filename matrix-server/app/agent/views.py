@@ -62,8 +62,8 @@ def post_data():
                                      disk_used=disk_data['used'],
                                      read_bytes=disk_data['read_bytes'],
                                      write_bytes=disk_data['write_bytes'],
-                                     read_bytes_per_sec=disk_data['read_time'],
-                                     write_bytes_per_sec=disk_data['write_time'],
+                                     read_bytes_per_sec=disk_data['read_per_sec'],
+                                     write_bytes_per_sec=disk_data['write_per_sec'],
                                      device_time=disk_data['time'],
                                      sys_time=sys_time,
                                      device_id=device.device_id)

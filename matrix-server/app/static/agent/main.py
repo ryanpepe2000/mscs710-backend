@@ -67,6 +67,7 @@ def collect_metrics():
     # Sleep for one second so we can get io per sec
     time.sleep(1)
 
+    disk_total_read, disk_total_write = 0, 0
     # Go through processes and get updated info
     for process in processes[:]:
         with process.oneshot():
@@ -86,6 +87,8 @@ def collect_metrics():
                     process._io_after = process.io_counters()
                     read_per_sec = (process._io_after.read_bytes - process._io_before.read_bytes)
                     write_per_sec = (process._io_after.write_bytes - process._io_before.write_bytes)
+                    disk_total_read += read_per_sec
+                    disk_total_write += write_per_sec
                     process_data[pid].update({'disk_read_per_sec': read_per_sec, 'disk_write_per_sec': write_per_sec, 'disk': disk})
                 except AttributeError:
                     continue
@@ -94,8 +97,12 @@ def collect_metrics():
 
     # Disk operations after interval
     disk_io_after = psutil.disk_io_counters()
-    disks_read_per_sec = disk_io_after.read_bytes - disk_io_before.read_bytes
-    disks_write_per_sec = disk_io_after.write_bytes - disk_io_before.write_bytes
+    if disk_total_read > 0 or disk_total_write > 0:
+        disks_read_per_sec = disk_total_read
+        disks_write_per_sec = disk_total_write
+    else:
+        disks_read_per_sec = disk_io_after.read_bytes - disk_io_before.read_bytes
+        disks_write_per_sec = disk_io_after.write_bytes - disk_io_before.write_bytes
     data['disk']['read_per_sec'] = disks_read_per_sec
     data['disk']['write_per_sec'] = disks_write_per_sec
 

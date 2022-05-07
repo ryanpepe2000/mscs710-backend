@@ -31,7 +31,6 @@ def dashboard_page():
                 metrics = None
                 chart_data = None
 
-            flash(f'Now viewing metrics collected for {device_ref.device_name}', category='info')
             return render_template('dash/dashboard.html', devices=user_devices, current_device=device_ref.device_name,
                                    metrics=metrics, chart_data=chart_data, conv_bytes=util.bytes_to_amt_per_sec), 200
         else:
