@@ -1,10 +1,12 @@
 module.exports = {
+  mode: 'jit',
   content: [
       './app/templates/*.html',
       './app/templates/main/*.html',
       './app/templates/auth/*.html',
       './app/templates/dash/*.html',
-      './app/templates/components/*.html'
+      './app/templates/components/*.html',
+      './app/static/*.js'
   ],
   theme: {
     extend: {

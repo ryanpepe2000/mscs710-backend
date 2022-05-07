@@ -104,7 +104,7 @@ function updateChartData() {
                             if (current_index == 2) {
                                 return formatFileSize(value, 2);
                             } else {
-                                return value + '%';
+                                return Math.round(value * 100) / 100 + '%';
                             }
                         }
                     },
@@ -186,21 +186,73 @@ function updateChartTitle() {
 }
 
 /* Metric Process Behavior */
-const process_view_wrapper = document.querySelector('.view-more-btn');
-const process_view_text = document.querySelector('button.view-btn');
-const process_hidden_rows = document.querySelectorAll('.hidden-row');
+function updateTableView() {
+    // Entries Length Selector
+    const entries = document.querySelector('.dataTables_length');
+    entries.classList.add('entries-text');
 
-let rotation = 0;
+    const entries_select = document.getElementsByName('process_table_length')[0];
+    entries_select.classList.add('entries-select');
 
-process_view_wrapper.addEventListener('click', () => {
-   for (let i = 0; i < process_hidden_rows.length; i++) {
-       process_hidden_rows[i].classList.toggle('hidden');
-   }
+    // Search Bar
+    const table_filter = document.querySelector('.dataTables_filter');
+    table_filter.classList.add('table-filter');
 
-   if (process_view_text.innerHTML.includes('view more')) {
-       process_view_text.innerHTML = 'view less';
-   } else {
-       process_view_text.innerHTML = 'view more';
-   }
-});
+    const table_search_bar = document.querySelectorAll('input[type=search]')[0];
+    table_search_bar.classList.add('table-search-bar');
+
+    table_search_bar.addEventListener('keypress', () => {
+            updateTableView();
+    });
+
+    // Table Information
+    const table_info = document.querySelector('.dataTables_info');
+    table_info.classList.add('table-info', '!h-full');
+
+    // Process Pages
+    const previous_btn = document.querySelector('a.previous');
+    previous_btn.remove();
+
+    const next_btn = document.querySelector('a.next');
+    next_btn.remove();
+
+    // Page List
+    let page_numbers = document.querySelectorAll('.paginate_button');
+
+    page_numbers.forEach( page => {
+                if (page.classList.contains('current')) {
+                    page.style.removeProperty('background');
+                    page.classList.remove('current');
+                    page.classList.add("!font-['Roboto']", '!font-bold', 'hover:!bg-gray-200');
+                }
+            })
+
+    addPageListeners(page_numbers);
+}
+
+function addPageListeners(pages) {
+    pages.forEach( page => {
+        page.classList.add('!bg-transparent', '!bg-opacity-0', '!font-matrix_body', '!text-matrix_gray-100', '!border-0', 'hover:!bg-gray-50', '!rounded-lg', 'hover:!border-0');
+
+        page.addEventListener('click', () => {
+            // Remove Added Elements
+            document.querySelector('a.previous').remove();
+            document.querySelector('a.next').remove();
+
+            // Update Page Number Reference
+            page_numbers = document.querySelectorAll('.paginate_button');
+
+            pages.forEach( page => {
+                if (page.classList.contains('current')) {
+                    page.style.removeProperty('color');
+                    page.classList.remove('current');
+                    page.classList.add("!font-['Roboto']", '!font-bold', 'hover:!bg-opacity-0');
+                }
+            })
+
+            // Recursively Call Function on Event to Update New Elements (If any)
+            addPageListeners(page_numbers)
+        });
+    });
+}
 

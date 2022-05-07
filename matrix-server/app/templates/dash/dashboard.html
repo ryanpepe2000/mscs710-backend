@@ -213,7 +213,10 @@ Matrix - Dashboard
                                 return data.substring(0, 20) + "...";
                             } else return data;
                         },
-                    }]
+                    }],
+                    "fnDrawCallback" : function(oSettings) {
+                        updateTableView();
+                    }
                 });
                 proc_table.show();
             });

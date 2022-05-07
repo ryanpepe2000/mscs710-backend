@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__.split(".", 1)[1])
 
 
 @dash.route('/dashboard', methods=['GET'])
+@dash.route('/dashboard/', methods=['GET'])
 def dashboard_page():
     if current_user.is_authenticated:
         # Check for Registered Devices (if any)
@@ -22,11 +23,11 @@ def dashboard_page():
             # Query all metrics
             metrics = Metrics(device_ref)
 
-            logger.info(f"Metric Validation Outcome: {metrics.is_valid()}")
-
             if metrics.is_valid():
+                logger.info(f'Successfully fetched metrics for: {device_ref.device_name}')
                 chart_data = ChartMetrics(metrics)
             else:
+                logger.error(f'Unable to fetch valid metrics for: {device_ref.device_name}')
                 metrics = None
                 chart_data = None
 
@@ -56,20 +57,20 @@ def dashboard_device_page(device_name):
             # Query all metrics
             metrics = Metrics(device_ref)
 
-            logger.info(f"Metric Validation Outcome: {metrics.is_valid()}")
-
             if metrics.is_valid():
+                logger.info(f'Successfully fetched metrics for: {device_ref.device_name}')
                 chart_data = ChartMetrics(metrics)
             else:
+                logger.error(f'Unable to fetch valid metrics for: {device_ref.device_name}')
                 metrics = None
                 chart_data = None
 
-            flash(f'Now viewing metrics collected for {device_ref.device_name}', category='info')
             return render_template('dash/dashboard.html', devices=user_devices, current_device=device_ref.device_name,
                                    metrics=metrics, chart_data=chart_data, conv_bytes=util.bytes_to_amt_per_sec), 200
         else:
+            logger.debug(f'Requested device ({device_name}) could not be found for user: {current_user.email}')
             flash(f'Device requested does not exist or the device does not belong to you.', category='danger')
-            return "Nope", 404
+            return render_template('404.html'), 404
 
     else:
         # User must log in to view the Dashboard
@@ -91,7 +92,7 @@ def register_device():
                 db.session.add(new_device)
                 db.session.commit()
 
-                logger.info("Committing new Registered User Device")
+                logger.info(f'Committing new Registered User Device: {new_device.device_name}')
                 flash(f'Device registered successfully! Now viewing {new_device.device_name}', category='success')
                 return redirect(url_for('dash.dashboard_device_page', device_name=new_device.device_name)), 301
 
