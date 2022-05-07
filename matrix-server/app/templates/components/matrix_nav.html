@@ -1,6 +1,6 @@
 <div class="z-10 w-full h-16 bg-white shadow-lg">
     <div class="flex flex-col max-w-screen-xl mx-auto md:items-center md:justify-between md:flex-row px-4 md:px-6 lg:px-8">
-        <div class="p-4 flex flex-row items-center justify-between">
+        <div class="py-4 flex flex-row items-center justify-between">
             <div class="flex flex-row items-center">
                 {% if current_user.is_authenticated %}
                     <a href="{{ url_for('auth.logout_page')}}"><button type="button" class="h-8 w-20 btn-solid-gray">Logout</button></a>
