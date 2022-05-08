@@ -10,8 +10,8 @@ from datetime import datetime
 import psutil
 
 # Constants
+base_url = "http://matrixsystems.info/"
 file_path = r'credentials.txt'
-base_url = "http://127.0.0.1:5000/"
 api_route = "api/send_data"
 
 DEBUG = False
@@ -20,7 +20,12 @@ DEBUG = False
 def main():
     data = collect_metrics()
     data['credentials'] = get_credentials()
-    send_metrics(data)
+    if data['credentials'].get('url', None) is not None:
+        base_url = data['credentials'].get('url')
+        if not base_url.endswith("/"):
+            base_url += "/"
+        data['credentials'].pop('url')
+    send_metrics(data, base_url)
 
 
 def collect_metrics():
@@ -141,13 +146,13 @@ def get_credentials():
         return {}
 
 
-def send_metrics(data):
+def send_metrics(data, url):
     try:
-        requests.get(base_url)
+        requests.get(url)
     except requests.exceptions.ConnectionError:
         print(f"Error: Could not connect to web-server.")
     else:
-        r = requests.post(base_url + api_route, json=json.dumps(data))
+        r = requests.post(url + api_route, json=json.dumps(data))
         print(f"Status Code: {r.status_code}, Response: {r.text}")
 
 

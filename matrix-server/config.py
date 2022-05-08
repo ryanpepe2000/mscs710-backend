@@ -41,10 +41,7 @@ class ProductionConfig(Config):
     DEBUG = False
     TESTING = False
 
-    SQLALCHEMY_DATABASE_URI = environ.get('MYSQL_DEVELOPMENT_URI')
-
-    # AWS ECS
-    # TODO:- Implement AWS Credentials through dotenv
+    SQLALCHEMY_DATABASE_URI = environ.get('MYSQL_PRODUCTION_URI')
 
 
 class DevelopmentConfig(Config):
