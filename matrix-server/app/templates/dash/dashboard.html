@@ -81,7 +81,10 @@ Matrix - Dashboard
                         </div>
 
                         <!-- Metric Chart Carousel -->
-                        <h2 class="chart-title text-lg text-matrix_gray-200 font-sans mt-8 transition-all ease-in duration-500">CPU Utilization</h2>
+                        <div class="flex flex-row items-center justify-between">
+                            <h2 class="chart-title text-lg text-matrix_gray-200 font-sans mt-8 transition-all ease-in duration-500">CPU Utilization</h2>
+                            <p class="text-xs text-matrix_gray-100 font-matrix_body italic mt-8">Utilization as of {{ chart_data.get_cpu_labels()[0] }}</p>
+                        </div>
                         <div class="flex flex-row mt-4 justify-center">
                             <div id="chart-carousel" class="w-full relative">
                                 <!-- Inner -->
