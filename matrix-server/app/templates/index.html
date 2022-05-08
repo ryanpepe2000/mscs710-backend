@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+Matrix Systems
+{% endblock %}
+{% block content %}
+    <div class="w-screen h-5/6 items-center justify-center flex flex-col">
+        <img class="w-40 h-40 md:w-64 md:h-64" src="{{ url_for('static', filename='assets/matrix-primary.svg') }}" alt="Matrix Systems Logo">
+        <p class="pb-6 pt-10 text-lg text-matrix_gray-100 font-sans">welcome to matrix systems</p>
+        {% if authenticated %}
+            <a href="{{ url_for('dash.dashboard_page')}}"><button type="button" class="h-8 w-36 btn-solid-blue">View Dashboard</button></a>
+        {% else %}
+            <a href="{{ url_for('auth.register_page')}}"><button type="button" class="h-8 w-32 btn-solid-blue">Get Started</button></a>
+        {% endif %}
+    </div>
+{% endblock %}

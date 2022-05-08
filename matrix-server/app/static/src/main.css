@@ -1,0 +1,108 @@
+/* Import Font Families */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400&display=swap');
+
+/* Tailwind Classes */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Matrix Components */
+.btn-solid-blue {
+    @apply p-1 text-white text-xs md:text-sm font-sans bg-matrix_blue-100 rounded-md hover:bg-matrix_blue-200 focus:outline-none transition duration-300
+}
+
+.btn-outline-blue {
+    @apply p-1 text-matrix_blue-100 text-sm md:text-base font-sans border-matrix_blue-100 border rounded-lg hover:text-white hover:bg-matrix_blue-100 focus:outline-none transition duration-300
+}
+
+.btn-solid-gray {
+    @apply p-1 text-white text-xs md:text-sm font-sans bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
+}
+
+.btn-solid-gray-small {
+    @apply p-1 text-white text-xs md:text-sm font-sans bg-matrix_gray-200 rounded hover:bg-matrix_gray-100 focus:outline-none transition duration-300
+}
+
+.form-field {
+    @apply p-1 my-2 md:my-3.5 bg-white rounded border border-gray-200 text-matrix_gray-200 text-xs md:text-sm font-matrix_body focus:outline-none focus:border-matrix_blue-100 transition duration-300
+}
+
+/* Metric Chart Carousel Components */
+.active-indicator {
+    @apply bg-matrix_gray-200 w-6
+}
+
+.inactive-indicator {
+    @apply bg-matrix_gray-100 w-2
+}
+
+/* Metric Process Data Components */
+.entries-text {
+    @apply pt-1 pl-2 font-matrix_body text-xs md:text-sm text-matrix_gray-100
+}
+
+.entries-select {
+    @apply h-6 w-12 font-sans text-matrix_gray-200 border-matrix_gray-100 text-xs focus:outline-none focus:ring-0 transition duration-300
+}
+
+.table-filter {
+    @apply pt-1 pr-2 h-8 font-sans text-matrix_gray-100 text-xs md:text-sm
+}
+
+.table-search-bar {
+    @apply ml-2 h-6 font-sans text-matrix_gray-200 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-matrix_blue-100 transition-all duration-300
+}
+
+.table-info {
+    @apply py-1 pl-2 my-auto h-full font-matrix_body text-xs md:text-sm text-matrix_gray-100
+}
+
+.table-page {
+    @apply bg-transparent border-none border-0 font-matrix_body text-xs md:text-sm text-matrix_gray-100
+}
+
+.table-header {
+    @apply font-sans text-matrix_gray-200 text-xs md:text-sm font-medium px-1 md:px-2 py-4
+}
+
+.table-row {
+    @apply text-center bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100
+}
+
+.table-item {
+    @apply font-matrix_body text-matrix_gray-200 text-sm font-light whitespace-nowrap px-2 py-4
+}
+
+.hidden-row {
+    @apply transition-all ease-in duration-300
+}
+
+/* Mobile Menu Components */
+.mobile-menu {
+    @apply w-screen h-screen bg-white shadow-lg -ml-3.5 border-t border-gray-100
+}
+
+/* Flash Components */
+.alert-success {
+    @apply bg-white border-t-4 border-green-500 rounded-b text-matrix_gray-100 px-4 py-3 shadow-md
+}
+
+.alert-danger {
+    @apply bg-white border-t-4 border-red-500 rounded-b text-matrix_gray-100 px-4 py-3 shadow-md
+}
+
+.alert-info {
+    @apply bg-white border-t-4 border-gray-500 rounded-b text-matrix_gray-100 px-4 py-3 shadow-md
+}
+
+.icon-success {
+    @apply text-green-500
+}
+
+.icon-danger {
+    @apply text-red-500
+}
+
+.icon-info {
+    @apply text-gray-500
+}
