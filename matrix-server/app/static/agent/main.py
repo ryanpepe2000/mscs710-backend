@@ -10,7 +10,6 @@ from datetime import datetime
 import psutil
 
 # Constants
-base_url = "http://matrixsystems.info/"
 file_path = r'credentials.txt'
 api_route = "api/send_data"
 
@@ -25,6 +24,8 @@ def main():
         if not base_url.endswith("/"):
             base_url += "/"
         data['credentials'].pop('url')
+    else:
+        base_url = "http://matrixsystems.info/"
     send_metrics(data, base_url)
 
 
